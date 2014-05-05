@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PrayerReminder</string>
+    <string name="vibrationTime">duration of vibration\nin 1/20 seconds</string>
+    <string name="vibrationCycleTime">repeat time\nin minutes</string>
+    <string name="PREFERENCEFILE">RE.PrayerReminder.preferenceFile</string>
+    <string name="firstStart">firstStartOfPrayerReminder</string>
+    <string name="VibrationStartDay">starts PrayerReminder every day at:</string>
+    <string name="VibrationEndDay">ends PrayerReminder every day at:</string>
+    <string name="VibrationStartHour">StartHour</string>
+    <string name="VibrationStartMinute">StartMinute</string>
+    <string name="VibrationEndHour">EndHour</string>
+    <string name="VibrationEndMinute">EndMinute</string>
+    <string name="isAppActive">isAppActive</string>
+    <string name="vibrationPower">the strength of the vibration</string>
+    <string name="vibrationStrengthValue">vibrationStrengthValue</string>
+    <string name="prayerReminderStatus">the current status of the PrayerReminderApp</string>
+    <string name="takeABreak">click to take a break, break duration in minutes</string>
+    <string name="takeABreakButton">take a break</string>
+    <string name="takeABreakValue">takeABreakValue</string>
+    <string name="lastVibrate">last vibration at:</string>
+    <string name="nextVibrate">next vibration at:</string>
+
+</resources>
