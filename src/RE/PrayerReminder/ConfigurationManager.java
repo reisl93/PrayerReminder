@@ -1,7 +1,5 @@
 package RE.PrayerReminder;
 
-import android.content.SharedPreferences;
-
 /**
  * @author: Eisl
  * Date: 01.05.14
@@ -18,8 +16,9 @@ public class ConfigurationManager {
     private int endMinute = 0;
     private int vibrationStrength = 150;
     private int takeABreakTime = 60;
-    private Long lastVibrate;
-    private Long nextVibrate;
+    private Long lastVibrate = System.currentTimeMillis();
+    private Long nextVibrate = System.currentTimeMillis();
+    private boolean appIsActive = true;
 
     public int getRepeatTime() {
         return repeatTime;
@@ -87,7 +86,6 @@ public class ConfigurationManager {
 
     public void setLastVibrate(long aLong) {
         this.lastVibrate = aLong;
-        this.nextVibrate = lastVibrate + repeatTime*1000*60;
     }
 
     public Long getLastVibrate() {
@@ -100,5 +98,13 @@ public class ConfigurationManager {
 
     public void setNextVibrate(Long nextVibrate) {
         this.nextVibrate = nextVibrate;
+    }
+
+    public void setAppIsActive(boolean aBoolean) {
+        this.appIsActive = aBoolean;
+    }
+
+    public boolean isAppIsActive() {
+        return appIsActive;
     }
 }

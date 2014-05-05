@@ -2,7 +2,7 @@
 
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\Eisl\\IdeaProjects\\PrayerReminder\\src\\RE\\PrayerReminder\\IVibrationRepeaterService.aidl
+ * Original file: D:\\InHisLight\\PrayerReminder\\src\\RE\\PrayerReminder\\IVibrationRepeaterService.aidl
  */
 package RE.PrayerReminder;
 public interface IVibrationRepeaterService extends android.os.IInterface

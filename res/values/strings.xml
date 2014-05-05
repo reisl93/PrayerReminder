@@ -21,4 +21,19 @@
     <string name="lastVibrate">last vibration at:</string>
     <string name="nextVibrate">next vibration at:</string>
 
+
+    <string name="keyNextVibrate">keyNextVibrate</string>
+    <string name="keyLastVibrate">keyLastVibrate</string>
+    <string name="keyTakeABreakValue">keyTakeABreakValue</string>
+    <string name="keyIsAppActive">keyIsAppActive</string>
+    <string name="keyVibrationStartHour">keyVibrationStartHour</string>
+    <string name="keyVibrationStartMinute">keyVibrationStartMinute</string>
+    <string name="keyVibrationEndHour">keyVibrationEndHour</string>
+    <string name="keyVibrationEndMinute">keyVibrationEndMinute</string>
+    <string name="keyFirstStart">keyFirstStart</string>
+    <string name="keyVibrationDuration">keyVibrationDuration</string>
+    <string name="keyVibrationRepeatTime">keyVibrationRepeatTime</string>
+    <string name="keyVibrationPower">keyVibrationPower</string>
+
+
 </resources>
