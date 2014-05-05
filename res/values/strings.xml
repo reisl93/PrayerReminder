@@ -18,8 +18,8 @@
     <string name="takeABreak">click to take a break, break duration in minutes</string>
     <string name="takeABreakButton">take a break</string>
     <string name="takeABreakValue">takeABreakValue</string>
-    <string name="lastVibrate">last vibration at:</string>
-    <string name="nextVibrate">next vibration at:</string>
+    <string name="lastVibrate">last vibration at: </string>
+    <string name="nextVibrate">next vibration at: </string>
 
 
     <string name="keyNextVibrate">keyNextVibrate</string>

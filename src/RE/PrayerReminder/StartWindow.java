@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.*;
-
 import java.util.Date;
 
 public class StartWindow extends Activity implements Observer {
@@ -19,6 +19,8 @@ public class StartWindow extends Activity implements Observer {
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             vibrationRepeaterService = ((VibrationRepeaterService.LocalBinder)service).getService();
+            addObserverToService();
+            Log.d(TAG, "connection established");
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -35,6 +37,13 @@ public class StartWindow extends Activity implements Observer {
         setContentView(R.layout.main);
 
         SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+
+        if(preferences.getBoolean(getString(R.string.keyIsAppActive),true)){
+            Log.d(TAG, "starting service");
+            this.startService(new Intent(this, VibrationRepeaterService.class));
+            bindService(new Intent(this, VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
+        }
+
         if(preferences.getBoolean(getString(R.string.keyFirstStart),true)){
             Log.d(TAG,"first startup");
             SharedPreferences.Editor editor = preferences.edit();
@@ -46,7 +55,7 @@ public class StartWindow extends Activity implements Observer {
             editor.putInt(getString(R.string.keyVibrationEndMinute),0);
             editor.putInt(getString(R.string.keyVibrationStartHour),6);
             editor.putInt(getString(R.string.keyVibrationStartMinute),0);
-            editor.putBoolean(getString(R.string.keyIsAppActive), true);
+            editor.putBoolean(getString(R.string.keyIsAppActive), false);
             editor.putInt(getString(R.string.keyTakeABreakValue), 60);
             editor.putLong(getString(R.string.keyLastVibrate), System.currentTimeMillis());
             editor.putLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + preferences.getLong(getString(R.string.keyVibrationDuration),60)*1000*60);
@@ -69,7 +78,7 @@ public class StartWindow extends Activity implements Observer {
                 editor.putInt(getString(R.string.keyVibrationRepeatTime), newVal);
                 editor.commit();
                 //change value it in the service too
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),true))
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
                     vibrationRepeaterService.setRepeatTime(newVal);
             }
         });
@@ -91,7 +100,7 @@ public class StartWindow extends Activity implements Observer {
                 editor.putInt(getString(R.string.keyVibrationDuration), newVal);
                 editor.commit();
                 //change value in the service too
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),true))
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
                     vibrationRepeaterService.setVibrationTime(newVal);
             }
         });
@@ -113,7 +122,7 @@ public class StartWindow extends Activity implements Observer {
                 editor.putInt(getString(R.string.keyTakeABreakValue), newVal);
                 editor.commit();
                 //change value in the service too
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),true))
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
                     vibrationRepeaterService.setTakeABreak(newVal);
             }
         });
@@ -136,7 +145,7 @@ public class StartWindow extends Activity implements Observer {
                 editor.putInt(getString(R.string.keyVibrationStartMinute), view.getCurrentMinute());
                 editor.commit();
                 //change value in the service too
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),true))
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
                     vibrationRepeaterService.setStartTime(view.getCurrentHour(), view.getCurrentMinute());
             }
         });
@@ -159,7 +168,7 @@ public class StartWindow extends Activity implements Observer {
                 editor.putInt(getString(R.string.keyVibrationEndMinute), view.getCurrentMinute());
                 editor.commit();
                 //change value in the service too
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),true))
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
                     vibrationRepeaterService.setEndTime(view.getCurrentHour(), view.getCurrentMinute());
             }
         });
@@ -183,7 +192,7 @@ public class StartWindow extends Activity implements Observer {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationPower), seekBar.getProgress());
                 editor.commit();
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),true))
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
                     vibrationRepeaterService.setVibrationStrength(seekBar.getProgress());
             }
         });
@@ -192,25 +201,39 @@ public class StartWindow extends Activity implements Observer {
         ToggleButton toggleButton = (ToggleButton) this.findViewById(R.id.toggleButton);
         toggleButton.setTextOff("the reminder is not running");
         toggleButton.setTextOn("the app keeps reminding you constantly");
-        toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), true));
+        toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), false));
 
-
-
-
-        if(preferences.getBoolean(getString(R.string.keyIsAppActive),true)){
-            this.startService(new Intent(this, VibrationRepeaterService.class));
-            bindService(new Intent(this, VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
-            this.vibrationRepeaterService.addObserver(this);
-        }
 
         TextView textView = (TextView) this.findViewById(R.id.textViewLastVibrate);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
         textView.setText(R.string.lastVibrate);
         textView.append(vibrationRepeaterService != null ? (new Date(vibrationRepeaterService.getLastVibrate())).toString() : "");
 
         textView = (TextView) this.findViewById(R.id.textViewNextVibrate);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
         textView.setText(R.string.nextVibrate);
         textView.append(vibrationRepeaterService != null ? (new Date(vibrationRepeaterService.getNextVibrate())).toString(): "");
 
+        textView = (TextView) this.findViewById(R.id.textViewRepeatTime);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+
+        textView = (TextView) this.findViewById(R.id.textViewVibrateDuration);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+
+        textView = (TextView) this.findViewById(R.id.textViewEndTime);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+
+        textView = (TextView) this.findViewById(R.id.textViewStartTime);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+
+        textView = (TextView) this.findViewById(R.id.textViewVibratePower);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+
+        textView = (TextView) this.findViewById(R.id.textViewTakeABreak);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+
+        textView = (TextView) this.findViewById(R.id.textViewStatus);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
     }
 
     public void onDestroy(){
@@ -232,7 +255,6 @@ public class StartWindow extends Activity implements Observer {
         if(toggleButton.isChecked()) {
             this.startService(new Intent(this, VibrationRepeaterService.class));
             bindService(new Intent(this,VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
-            this.vibrationRepeaterService.setAppIsActive(toggleButton.isChecked());
         } else {
             Log.d(TAG, "try to stop PrayerReminder serivce");
             this.vibrationRepeaterService.setAppIsActive(toggleButton.isChecked());
@@ -243,17 +265,23 @@ public class StartWindow extends Activity implements Observer {
 
     public void onTakeABreakClicked(View view){
         Log.d(TAG, "takeABreak was clicked");
-        this.vibrationRepeaterService.takeABreak();
+        if(getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getBoolean(getString(R.string.isAppActive),false))
+            this.vibrationRepeaterService.takeABreak();
     }
+
+    public void addObserverToService(){
+        this.vibrationRepeaterService.addObserver(this);
+    }
+
 
     @Override
     public void update() {
         TextView textView = (TextView) this.findViewById(R.id.textViewLastVibrate);
         textView.setText(R.string.lastVibrate);
-        textView.append(vibrationRepeaterService != null ? (new Date(vibrationRepeaterService.getLastVibrate())).toString() : "");
+        textView.append(vibrationRepeaterService != null ? DateFormat.format(" EEE HH:mm:ss", new Date(vibrationRepeaterService.getLastVibrate())) : " Service is not running");
 
         textView = (TextView) this.findViewById(R.id.textViewNextVibrate);
         textView.setText(R.string.nextVibrate);
-        textView.append(vibrationRepeaterService != null ? (new Date(vibrationRepeaterService.getNextVibrate())).toString(): "");
+        textView.append(vibrationRepeaterService != null ? DateFormat.format(" EEE HH:mm:ss", new Date(vibrationRepeaterService.getNextVibrate())) : " Service is not running");
     }
 }

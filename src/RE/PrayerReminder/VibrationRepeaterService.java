@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -23,34 +25,39 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     private static final String TAG = "VibrationRepeaterService";
     private IBinder mBinder = new LocalBinder();
     private ConfigurationManager configurationManager = new ConfigurationManager();
-    private Handler handler;
+    private AlarmManager alarmManager;
     private Vibrator vibrator;
     private List<Observer> observers;
+    private PendingIntent serviceToBeStarted;
 
     public void scheduleNextVibration(){
         if(!configurationManager.isAppIsActive())
             return;
 
-        Log.d(TAG, "starting timer - next vibrate at: " + new Date(configurationManager.getNextVibrate()));
+        Log.d(TAG, "starting timer");
         notifyAllObservers();
-        this.handler.removeCallbacks(this);
-        this.handler.postAtTime(this, configurationManager.getNextVibrate() - (System.currentTimeMillis() - SystemClock.uptimeMillis()));
+        alarmManager.cancel(serviceToBeStarted);
+        long delay = configurationManager.getNextVibrate() - (System.currentTimeMillis() - SystemClock.uptimeMillis());
+        if(delay <= 0)
+            delay = 0;
+        final long interval = (long) configurationManager.getRepeatTime() * 1000l * 60;
+        this.alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, delay, interval, serviceToBeStarted);
     }
 
     @Override
     public void onCreate(){
         super.onCreate();
-        Log.d(TAG, "starting service...");
+        Log.d(TAG, "creating service...");
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         configurationManager = new ConfigurationManager();
         mBinder = new LocalBinder();
-        handler = new Handler();
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         observers = new LinkedList<Observer>();
 
         SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
-        configurationManager.setAppIsActive(preferences.getBoolean(getString(R.string.keyIsAppActive),true));
+        configurationManager.setAppIsActive(preferences.getBoolean(getString(R.string.keyIsAppActive), true));
         configurationManager.setVibrationTime(preferences.getInt(getString(R.string.keyVibrationDuration), 16));
         configurationManager.setVibrationStrength(preferences.getInt(getString(R.string.keyVibrationPower), 150));
         configurationManager.setRepeatTime(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 10));
@@ -60,18 +67,23 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
         configurationManager.setStartMinute(preferences.getInt(getString(R.string.keyVibrationStartMinute), 0));
         configurationManager.setTakeABreak(preferences.getInt(getString(R.string.keyTakeABreakValue), 60));
         configurationManager.setLastVibrate(preferences.getLong(getString(R.string.keyLastVibrate), System.currentTimeMillis()));
-        configurationManager.setNextVibrate(preferences.getLong(getString(R.string.keyNextVibrate),System.currentTimeMillis() + configurationManager.getRepeatTime()*1000*60));
+        configurationManager.setNextVibrate(preferences.getLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + configurationManager.getRepeatTime() * 1000l * 60));
 
         //don't start service if cellphone has no vibrator
         if(vibrator == null || !vibrator.hasVibrator()){
             Log.d(TAG, "cellphone isn't able to vibrate");
         }
+        this.serviceToBeStarted = PendingIntent.getService(this, 0, new Intent(this, VibrationRepeaterService.class), 0);
+        //to set the nextVibrate properly
+        run();
+        //activate alarm
+        scheduleNextVibration();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         super.onStartCommand(intent, flags, startId);
-        this.scheduleNextVibration();
+        run();
         return START_STICKY;
     }
 
@@ -82,14 +94,15 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
 
     @Override
     public void onDestroy(){
+        this.alarmManager.cancel(this.serviceToBeStarted);
+
     }
 
     public void setRepeatTime(final int newVal) {
         Log.d(TAG,"changed repeat time: "+newVal);
         configurationManager.setRepeatTime(newVal);
-        configurationManager.setNextVibrate(configurationManager.getLastVibrate() + newVal*1000*60 >= System.currentTimeMillis() ? configurationManager.getLastVibrate() + newVal*1000*60 : System.currentTimeMillis() + newVal*1000*60);
+        calculateNextVibration();
         scheduleNextVibration();
-        notifyAllObservers();
     }
 
     public void setVibrationTime(final int newVal){
@@ -100,17 +113,17 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     public void setStartTime(final int startHour, final int startMinute) {
         configurationManager.setStartHour(startHour);
         configurationManager.setStartMinute(startMinute);
-
+        calculateNextVibration();
     }
 
     public void setEndTime(final int endHour, final int endMinute) {
         configurationManager.setEndHour(endHour);
         configurationManager.setEndMinute(endMinute);
+        calculateNextVibration();
     }
 
     public void setVibrationStrength(int progress) {
         configurationManager.setVibrationStrength(progress);
-
     }
 
     public void setTakeABreak(int newVal) {
@@ -126,10 +139,10 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     }
 
     public void takeABreak() {
-        this.configurationManager.setNextVibrate(configurationManager.getNextVibrate()+configurationManager.getTakeABreakTime()*1000*60);
+        if(!configurationManager.isAppIsActive())
+            return;
+        this.configurationManager.setNextVibrate(configurationManager.getNextVibrate()+configurationManager.getTakeABreakTime()*1000*60l);
         scheduleNextVibration();
-        notifyAllObservers();
-
     }
 
     @Override
@@ -149,28 +162,38 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
             } else {
                 vibrator.vibrate(configurationManager.getVibrationTime()*50);
             }
-            //set next vibration
-            configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60);
-            //if it isn't in the future --> set it to the future
-            if(System.currentTimeMillis() >= configurationManager.getNextVibrate())
-                configurationManager.setNextVibrate(System.currentTimeMillis() + configurationManager.getRepeatTime()*1000*60);
-            //if it is out of the boundaries --> set it to tomorrow
-            if(configurationManager.getNextVibrate() >= configurationManager.getNextVibrate() - configurationManager.getNextVibrate() % (1000 * 3600 * 24) +
-                                                        configurationManager.getEndHour()*1000*3600 + configurationManager.getEndMinute()*1000){
-                configurationManager.setNextVibrate(
-                                configurationManager.getNextVibrate() - configurationManager.getNextVibrate() % (1000 * 3600 * 24) +    //set to 00:00 AM of current day
-                                configurationManager.getStartHour()*1000*3600 + configurationManager.getStartMinute()*1000 +            //set next vibration to start time
-                                1000*3600*24);                                                                                          //add one day so vibration is tomorrow
-            }
         }
         //set next Vibration
-        this.scheduleNextVibration();
+        calculateNextVibration();
+        notifyAllObservers();
+    }
+
+    private void calculateNextVibration(){
+        //set next vibration
+        configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60l);
+        //if it isn't in the future --> set it to the future
+        if(System.currentTimeMillis() >= configurationManager.getNextVibrate())
+            configurationManager.setNextVibrate(System.currentTimeMillis() + configurationManager.getRepeatTime()*1000*60);
+        //if it is out of the boundaries --> set it to tomorrow
+        Log.d(TAG, "kleiner: "+ configurationManager.getNextVibrate());
+        Log.d(TAG, "groesser: "+ (configurationManager.getNextVibrate() - (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+                configurationManager.getEndHour()*1000*60*60l + configurationManager.getEndMinute()*1000*60l));
+
+        if(configurationManager.getNextVibrate() >= configurationManager.getNextVibrate() - (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+                configurationManager.getEndHour()*1000*60*60l + configurationManager.getEndMinute()*1000*60l){
+            configurationManager.setNextVibrate(
+                    configurationManager.getNextVibrate() - configurationManager.getNextVibrate() % (1000l * 3600 * 24) +    //set to 00:00 AM of current day
+                            configurationManager.getStartHour()*1000*3600l + configurationManager.getStartMinute()*1000*60l +            //set next vibration to start time
+                            1000*60*60*24l);                                                                                          //add one day so vibration is tomorrow
+            scheduleNextVibration();
+        }
     }
 
 
     @Override
     public void addObserver(Observer observer) {
         this.observers.add(observer);
+        notifyAllObservers();
     }
 
     @Override

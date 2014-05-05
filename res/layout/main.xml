@@ -20,7 +20,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/vibrationCycleTime"
-                        android:id="@+id/textView1" android:gravity="center|left"/>
+                        android:id="@+id/textViewRepeatTime" android:gravity="center|left"/>
                 <NumberPicker
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/vibrationTime"
-                        android:id="@+id/textView" android:layout_gravity="center_horizontal|top"
+                        android:id="@+id/textViewVibrateDuration" android:layout_gravity="center_horizontal|top"
                         android:gravity="center|left"/>
                 <NumberPicker
                         android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/VibrationStartDay"
-                        android:id="@+id/textView2" android:layout_gravity="center|bottom" android:gravity="center|left"/>
+                        android:id="@+id/textViewStartTime" android:layout_gravity="center|bottom" android:gravity="center|left"/>
                 <TimePicker
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/VibrationEndDay"
-                        android:id="@+id/textView3" android:layout_gravity="center" android:gravity="center|left"/>
+                        android:id="@+id/textViewEndTime" android:layout_gravity="center" android:gravity="center|left"/>
                 <TimePicker
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/vibrationPower"
-                        android:id="@+id/textView4"/>
+                        android:id="@+id/textViewVibratePower"/>
                 <SeekBar
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/takeABreak"
-                        android:id="@+id/textView6"/>
+                        android:id="@+id/textViewTakeABreak"/>
                 <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/prayerReminderStatus"
-                        android:id="@+id/textView5"/>
+                        android:id="@+id/textViewStatus"/>
                 <ToggleButton
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
