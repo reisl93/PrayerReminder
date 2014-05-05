@@ -8,10 +8,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Binder;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Vibrator;
+import android.os.*;
 import android.util.Log;
 
 /**
@@ -37,7 +34,7 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
         Log.d(TAG, "starting timer - next vibrate at: " + new Date(configurationManager.getNextVibrate()));
         notifyAllObservers();
         this.handler.removeCallbacks(this);
-        this.handler.postAtTime(this, configurationManager.getNextVibrate());
+        this.handler.postAtTime(this, configurationManager.getNextVibrate() - (System.currentTimeMillis() - SystemClock.uptimeMillis()));
     }
 
     @Override
@@ -90,7 +87,7 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     public void setRepeatTime(final int newVal) {
         Log.d(TAG,"changed repeat time: "+newVal);
         configurationManager.setRepeatTime(newVal);
-        configurationManager.setNextVibrate(configurationManager.getLastVibrate() + newVal*1000*60 >= System.currentTimeMillis() ? configurationManager.getLastVibrate() + newVal*1000*60 : System.currentTimeMillis());
+        configurationManager.setNextVibrate(configurationManager.getLastVibrate() + newVal*1000*60 >= System.currentTimeMillis() ? configurationManager.getLastVibrate() + newVal*1000*60 : System.currentTimeMillis() + newVal*1000*60);
         scheduleNextVibration();
         notifyAllObservers();
     }
@@ -152,16 +149,21 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
             } else {
                 vibrator.vibrate(configurationManager.getVibrationTime()*50);
             }
-
+            //set next vibration
             configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60);
+            //if it isn't in the future --> set it to the future
+            if(System.currentTimeMillis() >= configurationManager.getNextVibrate())
+                configurationManager.setNextVibrate(System.currentTimeMillis() + configurationManager.getRepeatTime()*1000*60);
+            //if it is out of the boundaries --> set it to tomorrow
             if(configurationManager.getNextVibrate() >= configurationManager.getNextVibrate() - configurationManager.getNextVibrate() % (1000 * 3600 * 24) +
                                                         configurationManager.getEndHour()*1000*3600 + configurationManager.getEndMinute()*1000){
                 configurationManager.setNextVibrate(
                                 configurationManager.getNextVibrate() - configurationManager.getNextVibrate() % (1000 * 3600 * 24) +    //set to 00:00 AM of current day
-                                configurationManager.getStartHour()*1000*3600 + configurationManager.getStartMinute()*1000 +
-                                1000*3600*24);
+                                configurationManager.getStartHour()*1000*3600 + configurationManager.getStartMinute()*1000 +            //set next vibration to start time
+                                1000*3600*24);                                                                                          //add one day so vibration is tomorrow
             }
         }
+        //set next Vibration
         this.scheduleNextVibration();
     }
 
