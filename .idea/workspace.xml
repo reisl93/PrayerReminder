@@ -30,11 +30,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/values-de/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RE/PrayerReminder/ConfigurationManager.java" afterPath="$PROJECT_DIR$/src/RE/PrayerReminder/ConfigurationManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java" afterPath="$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RE/PrayerReminder/VibrationRepeaterService.java" afterPath="$PROJECT_DIR$/src/RE/PrayerReminder/VibrationRepeaterService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PrayerReminder.iws" />
@@ -50,7 +47,7 @@
     <file path="/main.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399314002770" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399311690660" ignored="false" />
     <file path="/IVibrationRepeaterService.aidl" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399044610814" ignored="false" />
-    <file path="/Dummy.txt" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399398817926" ignored="false" />
+    <file path="/Dummy.txt" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399398872220" ignored="false" />
     <file path="/ObserverEvent.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288449786" ignored="false" />
     <file path="/Observer.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288883916" ignored="false" />
     <file path="/Observeable.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288877992" ignored="false" />
@@ -123,7 +120,7 @@
       <file leaf-file-name="VibrationRepeaterService.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/RE/PrayerReminder/VibrationRepeaterService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="49" selection-start="6292" selection-end="6292" vertical-scroll-proportion="-0.09335727">
+            <state line="221" column="115" selection-start="9624" selection-end="9624" vertical-scroll-proportion="0.41746247">
               <folding />
             </state>
           </provider>
@@ -132,7 +129,7 @@
       <file leaf-file-name="StartWindow.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="206" column="14" selection-start="10520" selection-end="10520" vertical-scroll-proportion="0.0">
+            <state line="66" column="38" selection-start="3020" selection-end="3020" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -252,10 +249,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="32" />
-    <option name="width" value="1696" />
-    <option name="height" value="1026" />
+    <option name="x" value="1672" />
+    <option name="y" value="142" />
+    <option name="width" value="1616" />
+    <option name="height" value="916" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -593,14 +590,18 @@
       <created>1399325097666</created>
       <updated>1399325097666</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added DE language&#10;fixed minor bugs">
+      <created>1399398879954</created>
+      <updated>1399398879955</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="32" width="1696" height="1026" extended-state="6" />
-    <editor active="false" />
+    <frame x="1672" y="142" width="1616" height="916" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3768116" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -784,15 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="206" column="14" selection-start="10520" selection-end="10520" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="95" selection-start="1342" selection-end="1342" vertical-scroll-proportion="-13.6">
@@ -800,9 +792,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="38" selection-start="3020" selection-end="3020" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/RE/PrayerReminder/VibrationRepeaterService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="49" selection-start="6292" selection-end="6292" vertical-scroll-proportion="-0.09335727">
+        <state line="221" column="115" selection-start="9624" selection-end="9624" vertical-scroll-proportion="0.41746247">
           <folding />
         </state>
       </provider>

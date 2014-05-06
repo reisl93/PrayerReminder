@@ -64,7 +64,7 @@ public class StartWindow extends Activity implements Observer {
 
         NumberPicker numberPicker = (NumberPicker) this.findViewById(R.id.numberPickerRepeatTime);
         numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(99);
+        numberPicker.setMaxValue(24*60);
         numberPicker.setValue(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 10));
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
             public static final String TAG = "NumberPickerRepeatTime";

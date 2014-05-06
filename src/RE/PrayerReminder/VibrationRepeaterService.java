@@ -17,7 +17,7 @@ import android.util.Log;
  * Time: 18:36
  * @version: 1.0.0
  */
-public class VibrationRepeaterService extends Service implements Runnable, Observeable{
+public class VibrationRepeaterService extends Service implements Observeable{
 
 
     private static final String TAG = "VibrationRepeaterService";
@@ -174,7 +174,6 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     /**
      * vibrates and verifies next vibration
      */
-    @Override
     public void run() {
         if(System.currentTimeMillis() >= configurationManager.getNextVibrate()){
             configurationManager.setLastVibrate(System.currentTimeMillis());
