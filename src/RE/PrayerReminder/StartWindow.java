@@ -199,41 +199,42 @@ public class StartWindow extends Activity implements Observer {
 
 
         ToggleButton toggleButton = (ToggleButton) this.findViewById(R.id.toggleButton);
-        toggleButton.setTextOff("the reminder is not running");
-        toggleButton.setTextOn("the app keeps reminding you constantly");
+        toggleButton.setTextOff(getString(R.string.appIsNotActiveText));
+        toggleButton.setTextOn(getString(R.string.appIsActiveText));
         toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), false));
 
 
+        final int textSizeInMM = 3;
         TextView textView = (TextView) this.findViewById(R.id.textViewLastVibrate);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
         textView.setText(R.string.lastVibrate);
         textView.append(vibrationRepeaterService != null ? (new Date(vibrationRepeaterService.getLastVibrate())).toString() : "");
 
         textView = (TextView) this.findViewById(R.id.textViewNextVibrate);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
         textView.setText(R.string.nextVibrate);
         textView.append(vibrationRepeaterService != null ? (new Date(vibrationRepeaterService.getNextVibrate())).toString(): "");
 
         textView = (TextView) this.findViewById(R.id.textViewRepeatTime);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewVibrateDuration);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewEndTime);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewStartTime);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewVibratePower);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewTakeABreak);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewStatus);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, 3);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
     }
 
     public void onDestroy(){

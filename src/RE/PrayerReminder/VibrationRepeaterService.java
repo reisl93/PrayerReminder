@@ -1,8 +1,6 @@
 package RE.PrayerReminder;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -38,7 +36,7 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
         notifyAllObservers();
         alarmManager.cancel(serviceToBeStarted);
         long delay = configurationManager.getNextVibrate() - (System.currentTimeMillis() - SystemClock.uptimeMillis());
-        if(delay <= 0)
+        if(delay < 0)
             delay = 0;
         final long interval = (long) configurationManager.getRepeatTime() * 1000l * 60;
         this.alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, delay, interval, serviceToBeStarted);
@@ -95,13 +93,19 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     @Override
     public void onDestroy(){
         this.alarmManager.cancel(this.serviceToBeStarted);
-
+        SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putLong(getString(R.string.keyNextVibrate), configurationManager.getNextVibrate());
+        editor.putLong(getString(R.string.keyLastVibrate), configurationManager.getLastVibrate());
+        editor.commit();
     }
 
     public void setRepeatTime(final int newVal) {
         Log.d(TAG,"changed repeat time: "+newVal);
         configurationManager.setRepeatTime(newVal);
-        calculateNextVibration();
+        //set next vibration
+        configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60l);
+        verifyNextVibration();
         scheduleNextVibration();
     }
 
@@ -111,15 +115,35 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     }
 
     public void setStartTime(final int startHour, final int startMinute) {
+        int timeZoneOffset = GregorianCalendar.getInstance().getTimeZone().getRawOffset() + 1000*60*60; //add an hour
+        if(configurationManager.getNextVibrate() ==
+                        configurationManager.getNextVibrate() -
+                        (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+                        configurationManager.getStartHour() * 1000*60*60l +
+                        configurationManager.getStartMinute() * 1000*60l -
+                        timeZoneOffset){
+            configurationManager.setNextVibrate(configurationManager.getNextVibrate() -
+                    (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+                    startHour * 1000*60*60l +
+                    startMinute * 1000*60l -
+                    timeZoneOffset);
+            scheduleNextVibration();
+        }
+
         configurationManager.setStartHour(startHour);
         configurationManager.setStartMinute(startMinute);
-        calculateNextVibration();
+        verifyNextVibration();
     }
 
+    /**
+     * sets "every day end time border" when vibrations should stop
+     * @param endHour ends every day at hour:
+     * @param endMinute ends every day at minute:
+     */
     public void setEndTime(final int endHour, final int endMinute) {
         configurationManager.setEndHour(endHour);
         configurationManager.setEndMinute(endMinute);
-        calculateNextVibration();
+        verifyNextVibration();
     }
 
     public void setVibrationStrength(int progress) {
@@ -139,12 +163,17 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
     }
 
     public void takeABreak() {
-        if(!configurationManager.isAppIsActive())
+        if(!configurationManager.isAppIsActive()) {
             return;
+        }
         this.configurationManager.setNextVibrate(configurationManager.getNextVibrate()+configurationManager.getTakeABreakTime()*1000*60l);
+        verifyNextVibration();
         scheduleNextVibration();
     }
 
+    /**
+     * vibrates and verifies next vibration
+     */
     @Override
     public void run() {
         if(System.currentTimeMillis() >= configurationManager.getNextVibrate()){
@@ -162,29 +191,55 @@ public class VibrationRepeaterService extends Service implements Runnable, Obser
             } else {
                 vibrator.vibrate(configurationManager.getVibrationTime()*50);
             }
+            //set next vibration
+            configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60l);
+            verifyNextVibration();
+            notifyAllObservers();
         }
-        //set next Vibration
-        calculateNextVibration();
-        notifyAllObservers();
     }
 
-    private void calculateNextVibration(){
-        //set next vibration
-        configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60l);
+    /**
+     * verifies that the next Vibration is within the vibration limits (start & end time)
+     */
+    private void verifyNextVibration(){
+
         //if it isn't in the future --> set it to the future
         if(System.currentTimeMillis() >= configurationManager.getNextVibrate())
             configurationManager.setNextVibrate(System.currentTimeMillis() + configurationManager.getRepeatTime()*1000*60);
-        //if it is out of the boundaries --> set it to tomorrow
-        Log.d(TAG, "kleiner: "+ configurationManager.getNextVibrate());
-        Log.d(TAG, "groesser: "+ (configurationManager.getNextVibrate() - (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
-                configurationManager.getEndHour()*1000*60*60l + configurationManager.getEndMinute()*1000*60l));
 
-        if(configurationManager.getNextVibrate() >= configurationManager.getNextVibrate() - (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
-                configurationManager.getEndHour()*1000*60*60l + configurationManager.getEndMinute()*1000*60l){
+        //if it is out of the boundaries --> set it to tomorrow
+        //is it above the end time boundary
+        int timeZoneOffset = GregorianCalendar.getInstance().getTimeZone().getRawOffset() + 1000*60*60; //add an hour
+        if(configurationManager.getNextVibrate() >
+                configurationManager.getNextVibrate() -
+                (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+                configurationManager.getEndHour() * 1000*60*60l +
+                configurationManager.getEndMinute()*1000*60l -
+                timeZoneOffset){
+
             configurationManager.setNextVibrate(
-                    configurationManager.getNextVibrate() - configurationManager.getNextVibrate() % (1000l * 3600 * 24) +    //set to 00:00 AM of current day
-                            configurationManager.getStartHour()*1000*3600l + configurationManager.getStartMinute()*1000*60l +            //set next vibration to start time
-                            1000*60*60*24l);                                                                                          //add one day so vibration is tomorrow
+                            configurationManager.getNextVibrate() -
+                            configurationManager.getNextVibrate() % (1000l * 3600 * 24) +    //set to 00:00 AM of current day
+                            configurationManager.getStartHour() *1000*3600l +
+                            configurationManager.getStartMinute()*1000*60l -    //set next vibration to start time
+                            timeZoneOffset +
+                            1000*60*60*24l);                                    //add one day so vibration is tomorrow
+            scheduleNextVibration();
+        //below the start time boundary
+        } else if(configurationManager.getNextVibrate() <
+                        configurationManager.getNextVibrate() -
+                        (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+                        configurationManager.getStartHour() *1000*60*60l +
+                        configurationManager.getStartMinute()*1000*60l -
+                        timeZoneOffset){
+
+            configurationManager.setNextVibrate(
+                            configurationManager.getNextVibrate() -
+                            configurationManager.getNextVibrate() % (1000l * 3600 * 24) +    //set to 00:00 AM of current day
+                            configurationManager.getStartHour() *1000*3600l +
+                            configurationManager.getStartMinute()*1000*60l -    //set next vibration to start time
+                            timeZoneOffset +
+                            1000*60*60*24l);
             scheduleNextVibration();
         }
     }

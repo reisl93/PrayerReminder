@@ -20,6 +20,8 @@
     <string name="takeABreakValue">takeABreakValue</string>
     <string name="lastVibrate">last vibration at: </string>
     <string name="nextVibrate">next vibration at: </string>
+    <string name="appIsActiveText">app keeps reminding you</string>
+    <string name="appIsNotActiveText">app is not running</string>
 
 
     <string name="keyNextVibrate">keyNextVibrate</string>

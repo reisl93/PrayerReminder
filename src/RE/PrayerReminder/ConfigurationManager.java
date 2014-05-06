@@ -16,8 +16,8 @@ public class ConfigurationManager {
     private int endMinute = 0;
     private int vibrationStrength = 150;
     private int takeABreakTime = 60;
-    private Long lastVibrate = System.currentTimeMillis();
-    private Long nextVibrate = System.currentTimeMillis();
+    private long lastVibrate = System.currentTimeMillis();
+    private long nextVibrate = System.currentTimeMillis();
     private boolean appIsActive = true;
 
     public int getRepeatTime() {
@@ -96,11 +96,11 @@ public class ConfigurationManager {
         return nextVibrate;
     }
 
-    public void setNextVibrate(Long nextVibrate) {
+    public void setNextVibrate(final long nextVibrate) {
         this.nextVibrate = nextVibrate;
     }
 
-    public void setAppIsActive(boolean aBoolean) {
+    public void setAppIsActive(final boolean aBoolean) {
         this.appIsActive = aBoolean;
     }
 
