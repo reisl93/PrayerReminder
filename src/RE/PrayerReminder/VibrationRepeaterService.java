@@ -67,10 +67,6 @@ public class VibrationRepeaterService extends Service implements Observeable{
         configurationManager.setLastVibrate(preferences.getLong(getString(R.string.keyLastVibrate), System.currentTimeMillis()));
         configurationManager.setNextVibrate(preferences.getLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + configurationManager.getRepeatTime() * 1000l * 60));
 
-        //don't start service if cellphone has no vibrator
-        if(vibrator == null || !vibrator.hasVibrator()){
-            Log.d(TAG, "cellphone isn't able to vibrate");
-        }
         this.serviceToBeStarted = PendingIntent.getService(this, 0, new Intent(this, VibrationRepeaterService.class), 0);
         //to set the nextVibrate properly
         run();

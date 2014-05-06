@@ -26,8 +26,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/numberPickerRepeatTime" android:layout_gravity="center_horizontal|left|top"
                         android:orientation="horizontal"
-                        android:gravity="left"
-                        android:measureWithLargestChild="false"/>
+                        android:gravity="left"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -134,7 +133,7 @@
                 <ToggleButton
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="New ToggleButton"
+                        android:text=""
                         android:id="@+id/toggleButton" android:onClick="onToggleButtonClick"/>
             </LinearLayout>
         </LinearLayout>

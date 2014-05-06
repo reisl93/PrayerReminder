@@ -55,7 +55,7 @@ public class StartWindow extends Activity implements Observer {
             editor.putInt(getString(R.string.keyVibrationEndMinute),0);
             editor.putInt(getString(R.string.keyVibrationStartHour),6);
             editor.putInt(getString(R.string.keyVibrationStartMinute),0);
-            editor.putBoolean(getString(R.string.keyIsAppActive), false);
+            editor.putBoolean(getString(R.string.keyIsAppActive), true);
             editor.putInt(getString(R.string.keyTakeABreakValue), 60);
             editor.putLong(getString(R.string.keyLastVibrate), System.currentTimeMillis());
             editor.putLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + preferences.getLong(getString(R.string.keyVibrationDuration),60)*1000*60);
@@ -238,11 +238,11 @@ public class StartWindow extends Activity implements Observer {
     }
 
     public void onDestroy(){
-        super.onDestroy();
         if(vibrationRepeaterService != null) {
             vibrationRepeaterService.removeObserver(this);
             this.unbindService(mConnection);
         }
+        super.onDestroy();
     }
 
     public void onToggleButtonClick(View view){
@@ -257,7 +257,7 @@ public class StartWindow extends Activity implements Observer {
             this.startService(new Intent(this, VibrationRepeaterService.class));
             bindService(new Intent(this,VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
         } else {
-            Log.d(TAG, "try to stop PrayerReminder serivce");
+            Log.d(TAG, "try to stop PrayerReminder service");
             this.vibrationRepeaterService.setAppIsActive(toggleButton.isChecked());
             this.unbindService(mConnection);
             this.stopService(new Intent(this, VibrationRepeaterService.class));
@@ -266,7 +266,7 @@ public class StartWindow extends Activity implements Observer {
 
     public void onTakeABreakClicked(View view){
         Log.d(TAG, "takeABreak was clicked");
-        if(getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getBoolean(getString(R.string.isAppActive),false))
+        if(getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getBoolean(getString(R.string.keyIsAppActive),false))
             this.vibrationRepeaterService.takeABreak();
     }
 
