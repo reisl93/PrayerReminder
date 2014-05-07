@@ -1,5 +1,10 @@
 package RE.PrayerReminder;
 
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+
 import android.app.Activity;
 import android.content.*;
 import android.os.Bundle;
@@ -14,7 +19,9 @@ import java.util.Date;
 public class StartWindow extends Activity implements Observer {
 
     private static final String TAG = "StartWindow";
+    private static final String AD_UNIT_ID = "ca-app-pub-3956003081714684/6818330858";
     private VibrationRepeaterService vibrationRepeaterService;
+    private AdView adView;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -34,6 +41,7 @@ public class StartWindow extends Activity implements Observer {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
 
         SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
@@ -43,6 +51,10 @@ public class StartWindow extends Activity implements Observer {
             this.startService(new Intent(this, VibrationRepeaterService.class));
             bindService(new Intent(this, VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
         }
+        
+        adView = new AdView(this);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(AD_UNIT_ID);
 
         if(preferences.getBoolean(getString(R.string.keyFirstStart),true)){
             Log.d(TAG,"first startup");
@@ -61,6 +73,17 @@ public class StartWindow extends Activity implements Observer {
             editor.putLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + preferences.getLong(getString(R.string.keyVibrationDuration),60)*1000*60);
             editor.commit();
         }
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adView);
+        linearLayout.addView(adView);
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
+                .build();
+
+
+        adView.loadAd(adRequest);
 
         NumberPicker numberPicker = (NumberPicker) this.findViewById(R.id.numberPickerRepeatTime);
         numberPicker.setMinValue(1);
@@ -235,6 +258,9 @@ public class StartWindow extends Activity implements Observer {
 
         textView = (TextView) this.findViewById(R.id.textViewStatus);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
+
+        //  AdView adView = new AdView(this,AdSize.Banner, "yourid");
+
     }
 
     public void onDestroy(){
@@ -243,6 +269,18 @@ public class StartWindow extends Activity implements Observer {
             this.unbindService(mConnection);
         }
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onResume(){
+
+        super.onResume();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
     }
 
     public void onToggleButtonClick(View view){

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PrayerReminder</string>
+    <string name="app_name">BreathPray</string>
     <string name="vibrationTime">duration of vibration\nin 1/20 seconds</string>
     <string name="vibrationCycleTime">repeat time\nin minutes</string>
     <string name="PREFERENCEFILE">RE.PrayerReminder.preferenceFile</string>

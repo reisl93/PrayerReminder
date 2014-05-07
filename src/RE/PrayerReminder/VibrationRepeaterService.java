@@ -88,7 +88,11 @@ public class VibrationRepeaterService extends Service implements Observeable{
 
     @Override
     public void onDestroy(){
-        this.alarmManager.cancel(this.serviceToBeStarted);
+        //only "shutdown"/destroy service if app should be active
+        if(!configurationManager.isAppIsActive())
+            if(this.alarmManager != null)
+                this.alarmManager.cancel(this.serviceToBeStarted);
+
         SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong(getString(R.string.keyNextVibrate), configurationManager.getNextVibrate());

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PrayerReminder.iml" filepath="$PROJECT_DIR$/PrayerReminder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/google-play-services/google-play-services1.iml" filepath="$PROJECT_DIR$/google-play-services/google-play-services1.iml" />
     </modules>
   </component>
 </project>
