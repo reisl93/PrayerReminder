@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
     <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollView">
+            android:layout_height="fill_parent"
+            android:id="@+id/scrollView" android:layout_alignParentLeft="true" android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true" android:layout_marginTop="0dp" android:layout_marginBottom="50dp">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
@@ -143,6 +144,8 @@
             android:id="@+id/adView"
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="50dip" android:layout_gravity="top" android:gravity="top">
+            android:layout_height="50dip" android:layout_gravity="top" android:gravity="top"
+            android:layout_alignParentLeft="true" android:layout_marginLeft="0dp" android:layout_alignParentTop="false"
+            android:layout_marginTop="1230dp" android:layout_alignParentBottom="true">
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

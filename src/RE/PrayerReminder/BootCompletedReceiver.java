@@ -18,6 +18,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent arg1) {
         Log.w(TAG, "starting service PrayerReminder");
-        context.startService(new Intent(context, VibrationRepeaterService.class));
+        Intent intent = new Intent(context, VibrationRepeaterService.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        context.startService(intent);
     }
 }

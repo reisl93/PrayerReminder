@@ -1,6 +1,7 @@
 package RE.PrayerReminder;
 
 
+import android.preference.PreferenceManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -15,6 +16,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.*;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class StartWindow extends Activity implements Observer {
 
@@ -69,8 +71,8 @@ public class StartWindow extends Activity implements Observer {
             editor.putInt(getString(R.string.keyVibrationStartMinute),0);
             editor.putBoolean(getString(R.string.keyIsAppActive), true);
             editor.putInt(getString(R.string.keyTakeABreakValue), 60);
-            editor.putLong(getString(R.string.keyLastVibrate), System.currentTimeMillis());
-            editor.putLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + preferences.getLong(getString(R.string.keyVibrationDuration),60)*1000*60);
+            editor.putLong(getString(R.string.keyLastVibrate), System.currentTimeMillis() - GregorianCalendar.getInstance().getTimeZone().getRawOffset() - 1000*60);
+            editor.putLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() - GregorianCalendar.getInstance().getTimeZone().getRawOffset() - 1000*60 + preferences.getLong(getString(R.string.keyVibrationDuration),60)*1000*60);
             editor.commit();
         }
 
@@ -258,9 +260,6 @@ public class StartWindow extends Activity implements Observer {
 
         textView = (TextView) this.findViewById(R.id.textViewStatus);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-
-        //  AdView adView = new AdView(this,AdSize.Banner, "yourid");
-
     }
 
     public void onDestroy(){
@@ -268,18 +267,24 @@ public class StartWindow extends Activity implements Observer {
             vibrationRepeaterService.removeObserver(this);
             this.unbindService(mConnection);
         }
+        if(adView != null)
+            adView.destroy();
+
         super.onDestroy();
     }
 
 
     @Override
     public void onResume(){
-
         super.onResume();
+        if(adView != null)
+            adView.resume();
     }
 
     @Override
     public void onPause(){
+        if(adView != null)
+            adView.pause();
         super.onPause();
     }
 

@@ -35,11 +35,9 @@ public class VibrationRepeaterService extends Service implements Observeable{
         Log.d(TAG, "starting timer");
         notifyAllObservers();
         alarmManager.cancel(serviceToBeStarted);
-        long delay = configurationManager.getNextVibrate() - (System.currentTimeMillis() - SystemClock.uptimeMillis());
-        if(delay < 0)
-            delay = 0;
+        long delay = configurationManager.getNextVibrate();
         final long interval = (long) configurationManager.getRepeatTime() * 1000l * 60;
-        this.alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, delay, interval, serviceToBeStarted);
+        this.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, delay, interval, serviceToBeStarted);
     }
 
     @Override
@@ -65,9 +63,13 @@ public class VibrationRepeaterService extends Service implements Observeable{
         configurationManager.setStartMinute(preferences.getInt(getString(R.string.keyVibrationStartMinute), 0));
         configurationManager.setTakeABreak(preferences.getInt(getString(R.string.keyTakeABreakValue), 60));
         configurationManager.setLastVibrate(preferences.getLong(getString(R.string.keyLastVibrate), System.currentTimeMillis()));
-        configurationManager.setNextVibrate(preferences.getLong(getString(R.string.keyNextVibrate), System.currentTimeMillis() + configurationManager.getRepeatTime() * 1000l * 60));
+        configurationManager.setNextVibrate(preferences.getLong(getString(R.string.keyNextVibrate), configurationManager.getLastVibrate() + configurationManager.getRepeatTime() * 1000l * 60));
 
-        this.serviceToBeStarted = PendingIntent.getService(this, 0, new Intent(this, VibrationRepeaterService.class), 0);
+
+        Intent intent = new Intent(this, VibrationRepeaterService.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        this.serviceToBeStarted = PendingIntent.getService(this, 0, intent, 0);
         //to set the nextVibrate properly
         run();
         //activate alarm
@@ -115,21 +117,19 @@ public class VibrationRepeaterService extends Service implements Observeable{
     }
 
     public void setStartTime(final int startHour, final int startMinute) {
-        int timeZoneOffset = GregorianCalendar.getInstance().getTimeZone().getRawOffset() + 1000*60*60; //add an hour
-        if(configurationManager.getNextVibrate() ==
-                        configurationManager.getNextVibrate() -
-                        (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
-                        configurationManager.getStartHour() * 1000*60*60l +
-                        configurationManager.getStartMinute() * 1000*60l -
-                        timeZoneOffset){
-            configurationManager.setNextVibrate(configurationManager.getNextVibrate() -
-                    (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
-                    startHour * 1000*60*60l +
-                    startMinute * 1000*60l -
-                    timeZoneOffset);
-            scheduleNextVibration();
-        }
 
+
+        if(configurationManager.getNextVibrate() % (1000*60*60*24) ==
+                        configurationManager.getStartHour()*1000*60*60 +
+                        configurationManager.getStartMinute()*1000*60 -
+                        GregorianCalendar.getInstance().getTimeZone().getRawOffset() - 1000*60*60){
+
+            configurationManager.setNextVibrate(configurationManager.getNextVibrate() +
+                (startHour - configurationManager.getStartHour()) * 1000*60*60 +
+                (startMinute - configurationManager.getStartMinute()) * 1000*60);
+            scheduleNextVibration();
+
+        }
         configurationManager.setStartHour(startHour);
         configurationManager.setStartMinute(startMinute);
         verifyNextVibration();
@@ -143,6 +143,15 @@ public class VibrationRepeaterService extends Service implements Observeable{
     public void setEndTime(final int endHour, final int endMinute) {
         configurationManager.setEndHour(endHour);
         configurationManager.setEndMinute(endMinute);
+
+        if(configurationManager.getLastVibrate() % (1000*60*60*24l) + configurationManager.getRepeatTime()*1000*60 <=
+                configurationManager.getEndHour()*1000*60*60l +
+                configurationManager.getEndMinute()*1000*60l -
+                GregorianCalendar.getInstance().getTimeZone().getRawOffset() - 1000*60*60) {
+            configurationManager.setNextVibrate(configurationManager.getLastVibrate() + configurationManager.getRepeatTime() * 1000 * 60l);
+            scheduleNextVibration();
+        }
+
         verifyNextVibration();
     }
 
@@ -202,16 +211,17 @@ public class VibrationRepeaterService extends Service implements Observeable{
      */
     private void verifyNextVibration(){
 
+        long timeZoneOffset = GregorianCalendar.getInstance().getTimeZone().getRawOffset() + 1000*60*60; //add an hour
+
         //if it isn't in the future --> set it to the future
-        if(System.currentTimeMillis() >= configurationManager.getNextVibrate())
+        if(System.currentTimeMillis() >= configurationManager.getNextVibrate()) {
             configurationManager.setNextVibrate(System.currentTimeMillis() + configurationManager.getRepeatTime()*1000*60);
+            scheduleNextVibration();
+        }
 
         //if it is out of the boundaries --> set it to tomorrow
         //is it above the end time boundary
-        int timeZoneOffset = GregorianCalendar.getInstance().getTimeZone().getRawOffset() + 1000*60*60; //add an hour
-        if(configurationManager.getNextVibrate() >
-                configurationManager.getNextVibrate() -
-                (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+        if(configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24) >
                 configurationManager.getEndHour() * 1000*60*60l +
                 configurationManager.getEndMinute()*1000*60l -
                 timeZoneOffset){
@@ -224,10 +234,9 @@ public class VibrationRepeaterService extends Service implements Observeable{
                             timeZoneOffset +
                             1000*60*60*24l);                                    //add one day so vibration is tomorrow
             scheduleNextVibration();
+
         //below the start time boundary
-        } else if(configurationManager.getNextVibrate() <
-                        configurationManager.getNextVibrate() -
-                        (configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24)) +
+        } else if(configurationManager.getNextVibrate() % (1000l * 60 * 60 * 24 ) <
                         configurationManager.getStartHour() *1000*60*60l +
                         configurationManager.getStartMinute()*1000*60l -
                         timeZoneOffset){
@@ -236,9 +245,8 @@ public class VibrationRepeaterService extends Service implements Observeable{
                             configurationManager.getNextVibrate() -
                             configurationManager.getNextVibrate() % (1000l * 3600 * 24) +    //set to 00:00 AM of current day
                             configurationManager.getStartHour() *1000*3600l +
-                            configurationManager.getStartMinute()*1000*60l -    //set next vibration to start time
-                            timeZoneOffset +
-                            1000*60*60*24l);
+                            configurationManager.getStartMinute()*1000*60l -    //set next vibration to start time-
+                            timeZoneOffset);
             scheduleNextVibration();
         }
     }
