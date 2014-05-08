@@ -27,14 +27,182 @@
     </option>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RE/PrayerReminder/BootCompletedReceiver.java" afterPath="$PROJECT_DIR$/src/RE/PrayerReminder/BootCompletedReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java" afterPath="$PROJECT_DIR$/src/RE/PrayerReminder/StartWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/RE/PrayerReminder/VibrationRepeaterService.java" afterPath="$PROJECT_DIR$/src/RE/PrayerReminder/VibrationRepeaterService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/main.xml" afterPath="$PROJECT_DIR$/res/layout/main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.properties" afterPath="$PROJECT_DIR$/project.properties" />
+    <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="working version&#10;timezones fixed&#10;only parcel error remains">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_icon_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_icon_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_icon_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_icon_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_disabled_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_disabled_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_disabled_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_disabled_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_focus_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_focus_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_normal_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_normal_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_pressed_dark.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/common_signin_btn_text_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/common_signin_btn_text_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/common_signin_btn_text_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/common_signin_btn_text_pressed_light.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/libs/google-play-services.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/ic_plusone_medium_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/ic_plusone_medium_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/ic_plusone_medium_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/ic_plusone_medium_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/ic_plusone_small_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/ic_plusone_small_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/ic_plusone_small_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/ic_plusone_small_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/ic_plusone_standard_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/ic_plusone_standard_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/ic_plusone_standard_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/ic_plusone_standard_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-hdpi/ic_plusone_tall_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-mdpi/ic_plusone_tall_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xhdpi/ic_plusone_tall_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable-xxhdpi/ic_plusone_tall_off_client.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/.classpath" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/gen/com/google/android/gms/BuildConfig.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/gen/com/google/android/gms/Manifest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/gen/com/google/android/gms/R.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/src/android/UnusedStub.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values/ads_attrs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values/colors.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable/common_signin_btn_icon_dark.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable/common_signin_btn_icon_light.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/color/common_signin_btn_text_dark.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable/common_signin_btn_text_dark.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/color/common_signin_btn_text_light.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/drawable/common_signin_btn_text_light.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/libs/google-play-services.jar.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values/maps_attrs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/proguard.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/project.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-af/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-am/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ar/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-be/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-bg/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ca/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-cs/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-da/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-de/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-el/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-en-rGB/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-en-rIN/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-es/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-es-rUS/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-et-rEE/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-fa/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-fi/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-fr/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-fr-rCA/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-hi/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-hr/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-hu/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-hy-rAM/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-in/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-it/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-iw/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ja/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ka-rGE/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-km-rKH/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ko/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-lo-rLA/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-lt/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-lv/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-mn-rMN/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ms-rMY/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-nb/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-nl/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-pl/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-pt/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-pt-rBR/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-pt-rPT/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ro/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-ru/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-sk/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-sl/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-sr/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-sv/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-sw/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-th/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-tl/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-tr/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-uk/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-vi/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-zh-rCN/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-zh-rHK/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-zh-rTW/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values-zu/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/google-play-services/res/values/version.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PrayerReminder.iws" />
@@ -50,7 +218,7 @@
     <file path="/main.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399450879625" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399550052768" ignored="false" />
     <file path="/IVibrationRepeaterService.aidl" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399044610814" ignored="false" />
-    <file path="/Dummy.txt" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399549453408" ignored="false" />
+    <file path="/Dummy.txt" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399551596615" ignored="false" />
     <file path="/ObserverEvent.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288449786" ignored="false" />
     <file path="/Observer.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288883916" ignored="false" />
     <file path="/Observeable.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288877992" ignored="false" />
@@ -601,7 +769,11 @@
       <created>1399496381754</created>
       <updated>1399496381754</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="working version&#10;timezones fixed&#10;only parcel error remains">
+      <created>1399551579111</created>
+      <updated>1399551579111</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
