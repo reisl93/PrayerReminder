@@ -79,10 +79,7 @@ public class StartWindow extends Activity implements Observer {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adView);
         linearLayout.addView(adView);
 
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
-                .build();
+        AdRequest adRequest = new AdRequest.Builder().build();
 
 
         adView.loadAd(adRequest);
