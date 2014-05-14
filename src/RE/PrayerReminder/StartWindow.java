@@ -79,7 +79,10 @@ public class StartWindow extends Activity implements Observer {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adView);
         linearLayout.addView(adView);
 
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
+                .build();
 
 
         adView.loadAd(adRequest);
@@ -107,7 +110,7 @@ public class StartWindow extends Activity implements Observer {
 
         numberPicker = (NumberPicker) this.findViewById(R.id.numberPickerVibrationTime);
         numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(99);
+        numberPicker.setMaxValue(140);
         numberPicker.setValue(preferences.getInt(getString(R.string.keyVibrationDuration), 16));
         numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
 
