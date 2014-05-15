@@ -14,11 +14,15 @@
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:layout_centerInParent="true">
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -39,7 +43,9 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" android:layout_gravity="left|center_vertical">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -61,7 +67,9 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" android:layout_gravity="left|center_vertical">
+                    android:layout_height="wrap_content" android:layout_gravity="left|center_vertical"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -70,7 +78,9 @@
                 <LinearLayout
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_centerInParent="true">
 
                     <antistatic.spinnerwheel.WheelVerticalView android:id="@+id/startHour"
                                                                android:layout_height="wrap_content"
@@ -84,7 +94,9 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -93,7 +105,9 @@
                 <LinearLayout
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_centerInParent="true">
 
                     <antistatic.spinnerwheel.WheelVerticalView android:id="@+id/endHour"
                                                                android:layout_height="wrap_content"
@@ -111,7 +125,8 @@
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" android:gravity="left|top">
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -121,11 +136,18 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/seekBar"/>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#FF0000FF"
+                        />
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerInParent="true">
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -134,7 +156,9 @@
                 <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_centerInParent="true">
                     <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/breakTimeWheel"
                                                                  app:visibleItems="5"
                                                                  app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
@@ -147,6 +171,11 @@
                             android:text="@string/takeABreakButton"
                             android:id="@+id/button" android:onClick="onTakeABreakClicked"/>
                 </LinearLayout>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#FF0000FF"
+                        />
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -168,6 +197,11 @@
                         android:layout_height="wrap_content"
                         android:text="@string/prayerReminderStatus"
                         android:id="@+id/textViewStatus"/>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#FF0000FF"
+                        />
                 <ToggleButton
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"

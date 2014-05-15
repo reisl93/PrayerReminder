@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="apk" build-on-make="true" name="PrayerReminder">
+    <output-path>$PROJECT_DIR$/out/artifacts/PrayerReminder</output-path>
+    <properties id="android-properties">
+      <options>
+        <option name="includeSystemProGuardCfgFile" value="true" />
+        <option name="keyAlias" value="breathpraykeystore" />
+        <option name="keyPassword" value="ZGxpc2c0NUA=" />
+        <option name="keyStorePassword" value="MjF1c3JvYm90aWNz" />
+        <option name="keyStoreUrl" value="file://$PROJECT_DIR$/../BreathPrayKeyStore" />
+        <option name="proGuardCfgFileUrl" value="file://$PROJECT_DIR$/proguard-project.txt" />
+        <option name="signingMode" value="RELEASE_SIGNED" />
+      </options>
+    </properties>
+    <root id="archive" name="PrayerReminder.apk">
+      <element id="android-final-package" facet="PrayerReminder/android/Android" />
+    </root>
+  </artifact>
+</component>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="vibrationTime">Vibrationsdauer einer Erinnerung:\nZeit in 1/20 Sekunden</string>
-    <string name="vibrationCycleTime">Wiederholung alle:\nZeit in Minuten</string>
-    <string name="VibrationStartDay">startet die Erinnerungen jeden Tag um:\nIn Stunden und Minuten</string>
-    <string name="VibrationEndDay">beendet die Erinnerungen jeden Tag um:\nIn Stunden und Minuten</string>
-    <string name="vibrationPower">erzeugt ein eigenes Muster\n(fast volle Leiste für durchgehendes vibrieren)</string>
-    <string name="prayerReminderStatus">derzeitiger Status</string>
-    <string name="takeABreak">einmalige Pause zu nehmen?\nZeit in Minuten</string>
-    <string name="takeABreakButton">Pause nehmen</string>
+    <string name="vibrationTime">Hier stellen Sie die Vibrationsdauer in 1/20 Sekunden ein:</string>
+    <string name="vibrationCycleTime">Hier stellen sie die Intervallszeit in Minuten ein:</string>
+    <string name="VibrationStartDay">Die Erinnerungen startet jeden Tag um:</string>
+    <string name="VibrationEndDay">Die Erinnerungen enden jeden Tag um:</string>
+    <string name="vibrationPower">Hier kann man ein eigenes Vibriermuster einstellen:</string>
+    <string name="prayerReminderStatus">derzeitiger Status der App:</string>
+    <string name="takeABreak">Hier können sie die Pausendauer in Minuten einstellen:</string>
+    <string name="takeABreakButton">Jetzt Pause nehmen</string>
     <string name="lastVibrate">letzte Erinnerung: </string>
     <string name="nextVibrate">nächste Erinnerung: </string>
-    <string name="appIsActiveText">App aktiv und erinnert Sie</string>
+    <string name="appIsActiveText">App ist aktiv und erinnert Sie</string>
     <string name="appIsNotActiveText">App nicht aktiv - Sie werden nicht mehr erinnert</string>
 
 </resources>

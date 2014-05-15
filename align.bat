@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Android\android-sdk\tools\zipalign" -f 4 D:\InHisLight\PrayerReminder\out\artifacts\PrayerReminder\PrayerReminder.apk D:\InHisLight\PrayerReminder\out\BreathPray.apk
