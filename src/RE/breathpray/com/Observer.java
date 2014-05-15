@@ -1,4 +1,4 @@
-package RE.PrayerReminder;
+package re.breathpray.com;
 
 /**
  * @version 1.0

@@ -1,4 +1,4 @@
-package RE.PrayerReminder;
+package re.breathpray.com;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ public class VibrationRepeaterService extends Service implements Observeable{
     private ConfigurationManager configurationManager = new ConfigurationManager();
     private AlarmManager alarmManager;
     private Vibrator vibrator;
-    private List<Observer> observers;
+    private List<re.breathpray.com.Observer> observers;
     private PendingIntent serviceToBeStarted;
 
     public void scheduleNextVibration(){
@@ -50,7 +50,7 @@ public class VibrationRepeaterService extends Service implements Observeable{
         configurationManager = new ConfigurationManager();
         mBinder = new LocalBinder();
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        observers = new LinkedList<Observer>();
+        observers = new LinkedList<re.breathpray.com.Observer>();
 
         SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
         configurationManager.setAppIsActive(preferences.getBoolean(getString(R.string.keyIsAppActive), true));
@@ -253,18 +253,18 @@ public class VibrationRepeaterService extends Service implements Observeable{
 
 
     @Override
-    public void addObserver(Observer observer) {
+    public void addObserver(re.breathpray.com.Observer observer) {
         this.observers.add(observer);
         notifyAllObservers();
     }
 
     @Override
-    public void removeObserver(Observer observer) {
+    public void removeObserver(re.breathpray.com.Observer observer) {
         this.observers.remove(observer);
     }
 
     public void notifyAllObservers(){
-        for(final Observer o : observers){
+        for(final re.breathpray.com.Observer o : observers){
             o.update();
         }
     }

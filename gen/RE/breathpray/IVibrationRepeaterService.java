@@ -2,34 +2,34 @@
 
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: D:\\InHisLight\\PrayerReminder\\src\\RE\\PrayerReminder\\IVibrationRepeaterService.aidl
+ * Original file: D:\\InHisLight\\PrayerReminder\\src\\re\\breathpray\\IVibrationRepeaterService.aidl
  */
-package RE.PrayerReminder;
+package re.breathpray;
 public interface IVibrationRepeaterService extends android.os.IInterface
 {
 /** Local-side IPC implementation stub class. */
-public static abstract class Stub extends android.os.Binder implements RE.PrayerReminder.IVibrationRepeaterService
+public static abstract class Stub extends android.os.Binder implements re.breathpray.IVibrationRepeaterService
 {
-private static final java.lang.String DESCRIPTOR = "RE.PrayerReminder.IVibrationRepeaterService";
+private static final java.lang.String DESCRIPTOR = "re.breathpray.IVibrationRepeaterService";
 /** Construct the stub at attach it to the interface. */
 public Stub()
 {
 this.attachInterface(this, DESCRIPTOR);
 }
 /**
- * Cast an IBinder object into an RE.PrayerReminder.IVibrationRepeaterService interface,
+ * Cast an IBinder object into an re.breathpray.IVibrationRepeaterService interface,
  * generating a proxy if needed.
  */
-public static RE.PrayerReminder.IVibrationRepeaterService asInterface(android.os.IBinder obj)
+public static re.breathpray.IVibrationRepeaterService asInterface(android.os.IBinder obj)
 {
 if ((obj==null)) {
 return null;
 }
 android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-if (((iin!=null)&&(iin instanceof RE.PrayerReminder.IVibrationRepeaterService))) {
-return ((RE.PrayerReminder.IVibrationRepeaterService)iin);
+if (((iin!=null)&&(iin instanceof re.breathpray.IVibrationRepeaterService))) {
+return ((re.breathpray.IVibrationRepeaterService)iin);
 }
-return new RE.PrayerReminder.IVibrationRepeaterService.Stub.Proxy(obj);
+return new re.breathpray.IVibrationRepeaterService.Stub.Proxy(obj);
 }
 @Override public android.os.IBinder asBinder()
 {
@@ -47,7 +47,7 @@ return true;
 }
 return super.onTransact(code, data, reply, flags);
 }
-private static class Proxy implements RE.PrayerReminder.IVibrationRepeaterService
+private static class Proxy implements re.breathpray.IVibrationRepeaterService
 {
 private android.os.IBinder mRemote;
 Proxy(android.os.IBinder remote)

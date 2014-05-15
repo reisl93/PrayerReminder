@@ -3,7 +3,9 @@
 <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android">
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+
+        xmlns:app="http://schemas.android.com/apk/res/re.breathpray.com">
     <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -22,12 +24,17 @@
                         android:layout_height="wrap_content"
                         android:text="@string/vibrationCycleTime"
                         android:id="@+id/textViewRepeatTime" android:gravity="center|left"/>
-                <NumberPicker
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/numberPickerRepeatTime" android:layout_gravity="center_horizontal|left|top"
-                        android:orientation="horizontal"
-                        android:gravity="left"/>
+                <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/repeatTime"
+                                                             app:visibleItems="5"
+                                                             app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
+                                                             app:selectionDividerWidth="1px"
+                                                             android:layout_height="wrap_content"
+                                                             android:layout_width="wrap_content"/>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#FF0000FF"
+                        />
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -39,11 +46,17 @@
                         android:text="@string/vibrationTime"
                         android:id="@+id/textViewVibrateDuration" android:layout_gravity="center_horizontal|top"
                         android:gravity="center|left"/>
-                <NumberPicker
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/numberPickerVibrationTime" android:layout_gravity="center|left|top" android:orientation="horizontal"
-                        android:gravity="left|top"/>
+                <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/vibrationDuration"
+                                                             app:visibleItems="5"
+                                                             app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
+                                                             app:selectionDividerWidth="1px"
+                                                             android:layout_height="wrap_content"
+                                                             android:layout_width="wrap_content"/>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#FF0000FF"
+                        />
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -54,10 +67,19 @@
                         android:layout_height="wrap_content"
                         android:text="@string/VibrationStartDay"
                         android:id="@+id/textViewStartTime" android:layout_gravity="center|bottom" android:gravity="center|left"/>
-                <TimePicker
-                        android:layout_width="wrap_content"
+                <LinearLayout
                         android:layout_height="wrap_content"
-                        android:id="@+id/timePickerStart" android:layout_gravity="left|top"/>
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal">
+
+                    <antistatic.spinnerwheel.WheelVerticalView android:id="@+id/startHour"
+                                                               android:layout_height="wrap_content"
+                                                               android:layout_width="50dp"/>
+                    <antistatic.spinnerwheel.WheelVerticalView android:id="@+id/startMinute"
+                                                               android:layout_height="wrap_content"
+                                                               android:layout_width="50dp"/>
+
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -68,10 +90,23 @@
                         android:layout_height="wrap_content"
                         android:text="@string/VibrationEndDay"
                         android:id="@+id/textViewEndTime" android:layout_gravity="center" android:gravity="center|left"/>
-                <TimePicker
-                        android:layout_width="wrap_content"
+                <LinearLayout
                         android:layout_height="wrap_content"
-                        android:id="@+id/timePickerEnd" android:layout_gravity="left|top"/>
+                        android:layout_width="wrap_content"
+                        android:orientation="horizontal">
+
+                    <antistatic.spinnerwheel.WheelVerticalView android:id="@+id/endHour"
+                                                               android:layout_height="wrap_content"
+                                                               android:layout_width="50dp"/>
+                    <antistatic.spinnerwheel.WheelVerticalView android:id="@+id/endMinute"
+                                                               android:layout_height="wrap_content"
+                                                               android:layout_width="50dp"/>
+                </LinearLayout>
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dip"
+                        android:background="#FF0000FF"
+                        />
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -100,10 +135,12 @@
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content">
-                    <NumberPicker
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/numberPickerBreak" android:orientation="horizontal"/>
+                    <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/breakTimeWheel"
+                                                                 app:visibleItems="5"
+                                                                 app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
+                                                                 app:selectionDividerWidth="1px"
+                                                                 android:layout_height="wrap_content"
+                                                                 android:layout_width="wrap_content"/>
                     <Button
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"

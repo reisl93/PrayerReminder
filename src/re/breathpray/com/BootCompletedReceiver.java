@@ -1,4 +1,4 @@
-package RE.PrayerReminder;
+package re.breathpray.com;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -17,7 +17,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent arg1) {
-        Log.w(TAG, "starting service PrayerReminder");
+        Log.w(TAG, "starting service breathpray");
         Intent intent = new Intent(context, VibrationRepeaterService.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);

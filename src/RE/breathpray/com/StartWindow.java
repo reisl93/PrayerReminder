@@ -1,7 +1,6 @@
-package RE.PrayerReminder;
+package re.breathpray.com;
 
 
-import android.preference.PreferenceManager;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -15,6 +14,14 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.*;
+
+import antistatic.spinnerwheel.AbstractWheel;
+import antistatic.spinnerwheel.OnWheelChangedListener;
+import antistatic.spinnerwheel.OnWheelClickedListener;
+import antistatic.spinnerwheel.OnWheelScrollListener;
+import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
+
+
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -24,6 +31,9 @@ public class StartWindow extends Activity implements Observer {
     private static final String AD_UNIT_ID = "ca-app-pub-3956003081714684/6818330858";
     private VibrationRepeaterService vibrationRepeaterService;
     private AdView adView;
+    // Time scrolled flag
+    private boolean timeScrolledStartWheels = false;
+    private boolean timeScrolledEndWheels = false;
 
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
@@ -46,14 +56,18 @@ public class StartWindow extends Activity implements Observer {
 
         setContentView(R.layout.main);
 
-        SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+        final int minRepeatTime = 10;
+        final int minVibrationDuration = 2;
+        final int minBreakTime = 1;
+        final int textSizeInMM = 3;
 
+        SharedPreferences preferences = this.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
         if(preferences.getBoolean(getString(R.string.keyIsAppActive),true)){
             Log.d(TAG, "starting service");
             this.startService(new Intent(this, VibrationRepeaterService.class));
             bindService(new Intent(this, VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
         }
-        
+
         adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(AD_UNIT_ID);
@@ -87,116 +101,200 @@ public class StartWindow extends Activity implements Observer {
 
         adView.loadAd(adRequest);
 
-        NumberPicker numberPicker = (NumberPicker) this.findViewById(R.id.numberPickerRepeatTime);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(24*60);
-        numberPicker.setValue(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 10));
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
-            public static final String TAG = "NumberPickerRepeatTime";
 
+
+        final AbstractWheel repeatTimeWheel = (AbstractWheel) findViewById(R.id.repeatTime);
+        NumericWheelAdapter repeatTimeWheelAdapter = new NumericWheelAdapter(this,minRepeatTime , 12*60, "%03d");
+        repeatTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered);
+        repeatTimeWheelAdapter.setItemTextResource(R.id.text);
+        repeatTimeWheel.setViewAdapter(repeatTimeWheelAdapter);
+        repeatTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 25)-minRepeatTime);
+        repeatTimeWheel.addChangingListener(new OnWheelChangedListener() {
             @Override
-            public void onValueChange(NumberPicker numberPicker, int oldVal, int newVal){
-                Log.d(TAG, newVal + "");
-                //write data to app storage
+            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+                newValue += minRepeatTime;
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationRepeatTime), newVal);
-                editor.commit();
-                //change value it in the service too
-                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
-                    vibrationRepeaterService.setRepeatTime(newVal);
-            }
-        });
-
-        numberPicker = (NumberPicker) this.findViewById(R.id.numberPickerVibrationTime);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(140);
-        numberPicker.setValue(preferences.getInt(getString(R.string.keyVibrationDuration), 16));
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
-
-            public static final String TAG = "NumberPickerVibrationTime";
-
-            @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Log.d(TAG, newVal + "");
-                //write data to app storage
-                SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationDuration), newVal);
+                editor.putInt(getString(R.string.keyVibrationRepeatTime), newValue);
                 editor.commit();
                 //change value in the service too
                 if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
-                    vibrationRepeaterService.setVibrationTime(newVal);
+                    vibrationRepeaterService.setRepeatTime(newValue);
             }
         });
 
-        numberPicker = (NumberPicker) this.findViewById(R.id.numberPickerBreak);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(999);
-        numberPicker.setValue(preferences.getInt(getString(R.string.keyTakeABreakValue), 60));
-        numberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
 
-            public static final String TAG = "NumberPickerTakeABreak";
 
+
+        final AbstractWheel vibrationDurationWheel = (AbstractWheel) findViewById(R.id.vibrationDuration);
+        NumericWheelAdapter vibrationDurationWheelAdapter = new NumericWheelAdapter(this, minVibrationDuration, 99, "%02d");
+        vibrationDurationWheelAdapter.setItemResource(R.layout.wheel_text_centered);
+        vibrationDurationWheelAdapter.setItemTextResource(R.id.text);
+        vibrationDurationWheel.setViewAdapter(vibrationDurationWheelAdapter);
+        vibrationDurationWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationDuration), 25));
+        vibrationDurationWheel.addChangingListener(new OnWheelChangedListener() {
             @Override
-            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                Log.d(TAG, newVal + "");
-                //write data to app storage
+            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+                newValue += minVibrationDuration;
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyTakeABreakValue), newVal);
+                editor.putInt(getString(R.string.keyVibrationDuration), newValue);
                 editor.commit();
                 //change value in the service too
                 if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
-                    vibrationRepeaterService.setTakeABreak(newVal);
+                    vibrationRepeaterService.setVibrationTime(newValue);
             }
         });
 
-        TimePicker timePicker = (TimePicker) this.findViewById(R.id.timePickerStart);
-        timePicker.setIs24HourView(DateFormat.is24HourFormat(this));
-        timePicker.setCurrentHour(preferences.getInt(getString(R.string.keyVibrationStartHour),6));
-        timePicker.setCurrentMinute(preferences.getInt(getString(R.string.keyVibrationStartMinute), 0));
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener(){
-            private static final String TAG = "TimePickerStart";
+        final AbstractWheel breakTimeWheel = (AbstractWheel) findViewById(R.id.breakTimeWheel);
 
-
+        NumericWheelAdapter breakTimeWheelAdapter = new NumericWheelAdapter(this,minBreakTime , 999, "%03d");
+        breakTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered);
+        breakTimeWheelAdapter.setItemTextResource(R.id.text);
+        breakTimeWheel.setViewAdapter(breakTimeWheelAdapter);
+        breakTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyTakeABreakValue), 60));
+        breakTimeWheel.addChangingListener(new OnWheelChangedListener() {
             @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                Log.d(TAG, "changed");
-                //write data to app storage
+            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+                newValue += minBreakTime;
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationStartHour), view.getCurrentHour());
-                editor.putInt(getString(R.string.keyVibrationStartMinute), view.getCurrentMinute());
+                editor.putInt(getString(R.string.keyTakeABreakValue), newValue);
                 editor.commit();
                 //change value in the service too
                 if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
-                    vibrationRepeaterService.setStartTime(view.getCurrentHour(), view.getCurrentMinute());
+                    vibrationRepeaterService.setTakeABreak(newValue);
             }
         });
 
-        timePicker = (TimePicker) this.findViewById(R.id.timePickerEnd);
-        timePicker.setIs24HourView(DateFormat.is24HourFormat(this));
-        timePicker.setCurrentHour(preferences.getInt(getString(R.string.keyVibrationEndHour),22));
-        timePicker.setCurrentMinute(preferences.getInt(getString(R.string.keyVibrationEndMinute), 0));
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener(){
-            private static final String TAG = "TimePickerEnd";
+        final AbstractWheel startHourWheel = (AbstractWheel) findViewById(R.id.startHour);
+        startHourWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 23));
+        startHourWheel.setCyclic(true);
+        startHourWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationStartHour), 6));
+
+        final AbstractWheel startMinuteWheel = (AbstractWheel) findViewById(R.id.startMinute);
+        startMinuteWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 59, "%02d"));
+        startMinuteWheel.setCyclic(true);
+        startMinuteWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationStartMinute), 0));
 
 
-            @Override
-            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                Log.d(TAG, "changed");
+        // add listeners
+        addChangingListener(startMinuteWheel, "minStart");
+        addChangingListener(startHourWheel, "hourStart");
+
+        OnWheelChangedListener wheelListener = new OnWheelChangedListener() {
+            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+                if (!timeScrolledStartWheels) {
+                    //write data to app storage
+                    SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt(getString(R.string.keyVibrationStartHour), startHourWheel.getCurrentItem());
+                    editor.putInt(getString(R.string.keyVibrationStartMinute), startMinuteWheel.getCurrentItem());
+                    editor.commit();
+                    //change value in the service too
+                    if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
+                        vibrationRepeaterService.setStartTime(startHourWheel.getCurrentItem(), startMinuteWheel.getCurrentItem());
+                }
+            }
+        };
+        startHourWheel.addChangingListener(wheelListener);
+        startMinuteWheel.addChangingListener(wheelListener);
+
+        OnWheelClickedListener clickStart = new OnWheelClickedListener() {
+            public void onItemClicked(AbstractWheel wheel, int itemIndex) {
+                wheel.setCurrentItem(itemIndex, true);
+            }
+        };
+        startHourWheel.addClickingListener(clickStart);
+        startMinuteWheel.addClickingListener(clickStart);
+
+        OnWheelScrollListener wheelListenerStart = new OnWheelScrollListener() {
+            public void onScrollingStarted(AbstractWheel wheel) {
+                timeScrolledStartWheels = true;
+            }
+            public void onScrollingFinished(AbstractWheel wheel) {
+                timeScrolledStartWheels = false;
                 //write data to app storage
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationEndHour), view.getCurrentHour());
-                editor.putInt(getString(R.string.keyVibrationEndMinute), view.getCurrentMinute());
+                editor.putInt(getString(R.string.keyVibrationStartHour), startHourWheel.getCurrentItem());
+                editor.putInt(getString(R.string.keyVibrationStartMinute), startMinuteWheel.getCurrentItem());
                 editor.commit();
                 //change value in the service too
                 if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
-                    vibrationRepeaterService.setEndTime(view.getCurrentHour(), view.getCurrentMinute());
+                    vibrationRepeaterService.setStartTime(startHourWheel.getCurrentItem(), startMinuteWheel.getCurrentItem());
             }
-        });
+        };
+
+        startHourWheel.addScrollingListener(wheelListenerStart);
+        startMinuteWheel.addScrollingListener(wheelListenerStart);
+
+
+
+        final AbstractWheel endHourWheel = (AbstractWheel) findViewById(R.id.endHour);
+        endHourWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 23));
+        endHourWheel.setCyclic(true);
+        endHourWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationEndHour), 6));
+
+        final AbstractWheel endMinuteWheel = (AbstractWheel) findViewById(R.id.endMinute);
+        endMinuteWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 59, "%02d"));
+        endMinuteWheel.setCyclic(true);
+        endMinuteWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationEndMinute), 0));
+
+
+        // add listeners
+        addChangingListener(endMinuteWheel, "minEnd");
+        addChangingListener(endHourWheel, "hourEnd");
+
+        OnWheelChangedListener wheelListenerEnd = new OnWheelChangedListener() {
+            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+                if (!timeScrolledEndWheels) {
+                    //write data to app storage
+                    SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt(getString(R.string.keyVibrationEndHour), endHourWheel.getCurrentItem());
+                    editor.putInt(getString(R.string.keyVibrationEndMinute), endMinuteWheel.getCurrentItem());
+                    editor.commit();
+                    //change value in the service too
+                    if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
+                        vibrationRepeaterService.setEndTime(endHourWheel.getCurrentItem(), endMinuteWheel.getCurrentItem());
+                }
+            }
+        };
+        endHourWheel.addChangingListener(wheelListenerEnd);
+        endMinuteWheel.addChangingListener(wheelListenerEnd);
+
+        OnWheelClickedListener clickEnd = new OnWheelClickedListener() {
+            public void onItemClicked(AbstractWheel wheel, int itemIndex) {
+                wheel.setCurrentItem(itemIndex, true);
+            }
+        };
+        endHourWheel.addClickingListener(clickEnd);
+        endMinuteWheel.addClickingListener(clickEnd);
+
+        OnWheelScrollListener scrollListener = new OnWheelScrollListener() {
+            public void onScrollingStarted(AbstractWheel wheel) {
+                timeScrolledEndWheels = true;
+            }
+            public void onScrollingFinished(AbstractWheel wheel) {
+                timeScrolledEndWheels = false;
+                //write data to app storage
+                SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt(getString(R.string.keyVibrationEndHour), endHourWheel.getCurrentItem());
+                editor.putInt(getString(R.string.keyVibrationEndMinute), endMinuteWheel.getCurrentItem());
+                editor.commit();
+                //change value in the service too
+                if(preferences.getBoolean(getString(R.string.keyIsAppActive),false))
+                    vibrationRepeaterService.setEndTime(endHourWheel.getCurrentItem(), endMinuteWheel.getCurrentItem());
+            }
+        };
+
+        endHourWheel.addScrollingListener(scrollListener);
+        endMinuteWheel.addScrollingListener(scrollListener);
+
+
+
 
         SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar);
         seekBar.setMax(200);
@@ -229,7 +327,7 @@ public class StartWindow extends Activity implements Observer {
         toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), false));
 
 
-        final int textSizeInMM = 3;
+
         TextView textView = (TextView) this.findViewById(R.id.textViewLastVibrate);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
         textView.setText(R.string.lastVibrate);
@@ -300,7 +398,7 @@ public class StartWindow extends Activity implements Observer {
             this.startService(new Intent(this, VibrationRepeaterService.class));
             bindService(new Intent(this,VibrationRepeaterService.class), mConnection, Context.BIND_NOT_FOREGROUND);
         } else {
-            Log.d(TAG, "try to stop PrayerReminder service");
+            Log.d(TAG, "try to stop breathpray service");
             this.vibrationRepeaterService.setAppIsActive(toggleButton.isChecked());
             this.unbindService(mConnection);
             this.stopService(new Intent(this, VibrationRepeaterService.class));
@@ -327,5 +425,18 @@ public class StartWindow extends Activity implements Observer {
         textView = (TextView) this.findViewById(R.id.textViewNextVibrate);
         textView.setText(R.string.nextVibrate);
         textView.append(vibrationRepeaterService != null ? DateFormat.format(" EEE HH:mm:ss", new Date(vibrationRepeaterService.getNextVibrate())) : " Service is not running");
+    }
+
+    /**
+     * Adds changing listener for spinnerwheel that updates the spinnerwheel label
+     * @param wheel the spinnerwheel
+     * @param label the spinnerwheel label
+     */
+    private void addChangingListener(final AbstractWheel wheel, final String label) {
+        wheel.addChangingListener(new OnWheelChangedListener() {
+            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
+                //spinnerwheel.setLabel(newValue != 1 ? label + "s" : label);
+            }
+        });
     }
 }

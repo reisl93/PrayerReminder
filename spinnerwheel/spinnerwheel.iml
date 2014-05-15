@@ -3,8 +3,8 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="LIBRARY_PROJECT" value="true" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
-        <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
       </configuration>
     </facet>
   </component>
@@ -16,8 +16,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="google-play-services1" exported="" />
-    <orderEntry type="module" module-name="spinnerwheel" exported="" />
+    <orderEntry type="library" exported="" name="nineoldandroids-2.2.0" level="project" />
   </component>
 </module>
 

@@ -1,5 +1,5 @@
 
-package RE.PrayerReminder;
+package re.breathpray.com;
 
 interface IVibrationRepeaterService {
 

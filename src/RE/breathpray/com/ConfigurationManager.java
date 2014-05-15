@@ -1,4 +1,4 @@
-package RE.PrayerReminder;
+package re.breathpray.com;
 
 /**
  * @author: Eisl
