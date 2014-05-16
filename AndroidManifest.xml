@@ -3,7 +3,7 @@
           package="re.breathpray.com"
           android:versionCode="2"
           android:versionName="1.1">
-    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="18"/>
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="18"/>
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>

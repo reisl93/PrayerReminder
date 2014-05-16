@@ -1,6 +1,8 @@
 package re.breathpray.com;
 
 
+import android.os.Vibrator;
+import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -9,7 +11,6 @@ import android.app.Activity;
 import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -58,8 +59,8 @@ public class StartWindow extends Activity implements Observer {
 
         setContentView(R.layout.main);
 
-        final int minRepeatTime = 10;
-        final int minVibrationDuration = 2;
+        final int minRepeatTime = 1;
+        final int minVibrationDuration = 0;
         final int minBreakTime = 1;
         final int textSizeInMM = 3;
 
@@ -129,7 +130,18 @@ public class StartWindow extends Activity implements Observer {
 
 
         final AbstractWheel vibrationDurationWheel = (AbstractWheel) findViewById(R.id.vibrationDuration);
-        NumericWheelAdapter vibrationDurationWheelAdapter = new NumericWheelAdapter(this, minVibrationDuration, 99, "%02d");
+        ArrayWheelAdapter<String> vibrationDurationWheelAdapter = new ArrayWheelAdapter<String>(this, new String[]{
+                "0,1","0,2","0,3","0,4","0,5","0,6","0,7","0,8","0,9","1,0",
+                "1,1","1,2","1,3","1,4","1,5","1,6","1,7","1,8","1,9","2,0",
+                "2,1","2,2","2,3","2,4","2,5","2,6","2,7","2,8","2,9","3,0",
+                "3,1","3,2","3,3","3,4","3,5","3,6","3,7","3,8","3,9","4,0",
+                "4,1","4,2","4,3","4,4","4,5","4,6","4,7","4,8","4,9","5,0",
+                "5,1","5,2","5,3","5,4","5,5","5,6","5,7","5,8","5,9","6,0",
+                "6,1","6,2","6,3","6,4","6,5","6,6","6,7","6,8","6,9","7,0",
+                "7,1","7,2","7,3","7,4","7,5","7,6","7,7","7,8","7,9","8,0",
+                "8,1","8,2","8,3","8,4","8,5","8,6","8,7","8,8","8,9","9,0",
+                "9,1","9,2","9,3","9,4","9,5","9,6","9,7","9,8","9,9"
+        });
         vibrationDurationWheelAdapter.setItemResource(R.layout.wheel_text_centered);
         vibrationDurationWheelAdapter.setItemTextResource(R.id.text);
         vibrationDurationWheel.setViewAdapter(vibrationDurationWheelAdapter);
@@ -168,6 +180,7 @@ public class StartWindow extends Activity implements Observer {
                     vibrationRepeaterService.setTakeABreak(newValue);
             }
         });
+
 
         final AbstractWheel startHourWheel = (AbstractWheel) findViewById(R.id.startHour);
         startHourWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 23));
@@ -303,16 +316,23 @@ public class StartWindow extends Activity implements Observer {
         seekBar.setProgress(preferences.getInt(getString(R.string.keyVibrationPower),150));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
+            private Thread thread;
+            private TestVibrationPattern testVibrationPattern;
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                testVibrationPattern.setInterval(progress);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                testVibrationPattern = new TestVibrationPattern(seekBar.getProgress(), (Vibrator) getSystemService(Context.VIBRATOR_SERVICE));
+                thread =new Thread(testVibrationPattern);
+                thread.start();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                testVibrationPattern.setRunning(false);
                 SharedPreferences preferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationPower), seekBar.getProgress());
@@ -324,10 +344,10 @@ public class StartWindow extends Activity implements Observer {
 
 
         ToggleButton toggleButton = (ToggleButton) this.findViewById(R.id.toggleButton);
+
         toggleButton.setTextOff(getString(R.string.appIsNotActiveText));
         toggleButton.setTextOn(getString(R.string.appIsActiveText));
         toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), false));
-
 
 
         TextView textView = (TextView) this.findViewById(R.id.textViewLastVibrate);

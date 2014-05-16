@@ -37,7 +37,7 @@ public class VibrationRepeaterService extends Service implements Observeable{
         alarmManager.cancel(serviceToBeStarted);
         long delay = configurationManager.getNextVibrate();
         final long interval = (long) configurationManager.getRepeatTime() * 1000l * 60;
-        this.alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, delay, interval, serviceToBeStarted);
+        this.alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, delay, interval, serviceToBeStarted);
     }
 
     @Override
@@ -191,13 +191,13 @@ public class VibrationRepeaterService extends Service implements Observeable{
                 vibrator.vibrate(new long[] {0, configurationManager.getVibrationStrength(), 200-configurationManager.getVibrationStrength()}, 0);
 
                 try {
-                    Thread.sleep(configurationManager.getVibrationTime()*50);
+                    Thread.sleep(configurationManager.getVibrationTime()*100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 vibrator.cancel();
             } else {
-                vibrator.vibrate(configurationManager.getVibrationTime()*50);
+                vibrator.vibrate(configurationManager.getVibrationTime()*100);
             }
             //set next vibration
             configurationManager.setNextVibrate(configurationManager.getLastVibrate()+configurationManager.getRepeatTime()*1000*60l);

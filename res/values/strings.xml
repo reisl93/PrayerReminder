@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BreathPray</string>
-    <string name="vibrationTime">set here the duration of the vibrations in 1/20 seconds</string>
-    <string name="vibrationCycleTime">set here the vibration intervals in minutes</string>
+    <string name="vibrationTime">Set the duration in seconds of every single vibration which reminds you:</string>
+    <string name="vibrationCycleTime">Set the time in minutes between every vibration:</string>
     <string name="PREFERENCEFILE">RE.PrayerReminder.preferenceFile</string>
-    <string name="VibrationStartDay">starts the reminders every day at:</string>
-    <string name="VibrationEndDay">ends the reminders every day at:</string>
-    <string name="vibrationPower">set here the vibration of the app</string>
-    <string name="prayerReminderStatus">the current status of the App</string>
-    <string name="takeABreak">set here break duration in minutes</string>
-    <string name="takeABreakButton">Take a break</string>
-    <string name="lastVibrate">last vibration at: </string>
-    <string name="nextVibrate">next vibration at: </string>
+    <string name="VibrationStartDay">the app starts every day to remind you at:</string>
+    <string name="VibrationEndDay">the app ends every day to remind you at:</string>
+    <string name="vibrationPower">create and set here an own pattern of the vibration which reminds you</string>
+    <string name="prayerReminderStatus">Click here to change the current status of the app:</string>
+    <string name="takeABreak">If you click the \"break\" button, the app won\'t remind you for a certain amount of time. Select the duration of the break here in minutes:</string>
+    <string name="takeABreakButton">break</string>
+    <string name="lastVibrate">last vibration was at: </string>
+    <string name="nextVibrate">next vibration will be at: </string>
     <string name="appIsActiveText">app keeps reminding you</string>
     <string name="appIsNotActiveText">app is not running</string>
-
 
     <string name="keyNextVibrate">keyNextVibrate</string>
     <string name="keyLastVibrate">keyLastVibrate</string>

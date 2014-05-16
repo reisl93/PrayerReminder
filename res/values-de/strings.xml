@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="vibrationTime">Hier stellen Sie die Vibrationsdauer in 1/20 Sekunden ein:</string>
-    <string name="vibrationCycleTime">Hier stellen sie die Intervallszeit in Minuten ein:</string>
-    <string name="VibrationStartDay">Die Erinnerungen startet jeden Tag um:</string>
-    <string name="VibrationEndDay">Die Erinnerungen enden jeden Tag um:</string>
-    <string name="vibrationPower">Hier kann man ein eigenes Vibriermuster einstellen:</string>
-    <string name="prayerReminderStatus">derzeitiger Status der App:</string>
-    <string name="takeABreak">Hier können sie die Pausendauer in Minuten einstellen:</string>
-    <string name="takeABreakButton">Jetzt Pause nehmen</string>
+    <string name="vibrationTime">Hier stellen Sie die Vibrationsdauer der einzelnen Erinnerungen in Sekunden ein:</string>
+    <string name="vibrationCycleTime">Hier stellen sie die Intervallszeit zwischen den Erinnerungen in Minuten ein:</string>
+    <string name="VibrationStartDay">Hier stellen Sie die Uhrzeit ein, ab wann die App Sie jeden Tag erinnern soll:</string>
+    <string name="VibrationEndDay">Hier stellen Sie die Uhrzeit ein, bis wann die App sie erinnern soll:</string>
+    <string name="vibrationPower">Hier stellen Sie ein eigenes Vibriermuster ein, mit dem Sie erinnert werden:</string>
+    <string name="prayerReminderStatus">Klicken Sie hier um Status der App zu ändern:</string>
+    <string name="takeABreak">Wenn Sie den Knopf mit "Pause" drücken, werden Sie eine Zeit lang nicht mehr erinnert. Hier können sie die Pausenlänge in Minuten einstellen:</string>
+    <string name="takeABreakButton">Pause</string>
     <string name="lastVibrate">letzte Erinnerung: </string>
     <string name="nextVibrate">nächste Erinnerung: </string>
     <string name="appIsActiveText">App ist aktiv und erinnert Sie</string>
