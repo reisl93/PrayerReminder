@@ -97,8 +97,8 @@ public class StartWindow extends Activity implements Observer {
         linearLayout.addView(adView);
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
+               // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+               // .addTestDevice("9684DFFB83935CE920E945C32F975A12")
                 .build();
 
 
@@ -108,7 +108,7 @@ public class StartWindow extends Activity implements Observer {
 
         final AbstractWheel repeatTimeWheel = (AbstractWheel) findViewById(R.id.repeatTime);
         NumericWheelAdapter repeatTimeWheelAdapter = new NumericWheelAdapter(this,minRepeatTime , 12*60, "%03d");
-        repeatTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered);
+        repeatTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered_dark_back);
         repeatTimeWheelAdapter.setItemTextResource(R.id.text);
         repeatTimeWheel.setViewAdapter(repeatTimeWheelAdapter);
         repeatTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 25) - minRepeatTime);
@@ -142,7 +142,7 @@ public class StartWindow extends Activity implements Observer {
                 "8,1","8,2","8,3","8,4","8,5","8,6","8,7","8,8","8,9","9,0",
                 "9,1","9,2","9,3","9,4","9,5","9,6","9,7","9,8","9,9"
         });
-        vibrationDurationWheelAdapter.setItemResource(R.layout.wheel_text_centered);
+        vibrationDurationWheelAdapter.setItemResource(R.layout.wheel_text_centered_dark_back);
         vibrationDurationWheelAdapter.setItemTextResource(R.id.text);
         vibrationDurationWheel.setViewAdapter(vibrationDurationWheelAdapter);
         vibrationDurationWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationDuration), 25) - minVibrationDuration);
@@ -163,7 +163,7 @@ public class StartWindow extends Activity implements Observer {
         final AbstractWheel breakTimeWheel = (AbstractWheel) findViewById(R.id.breakTimeWheel);
 
         NumericWheelAdapter breakTimeWheelAdapter = new NumericWheelAdapter(this,minBreakTime , 999, "%03d");
-        breakTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered);
+        breakTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered_dark_back);
         breakTimeWheelAdapter.setItemTextResource(R.id.text);
         breakTimeWheel.setViewAdapter(breakTimeWheelAdapter);
         breakTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyTakeABreakValue), 60) - minBreakTime);

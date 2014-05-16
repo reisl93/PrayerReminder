@@ -37,7 +37,7 @@
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dip"
-                        android:background="#5C7DDE"
+                        android:background="@color/blue"
                         />
             </LinearLayout>
             <LinearLayout
@@ -61,7 +61,7 @@
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dip"
-                        android:background="#5C7DDE"
+                        android:background="@color/blue"
                         />
             </LinearLayout>
             <LinearLayout
@@ -119,7 +119,7 @@
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dip"
-                        android:background="#5C7DDE"
+                        android:background="@color/blue"
                         />
             </LinearLayout>
             <LinearLayout
@@ -139,7 +139,7 @@
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dip"
-                        android:background="#5C7DDE"
+                        android:background="@color/blue"
                         />
             </LinearLayout>
             <LinearLayout
@@ -174,7 +174,7 @@
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dip"
-                        android:background="#5C7DDE"
+                        android:background="@color/blue"
                         />
             </LinearLayout>
             <LinearLayout
@@ -195,7 +195,7 @@
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dip"
-                        android:background="#5C7DDE"
+                        android:background="@color/blue"
                         />
                 <TextView
                         android:layout_width="wrap_content"
@@ -204,7 +204,7 @@
                         android:id="@+id/textViewStatus"/>
                 <ToggleButton
                         android:layout_width="fill_parent"
-                        android:layout_height="65px"
+                        android:layout_height="100px"
                         android:text=""
                         android:background="@drawable/my_toggle_button"
                         android:id="@+id/toggleButton" android:onClick="onToggleButtonClick"/>
