@@ -18,6 +18,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="google-play-services1" exported="" />
     <orderEntry type="module" module-name="spinnerwheel" exported="" />
+    <orderEntry type="library" name="joda-time-2" level="project" />
   </component>
 </module>
 

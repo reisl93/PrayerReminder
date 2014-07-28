@@ -1,5 +1,10 @@
 package re.breathpray.com;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
+
 /**
  * @author: Eisl
  * Date: 01.05.14
@@ -9,16 +14,35 @@ package re.breathpray.com;
 public class ConfigurationManager {
 
     private int repeatTime = 1;
-    private int vibrationTime = 16;
+    private int vibrationDuration = 16;
     private int startHour = 6;
     private int startMinute = 0;
     private int endHour = 22;
     private int endMinute = 0;
-    private int vibrationStrength = 150;
+    private int vibrationtimeOfACycle = 150;
     private int takeABreakTime = 60;
-    private long lastVibrate = System.currentTimeMillis();
-    private long nextVibrate = System.currentTimeMillis();
     private boolean appIsActive = true;
+    private final Context context;
+    private int currentDayOfWeek = DateTimeConstants.MONDAY;
+
+    public final static long vibrationCycleDuration = 200;
+    public final static String defaultCategory = "re.breathpray.com.ConfigurationManager.BreathPrayDefaultCategory";
+    public final static String defaultCyclicVibrationServiceAction = "re.breathpray.com.ConfigurationManager.BreathPrayVibrationAction";
+    public final static String defaultVibrationRepeaterServiceAction = "re.breathpray.com.ConfigurationManager.BreathPrayVibrationRepeaterAction";
+
+    //note that index = DateTimeConstant.X - 1
+    public final static int[] daysOfWeeks = new int [] {
+        DateTimeConstants.MONDAY,
+        DateTimeConstants.TUESDAY,
+        DateTimeConstants.WEDNESDAY,
+        DateTimeConstants.THURSDAY,
+        DateTimeConstants.FRIDAY,
+        DateTimeConstants.SATURDAY,
+        DateTimeConstants.SUNDAY};
+
+    public ConfigurationManager(Context context) {
+        this.context = context;
+    }
 
     public int getRepeatTime() {
         return repeatTime;
@@ -28,15 +52,16 @@ public class ConfigurationManager {
         this.repeatTime = repeatTime;
     }
 
-    public int getVibrationTime() {
-        return vibrationTime;
+    public int getVibrationDuration() {
+        return vibrationDuration;
     }
 
-    public void setVibrationTime(final int vibrationTime) {
-        this.vibrationTime = vibrationTime;
+    public void setVibrationDuration(final int vibrationDuration) {
+        this.vibrationDuration = vibrationDuration;
     }
 
     public int getStartHour() {
+        alignToCurrentDate();
         return startHour;
     }
 
@@ -45,7 +70,19 @@ public class ConfigurationManager {
     }
 
     public int getStartMinute() {
+        alignToCurrentDate();
         return startMinute;
+    }
+
+    private void alignToCurrentDate() {
+        if(DateTime.now().getDayOfWeek() != this.currentDayOfWeek){
+            this.currentDayOfWeek = DateTime.now().getDayOfWeek();
+            SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.PREFERENCEFILE), context.MODE_PRIVATE);
+            startHour = sharedPreferences.getInt(context.getString(R.string.keyVibrationStartHour) + currentDayOfWeek, 6);
+            startMinute = sharedPreferences.getInt(context.getString(R.string.keyVibrationStartMinute) + currentDayOfWeek, 0);
+            endMinute = sharedPreferences.getInt(context.getString(R.string.keyVibrationEndMinute) + currentDayOfWeek, 22);
+            endHour = sharedPreferences.getInt(context.getString(R.string.keyVibrationEndHour) + currentDayOfWeek, 0);
+        }
     }
 
     public void setStartMinute(final int startMinute) {
@@ -53,6 +90,7 @@ public class ConfigurationManager {
     }
 
     public int getEndHour() {
+        alignToCurrentDate();
         return endHour;
     }
 
@@ -61,6 +99,7 @@ public class ConfigurationManager {
     }
 
     public int getEndMinute() {
+        alignToCurrentDate();
         return endMinute;
     }
 
@@ -68,12 +107,12 @@ public class ConfigurationManager {
         this.endMinute = endMinute;
     }
 
-    public void setVibrationStrength(final int vibrationStrength) {
-        this.vibrationStrength = vibrationStrength;
+    public void setVibrationtimeOfACycle(final int vibrationtimeOfACycle) {
+        this.vibrationtimeOfACycle = vibrationtimeOfACycle;
     }
 
-    public int getVibrationStrength() {
-        return vibrationStrength;
+    public int getVibrationtimeOfACycle() {
+        return vibrationtimeOfACycle;
     }
 
     public void setTakeABreak(final int time) {
@@ -82,22 +121,6 @@ public class ConfigurationManager {
 
     public int getTakeABreakTime() {
         return takeABreakTime;
-    }
-
-    public void setLastVibrate(long aLong) {
-        this.lastVibrate = aLong;
-    }
-
-    public Long getLastVibrate() {
-        return lastVibrate;
-    }
-
-    public Long getNextVibrate() {
-        return nextVibrate;
-    }
-
-    public void setNextVibrate(final long nextVibrate) {
-        this.nextVibrate = nextVibrate;
     }
 
     public void setAppIsActive(final boolean aBoolean) {

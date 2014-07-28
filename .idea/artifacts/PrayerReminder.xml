@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="apk" build-on-make="true" name="PrayerReminder">
+  <artifact type="apk" name="PrayerReminder">
     <output-path>$PROJECT_DIR$/out/artifacts/PrayerReminder</output-path>
     <properties id="android-properties">
       <options>

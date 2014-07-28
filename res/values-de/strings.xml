@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="vibrationTime">Hier stellen Sie die Vibrationsdauer der einzelnen Erinnerungen in Sekunden ein:</string>
+    <string name="vibrationDuration">Hier stellen Sie die Vibrationsdauer der einzelnen Erinnerungen in Sekunden ein:</string>
     <string name="vibrationCycleTime">Hier stellen sie die Intervallszeit zwischen den Erinnerungen in Minuten ein:</string>
     <string name="VibrationStartDay">Hier stellen Sie die Uhrzeit ein, ab wann die App Sie jeden Tag erinnern soll:</string>
     <string name="VibrationEndDay">Hier stellen Sie die Uhrzeit ein, bis wann die App sie erinnern soll:</string>

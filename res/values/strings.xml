@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BreathPray</string>
-    <string name="vibrationTime">Set the duration in seconds of every single vibration which reminds you:</string>
+    <string name="vibrationDuration">Set the duration in seconds of every single vibration which reminds you:</string>
     <string name="vibrationCycleTime">Set the time in minutes between every vibration:</string>
     <string name="PREFERENCEFILE">RE.PrayerReminder.preferenceFile</string>
     <string name="VibrationStartDay">the app starts every day to remind you at:</string>

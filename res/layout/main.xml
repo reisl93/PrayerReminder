@@ -49,7 +49,7 @@
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/vibrationTime"
+                        android:text="@string/vibrationDuration"
                         android:id="@+id/textViewVibrateDuration" android:layout_gravity="center_horizontal|top"
                         android:gravity="center|left"/>
                 <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/vibrationDuration"

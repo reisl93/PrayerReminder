@@ -34,12 +34,24 @@
                  android:permission="RE.PrayerReminder.UsePreferenceFile"
                  android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name=  "re.breathpray.com.ConfigurationManager.defaultVibrationRepeaterServiceAction"/>
+                <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
             </intent-filter>
         </service>
 
-        <receiver android:name=".BootCompletedReceiver" android:enabled="true" android:exported="false">
+        <service android:name=".ActiveVibrationService"
+                 android:exported="true"
+                 android:permission="RE.PrayerReminder.UsePreferenceFile"
+                 android:label="@string/app_name">
+            <intent-filter>
+                <action android:name=  "re.breathpray.com.ConfigurationManager.defaultCyclicVibrationServiceAction"/>
+                <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".BootCompletedReceiver"
+                  android:enabled="true"
+                  android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
