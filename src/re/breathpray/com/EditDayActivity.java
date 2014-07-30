@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,7 +12,6 @@ import com.triggertrap.seekarc.SeekArc;
 import org.joda.time.LocalTime;
 
 import java.util.LinkedList;
-import java.util.Locale;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,16 +25,20 @@ public class EditDayActivity extends Activity {
     private final Activity activity = this;
 
     private LinkedList<SeekArc> seekarcsListWithFirstElementsOnForeground;
+
     public final int MAXSEEKARCRANGE = 288; // Hence in 5 minute steps
     private final int gridInMinutes = 24 * 60 / MAXSEEKARCRANGE;
     private final int numberOfGridPerHour = MAXSEEKARCRANGE / 24;
+
     private int startDayAt = numberOfGridPerHour * 6; //start default at 6 o'clock
     private int endDayAt = numberOfGridPerHour * 22; //end default at 22 o'clock
+
     private SeekArc seekArcEnd;
     private SeekArc seekArkStart;
+    private String currentDayName;
 
     public final static String dayName = "EditDayActivity.dayName";
-    public final static String dayDescription = "EditDayActivity.dayDescription";
+    private final static String TAG = "EditDayActivity";
 
 
     @Override
@@ -46,8 +50,8 @@ public class EditDayActivity extends Activity {
         Intent intent = getIntent();
 
         seekarcsListWithFirstElementsOnForeground = new LinkedList<SeekArc>();
-        ((TextView) this.findViewById(R.id.nameOfEditedDay)).setText(intent.getStringExtra(dayName));
-        ((TextView) this.findViewById(R.id.description)).setText(intent.getStringExtra(dayDescription));
+        currentDayName = intent.getStringExtra(dayName);
+        ((TextView) this.findViewById(R.id.nameOfEditedDay)).setText(currentDayName);
 
         startDayAt = intent.getIntExtra("Start",6*numberOfGridPerHour);
         endDayAt = intent.getIntExtra("End",22*numberOfGridPerHour);
@@ -70,7 +74,7 @@ public class EditDayActivity extends Activity {
         seekArcEnd.setArcRotation(MAXSEEKARCRANGE/2-startDayAt);
         seekArcEnd.setSweepAngle(MAXSEEKARCRANGE/2-seekArcEnd.getArcRotation());
         seekArcEnd.setMax(seekArcEnd.getSweepAngle());
-        seekArcEnd.setProgress(seekArkStart.getSweepAngle()-endDayAt);
+        seekArcEnd.setProgress(endDayAt - startDayAt);
 
         seekArcEnd.invalidate();
         seekArcEnd.setVisibility(View.INVISIBLE);
@@ -79,7 +83,6 @@ public class EditDayActivity extends Activity {
         seekArkStart.setVisibility(View.VISIBLE);
         seekArkStart.setThumbVisible();
 
-        onSeekarcFocusChangeButtonClicked(null);
     }
 
     private void initSeekArkStart() {
@@ -87,6 +90,7 @@ public class EditDayActivity extends Activity {
         seekArkStart.setTouchInSide(false);
         seekArkStart.setSweepAngle(MAXSEEKARCRANGE / 2);
         seekArkStart.setClockwise(false);
+        seekArkStart.setArcRotation(0);
         seekArkStart.setMax(MAXSEEKARCRANGE / 2);
 
         seekArkStart.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
@@ -115,14 +119,17 @@ public class EditDayActivity extends Activity {
         seekArcEnd.setTouchInSide(false);
         seekArcEnd.setSweepAngle(MAXSEEKARCRANGE / 2);
         seekArcEnd.setClockwise(true);
-        seekArcEnd.setThumbVisible();
-        seekArcEnd.setVisibility(View.INVISIBLE);
-        seekArkStart.setMax(MAXSEEKARCRANGE / 2);
+        seekArcEnd.setArcRotation(0);
+        seekArcEnd.setMax(MAXSEEKARCRANGE / 2);
 
         seekArcEnd.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser) {
                 endDayAt = progress + seekArkStart.getSweepAngle() - (int) seekArkStart.getProgressAngle();
+                //24:00 not possible -> capture
+                if (endDayAt >= MAXSEEKARCRANGE) {
+                    endDayAt -= 1;
+                }
                 ((TextView) activity.findViewById(R.id.endTimeTextInButton)).setText(
                         new LocalTime()
                                 .hourOfDay().setCopy(endDayAt / numberOfGridPerHour)
@@ -164,20 +171,12 @@ public class EditDayActivity extends Activity {
 
     public void onExitDayActivityClicked(View view) {
 
-        final Intent data = new Intent();
-        data.putExtra("Start",startDayAt);
-        data.putExtra("End",endDayAt);
-
-        if(getParent() == null){
-            setResult(RESULT_OK,data);
-        } else {
-            getParent().setResult(RESULT_OK,data);
-        }
-/*
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE),MODE_PRIVATE).edit();
-        editor.putInt(name+"Start",data.getIntExtra("Start",6*12));
-        editor.putInt(name + "End", data.getIntExtra("End", 22 * 12));
-        editor.apply();*/
+        editor.putInt(currentDayName+"Start",startDayAt);
+        editor.putInt(currentDayName+"End", endDayAt);
+        while (!editor.commit())
+            SystemClock.sleep(10);
+
 
         finish();
     }

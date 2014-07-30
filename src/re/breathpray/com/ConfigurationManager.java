@@ -40,16 +40,6 @@ public class ConfigurationManager {
     public final static String defaultVibrationRepeaterServiceAction = "re.breathpray.com.ConfigurationManager.BreathPrayVibrationRepeaterAction";
     public final static String defaultActivityAction = "re.breathpray.com.ConfigurationManager.BreathPrayActivityAction";
 
-    //note that index = DateTimeConstant.X - 1
-    public final static int[] daysOfWeeks = new int [] {
-        DateTimeConstants.MONDAY,
-        DateTimeConstants.TUESDAY,
-        DateTimeConstants.WEDNESDAY,
-        DateTimeConstants.THURSDAY,
-        DateTimeConstants.FRIDAY,
-        DateTimeConstants.SATURDAY,
-        DateTimeConstants.SUNDAY};
-
     public ConfigurationManager(Context context) {
         this.context = context;
     }

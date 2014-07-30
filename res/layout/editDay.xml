@@ -23,7 +23,7 @@
                     android:id="@+id/nameOfEditedDay"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:textSize="65dp"
+                    android:textSize="40dp"
                     android:textStyle="bold"
                     android:textColor="@color/blue"
                     android:layout_alignParentLeft="true"
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/darkred"
                     android:layout_alignParentRight="true"
-                    android:textSize="65dp"
+                    android:textSize="60dp"
                     android:text="@string/exit"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -45,6 +45,7 @@
                 android:id="@+id/description"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:text="@string/editDayActivityDescription"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"/>
     </LinearLayout>

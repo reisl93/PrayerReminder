@@ -84,7 +84,8 @@
 
                 <LinearLayout
                         android:id="@+id/buttonTuesday"
-                        style="@style/buttonStyle" >
+                        style="@style/buttonStyle"
+                        android:onClick="onTuesdayClicked">
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/tuesday"/>
@@ -95,7 +96,8 @@
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonWednesday"
-                        style="@style/buttonStyle" >
+                        style="@style/buttonStyle"
+                        android:onClick="onWednesdayClicked">>
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/wednesday"/>
@@ -106,7 +108,8 @@
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonThursday"
-                        style="@style/buttonStyle" >
+                        style="@style/buttonStyle"
+                        android:onClick="onThursdayClicked">>
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/thursday"/>
@@ -117,7 +120,8 @@
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonFriday"
-                        style="@style/buttonStyle" >
+                        style="@style/buttonStyle"
+                        android:onClick="onFridayClicked">>
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/friday"/>
@@ -128,7 +132,8 @@
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonSaturday"
-                        style="@style/buttonStyle" >
+                        style="@style/buttonStyle"
+                        android:onClick="onSaturdayClicked">>
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/saturday"/>
@@ -139,7 +144,8 @@
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonSunday"
-                        style="@style/buttonStyle" >
+                        style="@style/buttonStyle"
+                        android:onClick="onSundayClicked">>
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/sunday"/>

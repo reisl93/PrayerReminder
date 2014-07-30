@@ -302,41 +302,52 @@ public class LauncherWindow extends Activity {
 
     public void onMondayClicked(View view){
         Log.d(TAG, "monday was edited");
-        Intent intent = new Intent(this, EditDayActivity.class);
-       /* intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
-        intent.setAction(Intent.ACTION_SYNC);
-        intent.addCategory(ConfigurationManager.defaultCategory);*/
-        //set the dayname to monday
-        intent.putExtra(EditDayActivity.dayName, getString(R.string.monday));
-        //set "monday"+"Start" to time where the app should shut down
-        intent.putExtra("Start",
-                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(getString(R.string.monday)+"Start",6*12));
-        //set "monday"+"End" to time where the app should shut down
-        intent.putExtra("End",
-                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(getString(R.string.monday)+"End",22*12));
-        intent.putExtra(EditDayActivity.dayDescription,getString(R.string.editDayActivityDescription));
-        startActivityForResult(intent, getString(R.string.monday).hashCode());
+        createEditDayActivity(getString(R.string.monday));
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        // Check which request we're responding to
-        Log.d(TAG,"activity returned");
-        if (resultCode == RESULT_OK) {
-            String name = dayToInteger.get(requestCode);
-            if(name != null){
-                Log.d(TAG,"dayChangeResultQuery: " + name + " was found - Start: "+ data.getIntExtra("Start",6*12) + " End: " + data.getIntExtra("End",22*12));
-                SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE),MODE_PRIVATE).edit();
-                editor.putInt(name+"Start",data.getIntExtra("Start",6*12));
-                editor.putInt(name + "End", data.getIntExtra("End", 22 * 12));
-                editor.apply();
-                Log.d(TAG, "wrote following value into preferences: " + getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(name + "Start", 132321));
-            } else {
-                Log.d(TAG,"dayChangeResultQuery: " + requestCode + " was not found");
-            }
-        }
+    public void onTuesdayClicked(View view){
+        Log.d(TAG, "tuesday was edited");
+        createEditDayActivity(getString(R.string.tuesday));
+    }
 
+    public void onWednesdayClicked(View view){
+        Log.d(TAG, "wednesday was edited");
+        createEditDayActivity(getString(R.string.wednesday));
+    }
+
+    public void onThursdayClicked(View view){
+        Log.d(TAG, "thursday was edited");
+        createEditDayActivity(getString(R.string.thursday));
+    }
+
+    public void onFridayClicked(View view){
+        Log.d(TAG, "friday was edited");
+        createEditDayActivity(getString(R.string.friday));
+    }
+
+    public void onSaturdayClicked(View view){
+        Log.d(TAG, "saturday was edited");
+        createEditDayActivity(getString(R.string.saturday));
+    }
+
+    public void onSundayClicked(View view){
+        Log.d(TAG, "sunday was edited");
+        createEditDayActivity(getString(R.string.sunday));
+    }
+
+    private void createEditDayActivity(String dayName) {
+        Intent intent = new Intent(this, EditDayActivity.class);
+        intent.setAction(ConfigurationManager.defaultActivityAction);
+        intent.addCategory(ConfigurationManager.defaultCategory);
+        //set the dayname to monday
+        intent.putExtra(EditDayActivity.dayName, dayName);
+        //set "monday"+"Start" to time where the app should shut down
+        intent.putExtra("Start",
+                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"Start",6*12));
+        //set "monday"+"End" to time where the app should shut down
+        intent.putExtra("End",
+                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"End",22*12));
+        startActivityForResult(intent, dayName.hashCode());
     }
 
     /**
