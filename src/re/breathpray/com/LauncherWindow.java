@@ -20,15 +20,20 @@ import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelChangedListener;
 import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
 
-public class StartWindow extends Activity {
+import java.util.HashMap;
+import java.util.Map;
 
-    private static final String TAG = "StartWindow";
+public class LauncherWindow extends Activity {
+
+    private static final String TAG = "LauncherWindow";
     private static final String AD_UNIT_ID = "ca-app-pub-3956003081714684/6818330858";
     private AdView adView;
     // Time scrolled flag
-    private boolean timeScrolledStartWheels = false;
-    private boolean timeScrolledEndWheels = false;
     private final Context context = this;
+    public final int textSizeInMM = 2;
+
+    private Map<Integer, String> dayToInteger;
+
 
     /**
      * Called when the activity is first created.
@@ -37,12 +42,21 @@ public class StartWindow extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        dayToInteger = new HashMap<Integer,String>(){{
+            put(getString(R.string.monday).hashCode(),getString(R.string.monday));
+            put(getString(R.string.tuesday).hashCode(),getString(R.string.tuesday));
+            put(getString(R.string.wednesday).hashCode(),getString(R.string.wednesday));
+            put(getString(R.string.thursday).hashCode(),getString(R.string.thursday));
+            put(getString(R.string.friday).hashCode(),getString(R.string.friday));
+            put(getString(R.string.saturday).hashCode(),getString(R.string.saturday));
+            put(getString(R.string.sunday).hashCode(),getString(R.string.sunday));
+        }};
+
         setContentView(R.layout.main);
 
         final int minRepeatTime = 1;
         final int minVibrationDuration = 0;
         final int minBreakTime = 1;
-        final int textSizeInMM = 2;
 
         SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
 
@@ -51,7 +65,7 @@ public class StartWindow extends Activity {
         adView.setAdUnitId(AD_UNIT_ID);
 
         Log.d(TAG,"starting up main window of BreathPray");
-        if(preferences.getBoolean(getString(R.string.keyFirstStart),true)){
+        if(preferences.getBoolean(getString(R.string.keyFirstStart),false)){
             Log.d(TAG,"BreathPray - first startup");
 
             if(!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator());
@@ -73,7 +87,7 @@ public class StartWindow extends Activity {
                 editor.putInt(getString(R.string.keyVibrationStartMinute) + ConfigurationManager.daysOfWeeks[i],0);
             }    */
 
-            editor.commit();
+            editor.apply();
         }
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adView);
@@ -101,7 +115,7 @@ public class StartWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationRepeatTime), newValue);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -132,7 +146,7 @@ public class StartWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationDuration), newValue);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -150,7 +164,7 @@ public class StartWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyTakeABreakValue), newValue);
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -205,7 +219,7 @@ public class StartWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationPower), seekBar.getProgress());
-                editor.commit();
+                editor.apply();
             }
         });
 
@@ -289,11 +303,40 @@ public class StartWindow extends Activity {
     public void onMondayClicked(View view){
         Log.d(TAG, "monday was edited");
         Intent intent = new Intent(this, EditDayActivity.class);
-        intent.setAction(ConfigurationManager.defaultActivityAction);
-        intent.addCategory(ConfigurationManager.defaultCategory);
-        intent.putExtra(EditDayActivity.dayName,R.string.monday);
-        intent.putExtra(EditDayActivity.dayDescription,R.string.editDayActivityDescription);
-        startActivity(intent);
+       /* intent.setFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
+        intent.setAction(Intent.ACTION_SYNC);
+        intent.addCategory(ConfigurationManager.defaultCategory);*/
+        //set the dayname to monday
+        intent.putExtra(EditDayActivity.dayName, getString(R.string.monday));
+        //set "monday"+"Start" to time where the app should shut down
+        intent.putExtra("Start",
+                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(getString(R.string.monday)+"Start",6*12));
+        //set "monday"+"End" to time where the app should shut down
+        intent.putExtra("End",
+                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(getString(R.string.monday)+"End",22*12));
+        intent.putExtra(EditDayActivity.dayDescription,getString(R.string.editDayActivityDescription));
+        startActivityForResult(intent, getString(R.string.monday).hashCode());
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        // Check which request we're responding to
+        Log.d(TAG,"activity returned");
+        if (resultCode == RESULT_OK) {
+            String name = dayToInteger.get(requestCode);
+            if(name != null){
+                Log.d(TAG,"dayChangeResultQuery: " + name + " was found - Start: "+ data.getIntExtra("Start",6*12) + " End: " + data.getIntExtra("End",22*12));
+                SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE),MODE_PRIVATE).edit();
+                editor.putInt(name+"Start",data.getIntExtra("Start",6*12));
+                editor.putInt(name + "End", data.getIntExtra("End", 22 * 12));
+                editor.apply();
+                Log.d(TAG, "wrote following value into preferences: " + getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(name + "Start", 132321));
+            } else {
+                Log.d(TAG,"dayChangeResultQuery: " + requestCode + " was not found");
+            }
+        }
+
     }
 
     /**

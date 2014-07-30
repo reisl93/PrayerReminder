@@ -2,6 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
+                android:paddingTop="0dp"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
@@ -9,66 +10,106 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
-        <TextView
-                android:paddingTop="4dp"
-                android:paddingLeft="4dp"
-                android:id="@+id/nameOfEditedDay"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true">
+        <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:gravity="left"
-                android:textColor="@color/blue"/>
+                android:layout_gravity="right"
+                android:gravity="right" android:baselineAligned="false">
+            <TextView
+                    android:paddingLeft="15dp"
+                    android:id="@+id/nameOfEditedDay"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textSize="65dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="left"/>
+            <Button
+                    android:layout_marginTop="0dp"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/darkred"
+                    android:layout_alignParentRight="true"
+                    android:textSize="65dp"
+                    android:text="@string/exit"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:background="@color/red"
+                    android:onClick="onExitDayActivityClicked"/>
+        </RelativeLayout>
         <TextView
                 android:id="@+id/description"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"/>
     </LinearLayout>
 
 
-        <re.breathpray.com.RelativeLayoutForCircle
-                android:id="@+id/circleLayout"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
+    <re.breathpray.com.RelativeLayoutForCircle
+            android:id="@+id/circleLayout"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+        <com.triggertrap.seekarc.SeekArc
+                android:id="@+id/seekArcStart"
+                android:padding="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true">
-            <com.triggertrap.seekarc.SeekArc
-                    android:id="@+id/seekArcStart"
-                    android:padding="50dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
-            <com.triggertrap.seekarc.SeekArc
-                    android:padding="50dp"
-                    android:id="@+id/seekArcEnd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                android:layout_gravity="center"/>
+        <com.triggertrap.seekarc.SeekArc
+                android:padding="50dp"
+                android:id="@+id/seekArcEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
-            <Button android:id="@+id/toggleFocusSeekarcButton"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_centerInParent="true"
-                    android:text="@string/toggleSeekarcFocusButton"
-                    android:textSize="16dp"
-                    android:textAlignment="center"
-                    android:textColor="@color/grey"
-                    android:background="@drawable/roundbutton"
-                    android:onClick="onSeekarcFocusChangeButtonClicked"/>
+        <Button android:id="@+id/toggleFocusSeekarcButton"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/roundbutton"
+                android:onClick="onSeekarcFocusChangeButtonClicked"/>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_centerInParent="true">
+            <TextView android:textColor="@color/lightgrey"
+                      android:textSize="19dp"
+                      android:paddingBottom="10dp"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:layout_width="wrap_content"
+                      android:text="@string/clickMe" android:layout_gravity="center_horizontal"/>
+            <TextView android:id="@+id/startTimeTextInButton"
+                      android:paddingTop="10dp"
+                      android:textColor="@color/grey"
+                      android:textSize="21dp"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:layout_width="wrap_content" android:layout_gravity="center_horizontal"/>
+            <TextView android:textColor="@color/lightgrey"
+                      android:gravity="center"
+                      android:textSize="19dp"
+                      android:layout_height="wrap_content"
+                      android:layout_width="wrap_content"
+                      android:text="@string/until" android:layout_gravity="center_horizontal"/>
+            <TextView android:id="@+id/endTimeTextInButton"
+                      android:gravity="center"
+                      android:textColor="@color/grey"
+                      android:textSize="21dp"
+                      android:layout_height="wrap_content"
+                      android:layout_width="wrap_content" android:layout_gravity="center_horizontal"/>
 
-        </re.breathpray.com.RelativeLayoutForCircle>
+        </LinearLayout>
 
 
-
-    <Button
-            android:id="@+id/buttonExit"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:text="X"
-            android:textColor="@color/darkred"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:onClick="onExitDayActivityClicked"
-            android:textSize="70dp"
-            android:background="@drawable/exitbutton"/>
+    </re.breathpray.com.RelativeLayoutForCircle>
 
 </RelativeLayout>

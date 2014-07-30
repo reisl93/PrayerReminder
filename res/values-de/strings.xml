@@ -21,4 +21,13 @@
     <string name="saturday">Samstag</string>
     <string name="sunday">Sonntag</string>
 
+    <string name="editDayActivityDescription">
+        Hier wird die Start und Endzeit der App festgelegt. Im blauen Punkt werden Start/Endzeit angezeigt, also wann die App am spezifizierten Wochentag gestartet bzw. beendet wird.
+        \nBeim Drücken des blauen Punktes wird eingestellt, ob Start oder Endzeit bearbeitet wird.
+    </string>
+
+    <string name="until">bis</string>
+
+    <string name="timePattern">HH:mm</string>
+
 </resources>

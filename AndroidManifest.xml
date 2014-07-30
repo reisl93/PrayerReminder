@@ -20,7 +20,7 @@
         <activity android:name="com.google.android.gms.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 
-        <activity android:name=".StartWindow"
+        <activity android:name=".LauncherWindow"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -29,10 +29,9 @@
         </activity>
 
         <activity android:name=".EditDayActivity"
-                  android:label="@string/app_name"
                   android:theme="@style/Theme.D1NoTitleDim">
             <intent-filter>
-                <action android:name="re.breathpray.com.ConfigurationManager.BreathPrayActivityAction"/>
+                <action android:name="android.intent.action.SYNC"/>
                 <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
             </intent-filter>
         </activity>

@@ -3,7 +3,7 @@
     <string name="app_name">BreathPray</string>
     <string name="vibrationDuration">Set the duration in seconds of every single vibration which reminds you:</string>
     <string name="vibrationCycleTime">Set the time in minutes between every vibration:</string>
-    <string name="PREFERENCEFILE">RE.PrayerReminder.preferenceFile</string>
+    <string name="PREFERENCEFILE">re.breathpray.com.preferencefile</string>
     <string name="VibrationStartDay">the app starts every day to remind you at:</string>
     <string name="VibrationEndDay">the app ends every day to remind you at:</string>
     <string name="vibrationPower">create and set here an own pattern of the vibration which reminds you</string>
@@ -15,8 +15,8 @@
     <string name="appIsActiveText">app keeps reminding you</string>
     <string name="appIsNotActiveText">app is not active</string>
     <string name="editDayActivityDescription">
-        In this view you can edit the time when to passively start the app in the background at the specific weekday every week.\n
-        By clicking the blue button in the middle of the circle the shutdown of the app is selected.
+        In this view you can edit the exact time to passively start the app in the background at the specific weekday every week.
+        \nBy clicking the blue button in the middle of the circle the shutdown of the app is selected.
     </string>
 
 
@@ -42,8 +42,11 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
-    <string name="toggleSeekarcFocusButton">toggle start-/endtime</string>
+    <string name="exit"> X </string>
+    <string name="until">to</string>
 
+    <string name="clickMe">click me!</string>
 
+    <string name="timePattern">KK:mm aa</string>
 
 </resources>
