@@ -53,10 +53,10 @@ public class VibrationRepeaterService extends Service{
         configurationManager.setVibrationDuration(preferences.getInt(getString(R.string.keyVibrationDuration), 16));
         configurationManager.setVibrationtimeOfACycle(preferences.getInt(getString(R.string.keyVibrationPower), 150));
         configurationManager.setRepeatTime(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 10));
-        configurationManager.setEndHour(preferences.getInt(getString(R.string.keyVibrationEndHour) + DateTime.now().getDayOfWeek(), 22));
-        configurationManager.setEndMinute(preferences.getInt(getString(R.string.keyVibrationEndMinute) + DateTime.now().getDayOfWeek(), 0));
-        configurationManager.setStartHour(preferences.getInt(getString(R.string.keyVibrationStartHour) + DateTime.now().getDayOfWeek(), 6));
-        configurationManager.setStartMinute(preferences.getInt(getString(R.string.keyVibrationStartMinute) + DateTime.now().getDayOfWeek(), 0));
+        configurationManager.setEndHour(preferences.getInt(getString(R.string.keyVibrationEndHour) + DateTime.now().getDayOfWeek(), 23));
+        configurationManager.setEndMinute(preferences.getInt(getString(R.string.keyVibrationEndMinute) + DateTime.now().getDayOfWeek(), 59));
+        configurationManager.setStartHour(preferences.getInt(getString(R.string.keyVibrationStartHour) + DateTime.now().getDayOfWeek(), 0));
+        configurationManager.setStartMinute(preferences.getInt(getString(R.string.keyVibrationStartMinute) + DateTime.now().getDayOfWeek(), 01));
         configurationManager.setTakeABreak(preferences.getInt(getString(R.string.keyTakeABreakValue), 60));
     }
 
@@ -131,7 +131,7 @@ public class VibrationRepeaterService extends Service{
         //config vibration
         intent.putExtra(ActiveVibrationService.intervalIntentExtraFieldName,configurationManager.getVibrationtimeOfACycle());
         intent.putExtra(ActiveVibrationService.durationIntentExtraFieldName,configurationManager.getVibrationDuration());
-        intent.putExtra(ActiveVibrationService.isRunningIntentExtraFieldName,false);
+        intent.putExtra(ActiveVibrationService.loopEndlessExecuteIntentExtraFieldName,false);
 
         return PendingIntent.getService(this,number, intent,0);
     }

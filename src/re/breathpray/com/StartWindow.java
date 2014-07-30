@@ -18,8 +18,6 @@ import android.widget.*;
 
 import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelChangedListener;
-import antistatic.spinnerwheel.OnWheelClickedListener;
-import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
 
 public class StartWindow extends Activity {
@@ -31,17 +29,6 @@ public class StartWindow extends Activity {
     private boolean timeScrolledStartWheels = false;
     private boolean timeScrolledEndWheels = false;
     private final Context context = this;
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            //vibrationRepeaterService = ((VibrationRepeaterService.LocalBinder)service).getService();
-            Log.d(TAG, "connection established");
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            //vibrationRepeaterService = null;
-        }
-    };
 
     /**
      * Called when the activity is first created.
@@ -55,7 +42,7 @@ public class StartWindow extends Activity {
         final int minRepeatTime = 1;
         final int minVibrationDuration = 0;
         final int minBreakTime = 1;
-        final int textSizeInMM = 3;
+        final int textSizeInMM = 2;
 
         SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
 
@@ -168,147 +155,53 @@ public class StartWindow extends Activity {
         });
 
 
-        final AbstractWheel startHourWheel = (AbstractWheel) findViewById(R.id.startHour);
-        startHourWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 23));
-        startHourWheel.setCyclic(true);
-        startHourWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationStartHour), 6));
-
-        final AbstractWheel startMinuteWheel = (AbstractWheel) findViewById(R.id.startMinute);
-        startMinuteWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 59, "%02d"));
-        startMinuteWheel.setCyclic(true);
-        startMinuteWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationStartMinute), 0));
-
-
-        // add listeners
-        addChangingListener(startMinuteWheel, "minStart");
-        addChangingListener(startHourWheel, "hourStart");
-
-        OnWheelChangedListener wheelListener = new OnWheelChangedListener() {
-            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
-                if (!timeScrolledStartWheels) {
-                    //write data to app storage
-                    SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putInt(getString(R.string.keyVibrationStartHour), startHourWheel.getCurrentItem());
-                    editor.putInt(getString(R.string.keyVibrationStartMinute), startMinuteWheel.getCurrentItem());
-                    editor.commit();
-                }
-            }
-        };
-        startHourWheel.addChangingListener(wheelListener);
-        startMinuteWheel.addChangingListener(wheelListener);
-
-        OnWheelClickedListener clickStart = new OnWheelClickedListener() {
-            public void onItemClicked(AbstractWheel wheel, int itemIndex) {
-                wheel.setCurrentItem(itemIndex, true);
-            }
-        };
-        startHourWheel.addClickingListener(clickStart);
-        startMinuteWheel.addClickingListener(clickStart);
-
-        OnWheelScrollListener wheelListenerStart = new OnWheelScrollListener() {
-            public void onScrollingStarted(AbstractWheel wheel) {
-                timeScrolledStartWheels = true;
-            }
-            public void onScrollingFinished(AbstractWheel wheel) {
-                timeScrolledStartWheels = false;
-                //write data to app storage
-                SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationStartHour), startHourWheel.getCurrentItem());
-                editor.putInt(getString(R.string.keyVibrationStartMinute), startMinuteWheel.getCurrentItem());
-                editor.commit();
-            }
-        };
-
-        startHourWheel.addScrollingListener(wheelListenerStart);
-        startMinuteWheel.addScrollingListener(wheelListenerStart);
-
-
-
-        final AbstractWheel endHourWheel = (AbstractWheel) findViewById(R.id.endHour);
-        endHourWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 23));
-        endHourWheel.setCyclic(true);
-        endHourWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationEndHour), 6));
-
-        final AbstractWheel endMinuteWheel = (AbstractWheel) findViewById(R.id.endMinute);
-        endMinuteWheel.setViewAdapter(new NumericWheelAdapter(this, 0, 59, "%02d"));
-        endMinuteWheel.setCyclic(true);
-        endMinuteWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationEndMinute), 0));
-
-
-        // add listeners
-        addChangingListener(endMinuteWheel, "minEnd");
-        addChangingListener(endHourWheel, "hourEnd");
-
-        OnWheelChangedListener wheelListenerEnd = new OnWheelChangedListener() {
-            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
-                if (!timeScrolledEndWheels) {
-                    //write data to app storage
-                    SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putInt(getString(R.string.keyVibrationEndHour), endHourWheel.getCurrentItem());
-                    editor.putInt(getString(R.string.keyVibrationEndMinute), endMinuteWheel.getCurrentItem());
-                    editor.commit();
-                }
-            }
-        };
-        endHourWheel.addChangingListener(wheelListenerEnd);
-        endMinuteWheel.addChangingListener(wheelListenerEnd);
-
-        OnWheelClickedListener clickEnd = new OnWheelClickedListener() {
-            public void onItemClicked(AbstractWheel wheel, int itemIndex) {
-                wheel.setCurrentItem(itemIndex, true);
-            }
-        };
-        endHourWheel.addClickingListener(clickEnd);
-        endMinuteWheel.addClickingListener(clickEnd);
-
-        OnWheelScrollListener scrollListener = new OnWheelScrollListener() {
-            public void onScrollingStarted(AbstractWheel wheel) {
-                timeScrolledEndWheels = true;
-            }
-            public void onScrollingFinished(AbstractWheel wheel) {
-                timeScrolledEndWheels = false;
-                //write data to app storage
-                SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationEndHour), endHourWheel.getCurrentItem());
-                editor.putInt(getString(R.string.keyVibrationEndMinute), endMinuteWheel.getCurrentItem());
-                editor.commit();
-            }
-        };
-
-        endHourWheel.addScrollingListener(scrollListener);
-        endMinuteWheel.addScrollingListener(scrollListener);
-
 
         SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar);
-        seekBar.setMax((int) ConfigurationManager.vibrationCycleDuration);
+        seekBar.setMax(ConfigurationManager.vibrationCycleDuration);
         seekBar.setProgress(preferences.getInt(getString(R.string.keyVibrationPower),150));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
+            private boolean mBound = false;
+            private ActiveVibrationService mService;
+
+            private ServiceConnection mConnection = new ServiceConnection() {
+                public void onServiceConnected(ComponentName className, IBinder service) {
+                    ActiveVibrationService.LocalBinder binder = (ActiveVibrationService.LocalBinder) service;
+                    mService = binder.getService();
+                    mBound = true;
+                    Log.d(TAG, "connection established to ActiveVibrationService");
+                }
+
+                public void onServiceDisconnected(ComponentName className) {
+                    mBound = false;
+                }
+            };
+
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //activeVibrationService.setInterval(progress);
+                if(mBound)
+                    mService.setInterval(seekBar.getProgress());
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+
                 final Intent intent = new Intent(context,ActiveVibrationService.class);
                 intent.setAction(ConfigurationManager.defaultCyclicVibrationServiceAction);
                 intent.addCategory(ConfigurationManager.defaultCategory);
-                intent.putExtra(ActiveVibrationService.intervalIntentExtraFieldName,(long)seekBar.getProgress());
+                intent.putExtra(ActiveVibrationService.intervalIntentExtraFieldName,seekBar.getProgress());
                 intent.putExtra(ActiveVibrationService.durationIntentExtraFieldName, ConfigurationManager.vibrationCycleDuration);
-                intent.putExtra(ActiveVibrationService.isRunningIntentExtraFieldName, true);
-                //context.startService(intent);
-                //TODO
+                intent.putExtra(ActiveVibrationService.loopEndlessExecuteIntentExtraFieldName, true);
 
+                bindService(intent,mConnection,Context.BIND_AUTO_CREATE);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //activeVibrationService.setRunning(false);
+                if(mBound){
+                    unbindService(mConnection);
+                    mBound = false;
+                }
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationPower), seekBar.getProgress());
@@ -323,25 +216,10 @@ public class StartWindow extends Activity {
         toggleButton.setTextOn(getString(R.string.appIsActiveText));
         toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), false));
 
-
-        TextView textView = (TextView) this.findViewById(R.id.textViewLastVibrate);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-        textView.setText(R.string.lastVibrate);
-
-        textView = (TextView) this.findViewById(R.id.textViewNextVibrate);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-        textView.setText(R.string.nextVibrate);
-
-        textView = (TextView) this.findViewById(R.id.textViewRepeatTime);
+        TextView textView = (TextView) this.findViewById(R.id.textViewRepeatTime);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewVibrateDuration);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-
-        textView = (TextView) this.findViewById(R.id.textViewEndTime);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-
-        textView = (TextView) this.findViewById(R.id.textViewStartTime);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
         textView = (TextView) this.findViewById(R.id.textViewVibratePower);
@@ -350,8 +228,6 @@ public class StartWindow extends Activity {
         textView = (TextView) this.findViewById(R.id.textViewTakeABreak);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
-        textView = (TextView) this.findViewById(R.id.textViewStatus);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
     }
 
     public void onDestroy(){
@@ -410,6 +286,15 @@ public class StartWindow extends Activity {
         //TODO take a break
     }
 
+    public void onMondayClicked(View view){
+        Log.d(TAG, "monday was edited");
+        Intent intent = new Intent(this, EditDayActivity.class);
+        intent.setAction(ConfigurationManager.defaultActivityAction);
+        intent.addCategory(ConfigurationManager.defaultCategory);
+        intent.putExtra(EditDayActivity.dayName,R.string.monday);
+        intent.putExtra(EditDayActivity.dayDescription,R.string.editDayActivityDescription);
+        startActivity(intent);
+    }
 
     /**
      * Adds changing listener for spinnerwheel that updates the spinnerwheel label

@@ -13,7 +13,12 @@
     <string name="lastVibrate">last vibration was at: </string>
     <string name="nextVibrate">next vibration will be at: </string>
     <string name="appIsActiveText">app keeps reminding you</string>
-    <string name="appIsNotActiveText">app is not running</string>
+    <string name="appIsNotActiveText">app is not active</string>
+    <string name="editDayActivityDescription">
+        In this view you can edit the time when to passively start the app in the background at the specific weekday every week.\n
+        By clicking the blue button in the middle of the circle the shutdown of the app is selected.
+    </string>
+
 
     <string name="keyNextVibrate">keyNextVibrate</string>
     <string name="keyLastVibrate">keyLastVibrate</string>
@@ -27,6 +32,18 @@
     <string name="keyVibrationDuration">keyVibrationDuration</string>
     <string name="keyVibrationRepeatTime">keyVibrationRepeatTime</string>
     <string name="keyVibrationPower">keyVibrationPower</string>
+
+
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
+    <string name="toggleSeekarcFocusButton">toggle start-/endtime</string>
+
 
 
 </resources>

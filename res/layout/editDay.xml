@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+        <TextView
+                android:paddingTop="4dp"
+                android:paddingLeft="4dp"
+                android:id="@+id/nameOfEditedDay"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:gravity="left"
+                android:textColor="@color/blue"/>
+        <TextView
+                android:id="@+id/description"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"/>
+    </LinearLayout>
+
+
+        <re.breathpray.com.RelativeLayoutForCircle
+                android:id="@+id/circleLayout"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true">
+            <com.triggertrap.seekarc.SeekArc
+                    android:id="@+id/seekArcStart"
+                    android:padding="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+            <com.triggertrap.seekarc.SeekArc
+                    android:padding="50dp"
+                    android:id="@+id/seekArcEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            <Button android:id="@+id/toggleFocusSeekarcButton"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerInParent="true"
+                    android:text="@string/toggleSeekarcFocusButton"
+                    android:textSize="16dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/grey"
+                    android:background="@drawable/roundbutton"
+                    android:onClick="onSeekarcFocusChangeButtonClicked"/>
+
+        </re.breathpray.com.RelativeLayoutForCircle>
+
+
+
+    <Button
+            android:id="@+id/buttonExit"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:text="X"
+            android:textColor="@color/darkred"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="onExitDayActivityClicked"
+            android:textSize="70dp"
+            android:background="@drawable/exitbutton"/>
+
+</RelativeLayout>

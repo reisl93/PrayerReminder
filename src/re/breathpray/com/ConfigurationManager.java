@@ -19,16 +19,26 @@ public class ConfigurationManager {
     private int startMinute = 0;
     private int endHour = 22;
     private int endMinute = 0;
+
+    /**
+     * {@value #vibrationCycleDuration}
+     * the duration of a full reminder vibration pattern
+     */
     private int vibrationtimeOfACycle = 150;
+
     private int takeABreakTime = 60;
     private boolean appIsActive = true;
     private final Context context;
     private int currentDayOfWeek = DateTimeConstants.MONDAY;
 
-    public final static long vibrationCycleDuration = 200;
+    /**
+     * the duration of a single cycle which will be repeated until the full "duration of a reminder" = {@link #vibrationCycleDuration} has been completed
+     */
+    public final static int vibrationCycleDuration = 200;
     public final static String defaultCategory = "re.breathpray.com.ConfigurationManager.BreathPrayDefaultCategory";
     public final static String defaultCyclicVibrationServiceAction = "re.breathpray.com.ConfigurationManager.BreathPrayVibrationAction";
     public final static String defaultVibrationRepeaterServiceAction = "re.breathpray.com.ConfigurationManager.BreathPrayVibrationRepeaterAction";
+    public final static String defaultActivityAction = "re.breathpray.com.ConfigurationManager.BreathPrayActivityAction";
 
     //note that index = DateTimeConstant.X - 1
     public final static int[] daysOfWeeks = new int [] {
