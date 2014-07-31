@@ -10,22 +10,15 @@ import android.os.Vibrator;
 import android.util.Log;
 
 /**
- * @version 1.0
- * @author: Eisl
  * Date: 16.05.14
- * Time: 18:12
  */
-public class ActiveVibrationService extends Service implements Runnable {
+public class ActiveVibrationService extends Service {
 
     private static final String TAG = "ActiveVibrationService";
     private int interval;
     private int duration;
     private Vibrator vibrator;
     private IBinder mBinder;
-
-    public final static String intervalIntentExtraFieldName = "interval";
-    public final static String loopEndlessExecuteIntentExtraFieldName = "loopEndlessExecute";
-    public final static String durationIntentExtraFieldName = "duration";
 
     public void setInterval(int interval) {
         this.interval = interval;
@@ -41,7 +34,7 @@ public class ActiveVibrationService extends Service implements Runnable {
     public void onCreate(){
         super.onCreate();
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        this.interval = ConfigurationManager.vibrationCycleDuration;
+        this.interval = BreathPrayConstants.vibrationCycleDuration;
         this.duration = 10;
         this.mBinder = new LocalBinder();
     }
@@ -50,31 +43,32 @@ public class ActiveVibrationService extends Service implements Runnable {
     public int onStartCommand(Intent intent, int flags, int startId){
         super.onStartCommand(intent, flags, startId);
 
-        interval = intent.getIntExtra(intervalIntentExtraFieldName,ConfigurationManager.vibrationCycleDuration);
-        duration = intent.getIntExtra(durationIntentExtraFieldName,10);
+        interval = intent.getIntExtra(BreathPrayConstants.intervalIntentExtraFieldName, BreathPrayConstants.vibrationCycleDuration);
+        duration = intent.getIntExtra(BreathPrayConstants.durationIntentExtraFieldName,10);
 
         run();
 
         return START_STICKY;
     }
 
-    @Override
     public void run() {
         Log.d(TAG,"enter - vibrationCycle");
 
         //+1 due to first element == 0
         //*2 because every toogle requires a inverse interval and real interval time
         //*100 because the duration is in 100ms steps and the vibration is counted in 1ms steps
-        final int arraySize = (duration*100*2) / ConfigurationManager.vibrationCycleDuration + 1;
+        final int arraySize = (duration*100*2) / BreathPrayConstants.vibrationCycleDuration + 1;
         final long[] array = new long[arraySize];
         array[0] = 0;
         long togglingIntervalToInverseinterval = interval;
         for(int i = 1; i < arraySize; i++){
             array[i] = togglingIntervalToInverseinterval;
-            togglingIntervalToInverseinterval = ConfigurationManager.vibrationCycleDuration - togglingIntervalToInverseinterval;
+            togglingIntervalToInverseinterval = BreathPrayConstants.vibrationCycleDuration - togglingIntervalToInverseinterval;
         }
 
         vibrator.vibrate(array,-1);
+
+        SystemClock.sleep(duration*100);
 
         Log.d(TAG,"exit - vibrationCycle");
     }

@@ -21,9 +21,6 @@ import antistatic.spinnerwheel.OnWheelChangedListener;
 import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
 import org.joda.time.LocalTime;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class LauncherWindow extends Activity {
 
     private static final String TAG = "LauncherWindow";
@@ -33,25 +30,12 @@ public class LauncherWindow extends Activity {
     private final Context context = this;
     public final int textSizeInMM = 2;
 
-    private Map<Integer, String> dayToInteger;
-
-
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        dayToInteger = new HashMap<Integer,String>(){{
-            put(getString(R.string.monday).hashCode(),getString(R.string.monday));
-            put(getString(R.string.tuesday).hashCode(),getString(R.string.tuesday));
-            put(getString(R.string.wednesday).hashCode(),getString(R.string.wednesday));
-            put(getString(R.string.thursday).hashCode(),getString(R.string.thursday));
-            put(getString(R.string.friday).hashCode(),getString(R.string.friday));
-            put(getString(R.string.saturday).hashCode(),getString(R.string.saturday));
-            put(getString(R.string.sunday).hashCode(),getString(R.string.sunday));
-        }};
 
         setContentView(R.layout.main);
 
@@ -72,15 +56,8 @@ public class LauncherWindow extends Activity {
             if(!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator());
                 //TODO create popup
 
-
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(getString(R.string.keyFirstStart), true);
-            editor.putInt(getString(R.string.keyVibrationPower), 150);
-            editor.putInt(getString(R.string.keyVibrationRepeatTime), 10);
-            editor.putInt(getString(R.string.keyVibrationDuration), 16);
-            editor.putBoolean(getString(R.string.keyIsAppActive), true);
-            editor.putInt(getString(R.string.keyTakeABreakValue), 60);
-
+            editor.putBoolean(getString(R.string.keyFirstStart),true);
             editor.apply();
         }
 
@@ -109,7 +86,8 @@ public class LauncherWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationRepeatTime), newValue);
-                editor.apply();
+                //Data has to be commited!
+                while (!editor.commit());
             }
         });
 
@@ -140,7 +118,8 @@ public class LauncherWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationDuration), newValue);
-                editor.apply();
+                //Data has to be commited!
+                while (!editor.commit());
             }
         });
 
@@ -158,14 +137,15 @@ public class LauncherWindow extends Activity {
                 SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyTakeABreakValue), newValue);
-                editor.apply();
+                //Data has to be commited!
+                while (!editor.commit());
             }
         });
 
 
 
         SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar);
-        seekBar.setMax(ConfigurationManager.vibrationCycleDuration);
+        seekBar.setMax(BreathPrayConstants.vibrationCycleDuration);
         seekBar.setProgress(preferences.getInt(getString(R.string.keyVibrationPower),150));
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
@@ -195,11 +175,11 @@ public class LauncherWindow extends Activity {
             public void onStartTrackingTouch(SeekBar seekBar) {
 
                 final Intent intent = new Intent(context,ActiveVibrationService.class);
-                intent.setAction(ConfigurationManager.defaultCyclicVibrationServiceAction);
-                intent.addCategory(ConfigurationManager.defaultCategory);
-                intent.putExtra(ActiveVibrationService.intervalIntentExtraFieldName,seekBar.getProgress());
-                intent.putExtra(ActiveVibrationService.durationIntentExtraFieldName, ConfigurationManager.vibrationCycleDuration);
-                intent.putExtra(ActiveVibrationService.loopEndlessExecuteIntentExtraFieldName, true);
+                intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
+                intent.addCategory(BreathPrayConstants.defaultCategory);
+                intent.putExtra(BreathPrayConstants.intervalIntentExtraFieldName,seekBar.getProgress());
+                intent.putExtra(BreathPrayConstants.durationIntentExtraFieldName, BreathPrayConstants.vibrationCycleDuration);
+                intent.putExtra(BreathPrayConstants.loopEndlessExecuteIntentExtraFieldName, true);
 
                 bindService(intent,mConnection,Context.BIND_AUTO_CREATE);
             }
@@ -243,7 +223,7 @@ public class LauncherWindow extends Activity {
     public void onDestroy(){
 
         final Intent intent = new Intent(this, VibrationRepeaterService.class);
-        intent.putExtra(VibrationRepeaterService.startVibrationIntentExtraFieldName,true);
+        intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
         this.startService(intent);
 
         if(adView != null)
@@ -279,17 +259,17 @@ public class LauncherWindow extends Activity {
     private void updateSingleDay(SharedPreferences sharedPreferences, String day, int textviewID) {
         int startTime;
         int endTime;
-        startTime = sharedPreferences.getInt(day + "Start", 6 * EditDayActivity.numberOfGridPerHour);
-        endTime = sharedPreferences.getInt(day + "End", 22 * EditDayActivity.numberOfGridPerHour);
+        startTime = sharedPreferences.getInt(day + "Start", 6 * BreathPrayConstants.numberOfGridPerHour);
+        endTime = sharedPreferences.getInt(day + "End", 22 * BreathPrayConstants.numberOfGridPerHour);
         ((TextView) this.findViewById(textviewID)).setText(
                 new LocalTime()
-                        .hourOfDay().setCopy(startTime / EditDayActivity.numberOfGridPerHour)
-                        .minuteOfHour().setCopy((startTime % EditDayActivity.numberOfGridPerHour) * EditDayActivity.gridInMinutes)
+                        .hourOfDay().setCopy(startTime / BreathPrayConstants.numberOfGridPerHour)
+                        .minuteOfHour().setCopy((startTime % BreathPrayConstants.numberOfGridPerHour) * BreathPrayConstants.gridInMinutes)
                         .toString(getString(R.string.timePattern))
                 + " - " +
                 new LocalTime()
-                        .hourOfDay().setCopy(endTime / EditDayActivity.numberOfGridPerHour)
-                        .minuteOfHour().setCopy((endTime % EditDayActivity.numberOfGridPerHour) * EditDayActivity.gridInMinutes)
+                        .hourOfDay().setCopy(endTime / BreathPrayConstants.numberOfGridPerHour)
+                        .minuteOfHour().setCopy((endTime % BreathPrayConstants.numberOfGridPerHour) * BreathPrayConstants.gridInMinutes)
                         .toString(getString(R.string.timePattern))
 
         );
@@ -299,7 +279,7 @@ public class LauncherWindow extends Activity {
     public void onPause(){
 
         final Intent intent = new Intent(this, VibrationRepeaterService.class);
-        intent.putExtra(VibrationRepeaterService.startVibrationIntentExtraFieldName,true);
+        intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
         this.startService(intent);
 
         if(adView != null)
@@ -317,11 +297,11 @@ public class LauncherWindow extends Activity {
 
         if(toggleButton.isChecked()) {
             final Intent intent = new Intent(this, VibrationRepeaterService.class);
-            intent.putExtra(VibrationRepeaterService.startVibrationIntentExtraFieldName,true);
+            intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
             this.startService(intent);
         } else {
             final Intent intent = new Intent(this, VibrationRepeaterService.class);
-            intent.putExtra(VibrationRepeaterService.endVibrationIntentExtraFieldName,true);
+            intent.putExtra(BreathPrayConstants.endVibrationIntentExtraFieldName,true);
             this.startService(intent);
         }
     }
@@ -368,17 +348,17 @@ public class LauncherWindow extends Activity {
 
     private void createEditDayActivity(String dayName) {
         Intent intent = new Intent(this, EditDayActivity.class);
-        intent.setAction(ConfigurationManager.defaultActivityAction);
-        intent.addCategory(ConfigurationManager.defaultCategory);
+        intent.setAction(BreathPrayConstants.defaultActivityAction);
+        intent.addCategory(BreathPrayConstants.defaultCategory);
         //set the dayname to monday
-        intent.putExtra(EditDayActivity.dayName, dayName);
+        intent.putExtra(BreathPrayConstants.dayName, dayName);
         //set "monday"+"Start" to time where the app should shut down
         intent.putExtra("Start",
                 context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"Start",6*12));
         //set "monday"+"End" to time where the app should shut down
         intent.putExtra("End",
                 context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"End",22*12));
-        startActivityForResult(intent, dayName.hashCode());
+        startActivity(intent);
     }
 
     /**
