@@ -51,39 +51,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="ActiveVibrationService" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="added module">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/libs/android-support-v4.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-hdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-ldpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-mdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-xhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-xhdpi/scrubber_control_disabled_holo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-xhdpi/scrubber_control_focused_holo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-xhdpi/scrubber_control_normal_holo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable-xhdpi/scrubber_control_pressed_holo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/AndroidManifest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/gen/com/triggertrap/seekarc/BuildConfig.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/re/breathpray/com/FontFitTextView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/gen/com/triggertrap/seekarc/Manifest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/gen/com/triggertrap/seekarc/R.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/src/com/triggertrap/seekarc/SeekArc.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/ant.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/values/attrs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/build.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/values/colors.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/licence.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/local.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/layout/main.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/proguard-project.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/project.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/drawable/seek_arc_control_selector.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SeekArc_library/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/re/breathpray/com/EditDayActivity.java" afterPath="$PROJECT_DIR$/src/re/breathpray/com/EditDayActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/styles.xml" afterPath="$PROJECT_DIR$/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MOVED" beforePath="D:\InHisLight\PrayerReminder\res\layout\editDay.xml" afterPath="$PROJECT_DIR$/res/layout/editday.xml" />
-    </list>
+    <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="added module" />
     <ignored path="PrayerReminder.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/strings.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406749984973" ignored="false" />
@@ -234,7 +202,7 @@
       <file leaf-file-name="LauncherWindow.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="252" column="132" selection-start="11600" selection-end="11600" vertical-scroll-proportion="-1.9644128">
+            <state line="363" column="54" selection-start="16001" selection-end="16001" vertical-scroll-proportion="0.27402136">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -425,70 +393,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="google-play-services" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PrayerReminder" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gen" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1064,7 +968,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="252" column="132" selection-start="11600" selection-end="11600" vertical-scroll-proportion="-1.9644128">
+        <state line="363" column="54" selection-start="16001" selection-end="16001" vertical-scroll-proportion="0.27402136">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
