@@ -35,8 +35,9 @@
                 <TextView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/vibrationCycleTime"
-                        android:id="@+id/textViewRepeatTime" android:gravity="center|left"/>
+                        android:id="@+id/textViewRepeatTime"
+                        android:text="@string/vibrationCycleTimeDescription"
+                        android:gravity="center|left"/>
                 <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/repeatTime"
                                                              app:visibleItems="5"
                                                              app:selectionDivider="@drawable/divider_dark_gradient_horizontal"

@@ -1,6 +1,7 @@
 package re.breathpray.com;
 
 
+import android.app.Dialog;
 import android.os.Vibrator;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
 import com.google.android.gms.ads.AdRequest;
@@ -53,12 +54,14 @@ public class LauncherWindow extends Activity {
         if(preferences.getBoolean(getString(R.string.keyFirstStart),false)){
             Log.d(TAG,"BreathPray - first startup");
 
+            startActivity(new Intent(this,FirstStartupActivity.class));
+
             if(!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator());
                 //TODO create popup
 
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean(getString(R.string.keyFirstStart),true);
-            editor.apply();
+            while(!editor.commit());
         }
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adView);

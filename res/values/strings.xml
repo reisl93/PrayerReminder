@@ -2,16 +2,12 @@
 <resources>
     <string name="app_name">BreathPray</string>
     <string name="vibrationDuration">Set the duration in seconds of every single vibration which reminds you:</string>
-    <string name="vibrationCycleTime">Set the time in minutes between every vibration:</string>
+    <string name="vibrationCycleTimeDescription">Set the time in minutes between every vibration:</string>
     <string name="PREFERENCEFILE">re.breathpray.com.preferencefile</string>
-    <string name="VibrationStartDay">the app starts every day to remind you at:</string>
-    <string name="VibrationEndDay">the app ends every day to remind you at:</string>
     <string name="vibrationPower">create and set here an own pattern of the vibration which reminds you</string>
     <string name="prayerReminderStatus">Click here to change the current status of the app:</string>
     <string name="takeABreak">If you click the \"break\" button, the app won\'t remind you for a certain amount of time. Select the duration of the break here in minutes:</string>
     <string name="takeABreakButton">break</string>
-    <string name="lastVibrate">last vibration was at: </string>
-    <string name="nextVibrate">next vibration will be at: </string>
     <string name="appIsActiveText">app keeps reminding you</string>
     <string name="appIsNotActiveText">app is not active</string>
     <string name="editDayActivityDescription">
@@ -20,19 +16,39 @@
     </string>
 
 
-    <string name="keyNextVibrate">keyNextVibrate</string>
-    <string name="keyLastVibrate">keyLastVibrate</string>
     <string name="keyTakeABreakValue">keyTakeABreakValue</string>
     <string name="keyIsAppActive">keyIsAppActive</string>
-    <string name="keyVibrationStartHour">keyVibrationStartHour</string>
-    <string name="keyVibrationStartMinute">keyVibrationStartMinute</string>
-    <string name="keyVibrationEndHour">keyVibrationEndHour</string>
-    <string name="keyVibrationEndMinute">keyVibrationEndMinute</string>
-    <string name="keyFirstStart">keyFirstStart</string>
+    <string name="keyFirstStart">keyFirstStartV2</string>
     <string name="keyVibrationDuration">keyVibrationDuration</string>
     <string name="keyVibrationRepeatTime">keyVibrationRepeatTime</string>
     <string name="keyVibrationPower">keyVibrationPower</string>
 
+    <string name="deviceHasNoVibrator">Device has no vibrator. Use acoustic alarm?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="firstStartupDialog">This little app has one purpose:\n
+        \nGive your style of praying a new momentum! \n
+        \nHow?! It does not give you any advice or anything else. It simply vibrates.
+        \nIt passively vibrates every X minutes, whereas the repeat time is defined by you. The gist of the reminding -
+        vibrating - is to motivate you to do a quick prayer, briefly speak with god and remind you of his presence in
+        your life.
+        \nBelieve me! Jesus will change everything!
+        \n
+        \nTo provide some comfort, the app has various adjustable preferences.
+        \n- repeat time of vibration
+        \n- duration of vibration
+        \n- off-hours - sleep mode at night
+        \n- own kind of vibration pattern
+        \n- take a break button
+        \n- shut down function
+        \nOnce the app is started it does not need any adjustments anymore and keeps running until you tell it otherwise.
+        It boots with your device, adjusts to your off-hours and offers a break-button if the reminding is not appropriate
+        at the time.
+    </string>
+    <string name="explainButtons">
+        Try out the blue buttons and sliders. They set up your individual configuration!
+    </string>
 
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -44,6 +60,8 @@
 
     <string name="exit"> X </string>
     <string name="until">to</string>
+
+    <string name="returnToApp">Explore BreathPray!</string>
 
     <string name="clickMe">click me!</string>
 
