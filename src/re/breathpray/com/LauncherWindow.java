@@ -1,8 +1,8 @@
 package re.breathpray.com;
 
 
-import android.app.Dialog;
 import android.os.Vibrator;
+import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -28,7 +28,7 @@ public class LauncherWindow extends Activity {
     private static final String AD_UNIT_ID = "ca-app-pub-3956003081714684/6818330858";
     private AdView adView;
     // Time scrolled flag
-    private final Context context = this;
+    private final Activity activity = this;
     public final int textSizeInMM = 2;
 
     /**
@@ -44,23 +44,28 @@ public class LauncherWindow extends Activity {
         final int minVibrationDuration = 0;
         final int minBreakTime = 1;
 
-        SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
 
         adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(AD_UNIT_ID);;
+        adView.setAdUnitId(AD_UNIT_ID);
 
         Log.d(TAG,"starting up main window of BreathPray");
         if(preferences.getBoolean(getString(R.string.keyFirstStart),false)){
             Log.d(TAG,"BreathPray - first startup");
 
-            startActivity(new Intent(this,FirstStartupActivity.class));
+
+            final Intent intent = new Intent(this, FirstStartupActivity.class);
+            intent.setAction(BreathPrayConstants.defaultFirstStartupActivityAction);
+            intent.addCategory(BreathPrayConstants.defaultCategory);
+            startActivity(intent);
 
             if(!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator());
                 //TODO create popup
 
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean(getString(R.string.keyFirstStart),true);
+            editor.putBoolean(getString(R.string.keyIsAppActive),false);
             while(!editor.commit());
         }
 
@@ -68,8 +73,8 @@ public class LauncherWindow extends Activity {
         linearLayout.addView(adView);
 
         AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                //.addTestDevice("9684DFFB83935CE920E945C32F975A12")
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
                 .build();
 
 
@@ -82,15 +87,24 @@ public class LauncherWindow extends Activity {
         repeatTimeWheelAdapter.setItemTextResource(R.id.text);
         repeatTimeWheel.setViewAdapter(repeatTimeWheelAdapter);
         repeatTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 25) - minRepeatTime);
-        repeatTimeWheel.addChangingListener(new OnWheelChangedListener() {
+        repeatTimeWheel.addScrollingListener(new OnWheelScrollListener() {
+
             @Override
-            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
-                newValue += minRepeatTime;
-                SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+            public void onScrollingStarted(AbstractWheel wheel) {
+
+            }
+
+            @Override
+            public void onScrollingFinished(AbstractWheel wheel) {
+                int value = minRepeatTime + wheel.getCurrentItem();
+                SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationRepeatTime), newValue);
+                editor.putInt(getString(R.string.keyVibrationRepeatTime), value);
+                editor.putBoolean(getString(R.string.keyIsAppActive), true);
                 //Data has to be commited!
-                while (!editor.commit());
+                while (!editor.commit()) ;
+                ((ToggleButton) activity.findViewById(R.id.toggleButton)).setChecked(true);
+                startVibrationService(true);
             }
         });
 
@@ -114,15 +128,23 @@ public class LauncherWindow extends Activity {
         vibrationDurationWheelAdapter.setItemTextResource(R.id.text);
         vibrationDurationWheel.setViewAdapter(vibrationDurationWheelAdapter);
         vibrationDurationWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationDuration), 25) - minVibrationDuration);
-        vibrationDurationWheel.addChangingListener(new OnWheelChangedListener() {
+        vibrationDurationWheel.addScrollingListener(new OnWheelScrollListener() {
+
             @Override
-            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
-                newValue += minVibrationDuration;
-                SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+            public void onScrollingStarted(AbstractWheel wheel) {
+            }
+
+            @Override
+            public void onScrollingFinished(AbstractWheel wheel) {
+                int value = minVibrationDuration + wheel.getCurrentItem();
+                SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationDuration), newValue);
+                editor.putInt(getString(R.string.keyVibrationDuration), value);
+                editor.putBoolean(getString(R.string.keyIsAppActive), true);
                 //Data has to be commited!
-                while (!editor.commit());
+                while (!editor.commit()) ;
+                ((ToggleButton) activity.findViewById(R.id.toggleButton)).setChecked(true);
+                startVibrationService(true);
             }
         });
 
@@ -133,15 +155,21 @@ public class LauncherWindow extends Activity {
         breakTimeWheelAdapter.setItemTextResource(R.id.text);
         breakTimeWheel.setViewAdapter(breakTimeWheelAdapter);
         breakTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyTakeABreakValue), 60) - minBreakTime);
-        breakTimeWheel.addChangingListener(new OnWheelChangedListener() {
+        breakTimeWheel.addScrollingListener(new OnWheelScrollListener() {
+
+
             @Override
-            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
-                newValue += minBreakTime;
-                SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+            public void onScrollingStarted(AbstractWheel wheel) {
+            }
+
+            @Override
+            public void onScrollingFinished(AbstractWheel wheel) {
+                int value = minBreakTime + wheel.getCurrentItem();
+                SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyTakeABreakValue), newValue);
+                editor.putInt(getString(R.string.keyTakeABreakValue), value);
                 //Data has to be commited!
-                while (!editor.commit());
+                while (!editor.commit()) ;
             }
         });
 
@@ -177,7 +205,7 @@ public class LauncherWindow extends Activity {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                final Intent intent = new Intent(context,ActiveVibrationService.class);
+                final Intent intent = new Intent(activity,ActiveVibrationService.class);
                 intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
                 intent.addCategory(BreathPrayConstants.defaultCategory);
                 intent.putExtra(BreathPrayConstants.intervalIntentExtraFieldName,seekBar.getProgress());
@@ -193,7 +221,7 @@ public class LauncherWindow extends Activity {
                     unbindService(mConnection);
                     mBound = false;
                 }
-                SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+                SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt(getString(R.string.keyVibrationPower), seekBar.getProgress());
                 editor.apply();
@@ -224,10 +252,6 @@ public class LauncherWindow extends Activity {
     }
 
     public void onDestroy(){
-
-        final Intent intent = new Intent(this, VibrationRepeaterService.class);
-        intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
-        this.startService(intent);
 
         if(adView != null)
             adView.destroy();
@@ -280,11 +304,6 @@ public class LauncherWindow extends Activity {
 
     @Override
     public void onPause(){
-
-        final Intent intent = new Intent(this, VibrationRepeaterService.class);
-        intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
-        this.startService(intent);
-
         if(adView != null)
             adView.pause();
         super.onPause();
@@ -293,12 +312,16 @@ public class LauncherWindow extends Activity {
     public void onToggleButtonClick(View view){
         ToggleButton toggleButton = (ToggleButton) view;
 
-        SharedPreferences preferences = context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(getString(R.string.keyIsAppActive), toggleButton.isChecked());
-        editor.commit();
+        while (!editor.commit());
 
-        if(toggleButton.isChecked()) {
+        startVibrationService(toggleButton.isChecked());
+    }
+
+    private void startVibrationService(final boolean startOrStop) {
+        if(startOrStop) {
             final Intent intent = new Intent(this, VibrationRepeaterService.class);
             intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
             this.startService(intent);
@@ -351,16 +374,16 @@ public class LauncherWindow extends Activity {
 
     private void createEditDayActivity(String dayName) {
         Intent intent = new Intent(this, EditDayActivity.class);
-        intent.setAction(BreathPrayConstants.defaultActivityAction);
+        intent.setAction(BreathPrayConstants.defaultEditDayAction);
         intent.addCategory(BreathPrayConstants.defaultCategory);
         //set the dayname to monday
         intent.putExtra(BreathPrayConstants.dayName, dayName);
         //set "monday"+"Start" to time where the app should shut down
         intent.putExtra("Start",
-                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"Start",6*12));
+                activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName + "Start", 6 * 12));
         //set "monday"+"End" to time where the app should shut down
         intent.putExtra("End",
-                context.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"End",22*12));
+                activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"End",22*12));
         startActivity(intent);
     }
 

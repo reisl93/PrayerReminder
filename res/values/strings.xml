@@ -18,7 +18,7 @@
 
     <string name="keyTakeABreakValue">keyTakeABreakValue</string>
     <string name="keyIsAppActive">keyIsAppActive</string>
-    <string name="keyFirstStart">keyFirstStartV2</string>
+    <string name="keyFirstStart">keyFirstStartv2</string>
     <string name="keyVibrationDuration">keyVibrationDuration</string>
     <string name="keyVibrationRepeatTime">keyVibrationRepeatTime</string>
     <string name="keyVibrationPower">keyVibrationPower</string>

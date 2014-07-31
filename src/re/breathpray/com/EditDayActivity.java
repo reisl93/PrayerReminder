@@ -167,8 +167,7 @@ public class EditDayActivity extends Activity {
         SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).edit();
         editor.putInt(currentDayName + "Start", startDayAt);
         editor.putInt(currentDayName + "End", endDayAt);
-        while (!editor.commit())
-            SystemClock.sleep(10);
+        while (!editor.commit());
 
 
         finish();

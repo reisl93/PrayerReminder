@@ -13,6 +13,8 @@ public class BreathPrayConstants {
     public final static String defaultCyclicVibrationServiceAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayVibrationAction";
     public final static String defaultVibrationRepeaterServiceAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayVibrationRepeaterAction";
     public final static String defaultActivityAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayActivityAction";
+    public final static String defaultFirstStartupActivityAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayFirstStartupActivityAction";
+    public final static String defaultEditDayAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayEditDayActivityAction";
     public final static String intervalIntentExtraFieldName = "interval";
     public final static String loopEndlessExecuteIntentExtraFieldName = "loopEndlessExecute";
     public final static String durationIntentExtraFieldName = "duration";

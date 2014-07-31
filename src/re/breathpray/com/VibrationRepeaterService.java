@@ -108,6 +108,8 @@ public class VibrationRepeaterService extends Service{
      */
     private void stopCurrentlyPendingVibrations(){
         final Intent intent = new Intent(this, ActiveVibrationService.class);
+        intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
+        intent.addCategory(BreathPrayConstants.defaultCategory);
         for(int requestCode = 0; requestCode < 24*60; requestCode++) {
             alarmManager.cancel(PendingIntent.getService(this,requestCode, intent,0));
         }

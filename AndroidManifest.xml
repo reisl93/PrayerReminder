@@ -31,16 +31,16 @@
         <activity android:name=".FirstStartupActivity"
                   android:theme="@style/Theme.D1NoTitleDim">
             <intent-filter>
-                <action android:name=  "re.breathpray.com.ConfigurationManager.defaultActivityAction"/>
-                <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
+                <action android:name=  "re.breathpray.com.BreathPrayConstants.defaultFirstStartupActivityAction"/>
+                <category android:name="re.breathpray.com.BreathPrayConstants.defaultCategory"/>
             </intent-filter>
         </activity>
 
         <activity android:name=".EditDayActivity"
                   android:theme="@style/Theme.D1NoTitleDim">
             <intent-filter>
-                <action android:name=  "re.breathpray.com.ConfigurationManager.defaultActivityAction"/>
-                <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
+                <action android:name=  "re.breathpray.com.BreathPrayConstants.defaultEditDayAction"/>
+                <category android:name="re.breathpray.com.BreathPrayConstants.defaultCategory"/>
             </intent-filter>
         </activity>
 
@@ -50,8 +50,8 @@
                  android:permission="RE.PrayerReminder.UsePreferenceFile"
                  android:label="@string/app_name">
             <intent-filter>
-                <action android:name=  "re.breathpray.com.ConfigurationManager.defaultVibrationRepeaterServiceAction"/>
-                <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
+                <action android:name=  "re.breathpray.com.BreathPrayConstants.defaultVibrationRepeaterServiceAction"/>
+                <category android:name="re.breathpray.com.BreathPrayConstants.defaultCategory"/>
             </intent-filter>
         </service>
 
@@ -60,8 +60,8 @@
                  android:permission="RE.PrayerReminder.UsePreferenceFile"
                  android:label="@string/app_name">
             <intent-filter>
-                <action android:name=  "re.breathpray.com.ConfigurationManager.defaultCyclicVibrationServiceAction"/>
-                <category android:name="re.breathpray.com.ConfigurationManager.defaultCategory"/>
+                <action android:name=  "re.breathpray.com.BreathPrayConstants.defaultCyclicVibrationServiceAction"/>
+                <category android:name="re.breathpray.com.BreathPrayConstants.defaultCategory"/>
             </intent-filter>
         </service>
 
