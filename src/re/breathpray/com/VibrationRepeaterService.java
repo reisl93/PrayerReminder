@@ -107,14 +107,10 @@ public class VibrationRepeaterService extends Service{
      * stops all currently scheduled vibrations
      */
     private void stopCurrentlyPendingVibrations(){
-
-        //calculate number of vibration that are scheduled at current day
-        final int numberOfVibrationsPerDay = (vibrationAttributesManager.getStart() - vibrationAttributesManager.getEnd())
-                / BreathPrayConstants.numberOfGridPerHour/ BreathPrayConstants.gridInMinutes/1000;
-        final int dummyDuration = 0;
-
-        for(int requestCode = 0; requestCode < numberOfVibrationsPerDay; requestCode++)
-            alarmManager.cancel(createCyclingServicePendingIntent(requestCode,dummyDuration));
+        final Intent intent = new Intent(this, ActiveVibrationService.class);
+        for(int requestCode = 0; requestCode < 24*60; requestCode++) {
+            alarmManager.cancel(PendingIntent.getService(this,requestCode, intent,0));
+        }
     }
 
     /**

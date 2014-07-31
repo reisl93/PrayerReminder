@@ -48,7 +48,7 @@ public class LauncherWindow extends Activity {
 
         adView = new AdView(this);
         adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(AD_UNIT_ID);
+        adView.setAdUnitId(AD_UNIT_ID);;
 
         Log.d(TAG,"starting up main window of BreathPray");
         if(preferences.getBoolean(getString(R.string.keyFirstStart),false)){
@@ -68,8 +68,8 @@ public class LauncherWindow extends Activity {
         linearLayout.addView(adView);
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
+                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                //.addTestDevice("9684DFFB83935CE920E945C32F975A12")
                 .build();
 
 

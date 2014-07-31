@@ -68,8 +68,6 @@ public class ActiveVibrationService extends Service {
 
         vibrator.vibrate(array,-1);
 
-        SystemClock.sleep(duration*100);
-
         Log.d(TAG,"exit - vibrationCycle");
     }
 

@@ -59,6 +59,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java" afterPath="$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java" afterPath="$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java" afterPath="$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PrayerReminder.iws" />
@@ -70,7 +74,7 @@
     <file path="/VibrationRepeater.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399115722335" ignored="false" />
     <file path="/StartWindow.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406758553389" ignored="false" />
     <file path="/BootCompletedReceiver.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399498637979" ignored="false" />
-    <file path="/VibrationRepeaterService.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406805141131" ignored="false" />
+    <file path="/VibrationRepeaterService.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406816976467" ignored="false" />
     <file path="/main.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406811494419" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406808967051" ignored="false" />
     <file path="/IVibrationRepeaterService.aidl" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1400098543343" ignored="false" />
@@ -125,7 +129,7 @@
     <file path="$PROJECT_DIR$/spinnerwheel/gen/antistatic/spinnerwheel/BuildConfig.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406684875789" ignored="false" />
     <file path="/roundbutton.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406688289541" ignored="false" />
     <file path="/exitbutton.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406721079450" ignored="false" />
-    <file path="/LauncherWindow.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406810777352" ignored="false" />
+    <file path="/LauncherWindow.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406817315407" ignored="false" />
     <file path="/BreathPrayConstants.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406802760241" ignored="false" />
     <file path="/VibrationAttributesManager.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406804168271" ignored="false" />
     <file path="/DeviceHasNoVibration.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406806900552" ignored="false" />
@@ -133,7 +137,8 @@
     <file path="/firststartup.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406810741529" ignored="false" />
     <file path="/DeviceHasNoVibrationDialog.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406808887884" ignored="false" />
     <file path="/FirstStartupActivity.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406810072271" ignored="false" />
-    <file path="$PROJECT_DIR$/gen/re/breathpray/com/BuildConfig.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406812517215" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/artifacts/PrayerReminder.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406817370679" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/re/breathpray/com/BuildConfig.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406817420191" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,7 +239,7 @@
       <file leaf-file-name="LauncherWindow.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="50" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.0">
+            <state line="122" column="30" selection-start="5541" selection-end="5541" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -245,7 +250,7 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="53" selection-start="409" selection-end="409" vertical-scroll-proportion="0.24285714">
+            <state line="4" column="46" selection-start="216" selection-end="216" vertical-scroll-proportion="0.12615955">
               <folding />
             </state>
           </provider>
@@ -263,21 +268,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DeviceHasNoVibrationDialog.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/DeviceHasNoVibrationDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="37" selection-start="930" selection-end="930" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#732#929#0" expanded="true" />
-                <element signature="e#910#911#0" expanded="true" />
-                <element signature="e#983#1188#0" expanded="true" />
-                <element signature="e#1169#1170#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="FirstStartupActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/FirstStartupActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -285,6 +275,24 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActiveVibrationService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="13" selection-start="2263" selection-end="2263" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VibrationRepeaterService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="113" column="45" selection-start="4366" selection-end="4366" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -310,32 +318,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/values/styles.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="18.04">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="editday.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/editday.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="68" selection-start="2352" selection-end="2352" vertical-scroll-proportion="-3.06">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="26" selection-start="2817" selection-end="2817" vertical-scroll-proportion="-14.28">
+            <state line="22" column="18" selection-start="1545" selection-end="1545" vertical-scroll-proportion="-6.84">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="VibrationAttributesManager.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/VibrationAttributesManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="53" column="76" selection-start="1807" selection-end="1881" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -366,8 +364,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/re/breathpray/com/VibrationAttributesManager.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/BreathPrayConstants.java" />
-        <option value="$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java" />
-        <option value="$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/DeviceHasNoVibration.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/DeviceHasNoVibrationActivity.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/DeviceHasNoVibrationDialog.java" />
@@ -378,6 +374,8 @@
         <option value="$PROJECT_DIR$/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
+        <option value="$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java" />
+        <option value="$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
@@ -1028,33 +1026,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/VibrationAttributesManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="62" selection-start="2965" selection-end="2965" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1059#1076#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/joda-time-2.3/src/main/java/org/joda/time/base/AbstractInstant.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="378" column="0" selection-start="12920" selection-end="12920" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="599" selection-end="599" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="17" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1120,9 +1094,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="26" selection-start="2817" selection-end="2817" vertical-scroll-proportion="-14.28">
+        <state line="27" column="70" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-2.04">
           <folding />
         </state>
       </provider>
@@ -1136,19 +1113,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="70" selection-start="1177" selection-end="1177" vertical-scroll-proportion="-2.04">
+        <state line="22" column="18" selection-start="1545" selection-end="1545" vertical-scroll-proportion="-6.84">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/VibrationAttributesManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="53" column="76" selection-start="1807" selection-end="1881" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/VibrationRepeaterService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="113" column="45" selection-start="4366" selection-end="4366" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/ActiveVibrationService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="13" selection-start="2263" selection-end="2263" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/LauncherWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="50" selection-start="1584" selection-end="1584" vertical-scroll-proportion="0.0">
+        <state line="122" column="30" selection-start="5541" selection-end="5541" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1157,7 +1154,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="53" selection-start="409" selection-end="409" vertical-scroll-proportion="0.24285714">
+        <state line="4" column="46" selection-start="216" selection-end="216" vertical-scroll-proportion="0.12615955">
           <folding />
         </state>
       </provider>
