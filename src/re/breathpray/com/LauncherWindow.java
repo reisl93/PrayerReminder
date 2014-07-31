@@ -19,6 +19,7 @@ import android.widget.*;
 import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.OnWheelChangedListener;
 import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
+import org.joda.time.LocalTime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,13 +80,6 @@ public class LauncherWindow extends Activity {
             editor.putInt(getString(R.string.keyVibrationDuration), 16);
             editor.putBoolean(getString(R.string.keyIsAppActive), true);
             editor.putInt(getString(R.string.keyTakeABreakValue), 60);
-            /*
-            for(int i = 0; i < ConfigurationManager.daysOfWeeks.length; i++){
-                editor.putInt(getString(R.string.keyVibrationEndHour) + ConfigurationManager.daysOfWeeks[i], 22);
-                editor.putInt(getString(R.string.keyVibrationEndMinute) + ConfigurationManager.daysOfWeeks[i],0);
-                editor.putInt(getString(R.string.keyVibrationStartHour) + ConfigurationManager.daysOfWeeks[i],6);
-                editor.putInt(getString(R.string.keyVibrationStartMinute) + ConfigurationManager.daysOfWeeks[i],0);
-            }    */
 
             editor.apply();
         }
@@ -242,6 +236,8 @@ public class LauncherWindow extends Activity {
         textView = (TextView) this.findViewById(R.id.textViewTakeABreak);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
 
+        updateDateTimes();
+
     }
 
     public void onDestroy(){
@@ -262,6 +258,41 @@ public class LauncherWindow extends Activity {
         super.onResume();
         if(adView != null)
             adView.resume();
+
+        updateDateTimes();
+    }
+
+    private void updateDateTimes() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+
+        updateSingleDay(sharedPreferences, getString(R.string.monday),R.id.mondayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.tuesday),R.id.tuesdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.wednesday),R.id.wednesdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.thursday),R.id.thursdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.friday),R.id.fridayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.saturday),R.id.saturdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.sunday),R.id.sundayTime);
+
+    }
+
+    private void updateSingleDay(SharedPreferences sharedPreferences, String day, int textviewID) {
+        int startTime;
+        int endTime;
+        startTime = sharedPreferences.getInt(day + "Start", 6 * EditDayActivity.numberOfGridPerHour);
+        endTime = sharedPreferences.getInt(day + "End", 22 * EditDayActivity.numberOfGridPerHour);
+        ((TextView) this.findViewById(textviewID)).setText(
+                new LocalTime()
+                        .hourOfDay().setCopy(startTime / EditDayActivity.numberOfGridPerHour)
+                        .minuteOfHour().setCopy((startTime % EditDayActivity.numberOfGridPerHour) * EditDayActivity.gridInMinutes)
+                        .toString(getString(R.string.timePattern))
+                + " - " +
+                new LocalTime()
+                        .hourOfDay().setCopy(endTime / EditDayActivity.numberOfGridPerHour)
+                        .minuteOfHour().setCopy((endTime % EditDayActivity.numberOfGridPerHour) * EditDayActivity.gridInMinutes)
+                        .toString(getString(R.string.timePattern))
+
+        );
     }
 
     @Override

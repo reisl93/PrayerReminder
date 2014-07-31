@@ -26,9 +26,9 @@ public class EditDayActivity extends Activity {
 
     private LinkedList<SeekArc> seekarcsListWithFirstElementsOnForeground;
 
-    public final int MAXSEEKARCRANGE = 288; // Hence in 5 minute steps
-    private final int gridInMinutes = 24 * 60 / MAXSEEKARCRANGE;
-    private final int numberOfGridPerHour = MAXSEEKARCRANGE / 24;
+    public final static int MAXSEEKARCRANGE = 288; // Hence in 5 minute steps
+    public final static int gridInMinutes = 24 * 60 / MAXSEEKARCRANGE;
+    public final static int numberOfGridPerHour = MAXSEEKARCRANGE / 24;
 
     private int startDayAt = numberOfGridPerHour * 6; //start default at 6 o'clock
     private int endDayAt = numberOfGridPerHour * 22; //end default at 22 o'clock
@@ -53,35 +53,35 @@ public class EditDayActivity extends Activity {
         currentDayName = intent.getStringExtra(dayName);
         ((TextView) this.findViewById(R.id.nameOfEditedDay)).setText(currentDayName);
 
-        startDayAt = intent.getIntExtra("Start",6*numberOfGridPerHour);
-        endDayAt = intent.getIntExtra("End",22*numberOfGridPerHour);
+        startDayAt = intent.getIntExtra("Start", 6 * numberOfGridPerHour);
+        endDayAt = intent.getIntExtra("End", 22 * numberOfGridPerHour);
 
         seekArcEnd = (SeekArc) this.findViewById(R.id.seekArcStart);
         seekArkStart = (SeekArc) this.findViewById(R.id.seekArcEnd);
 
-        seekarcsListWithFirstElementsOnForeground.add(seekArcEnd);
-        seekarcsListWithFirstElementsOnForeground.addFirst(seekArkStart);
+        seekarcsListWithFirstElementsOnForeground.add(seekArkStart);
+        seekarcsListWithFirstElementsOnForeground.addFirst(seekArcEnd);
 
         //requires some toggles unit it is levelled off
         initSeekArcEnd();
         initSeekArkStart();
 
-        seekArkStart.setArcRotation(MAXSEEKARCRANGE/2 - endDayAt);
+        seekArkStart.setArcRotation(MAXSEEKARCRANGE / 2 - endDayAt);
         seekArkStart.setSweepAngle(MAXSEEKARCRANGE / 2 - seekArkStart.getArcRotation());
         seekArkStart.setMax(seekArkStart.getSweepAngle());
-        seekArkStart.setProgress(seekArkStart.getSweepAngle()-startDayAt);
+        seekArkStart.setProgress(seekArkStart.getSweepAngle() - startDayAt);
 
-        seekArcEnd.setArcRotation(MAXSEEKARCRANGE/2-startDayAt);
-        seekArcEnd.setSweepAngle(MAXSEEKARCRANGE/2-seekArcEnd.getArcRotation());
+        seekArcEnd.setArcRotation(startDayAt - MAXSEEKARCRANGE / 2);
+        seekArcEnd.setSweepAngle(MAXSEEKARCRANGE / 2 - seekArcEnd.getArcRotation());
         seekArcEnd.setMax(seekArcEnd.getSweepAngle());
         seekArcEnd.setProgress(endDayAt - startDayAt);
 
-        seekArcEnd.invalidate();
-        seekArcEnd.setVisibility(View.INVISIBLE);
-        seekArcEnd.setThumbInvisible();
         seekArkStart.invalidate();
-        seekArkStart.setVisibility(View.VISIBLE);
-        seekArkStart.setThumbVisible();
+        seekArkStart.setVisibility(View.INVISIBLE);
+        seekArkStart.setThumbInvisible();
+        seekArcEnd.invalidate();
+        seekArcEnd.setVisibility(View.VISIBLE);
+        seekArcEnd.setThumbVisible();
 
     }
 
@@ -125,7 +125,7 @@ public class EditDayActivity extends Activity {
         seekArcEnd.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser) {
-                endDayAt = progress + seekArkStart.getSweepAngle() - (int) seekArkStart.getProgressAngle();
+                endDayAt = progress + startDayAt;
                 //24:00 not possible -> capture
                 if (endDayAt >= MAXSEEKARCRANGE) {
                     endDayAt -= 1;
@@ -161,19 +161,19 @@ public class EditDayActivity extends Activity {
             newFirst.setThumbVisible();
             newFirst.setVisibility(View.VISIBLE);
 
-            int oldStartAngle = newFirst.getArcRotation();
+            int oldRotationAngle = newFirst.getArcRotation();
             newFirst.setArcRotation(-((int) first.getProgressAngle() + first.getArcRotation()));
             newFirst.setSweepAngle(MAXSEEKARCRANGE / 2 - newFirst.getArcRotation());
             newFirst.setMax(newFirst.getSweepAngle());
-            newFirst.setProgress((int) newFirst.getProgressAngle() + (oldStartAngle - newFirst.getArcRotation()));
+            newFirst.setProgress((int) newFirst.getProgressAngle() + (oldRotationAngle - newFirst.getArcRotation()));
         }
     }
 
     public void onExitDayActivityClicked(View view) {
 
-        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE),MODE_PRIVATE).edit();
-        editor.putInt(currentDayName+"Start",startDayAt);
-        editor.putInt(currentDayName+"End", endDayAt);
+        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).edit();
+        editor.putInt(currentDayName + "Start", startDayAt);
+        editor.putInt(currentDayName + "End", endDayAt);
         while (!editor.commit())
             SystemClock.sleep(10);
 
