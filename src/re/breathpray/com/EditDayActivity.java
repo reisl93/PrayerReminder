@@ -51,7 +51,9 @@ public class EditDayActivity extends Activity {
 
         seekarcsListWithFirstElementsOnForeground = new LinkedList<SeekArc>();
         currentDayName = intent.getStringExtra(dayName);
-        ((TextView) this.findViewById(R.id.nameOfEditedDay)).setText(currentDayName);
+        final TextView textView = (TextView) this.findViewById(R.id.nameOfEditedDay);
+        textView.setText(currentDayName);
+
 
         startDayAt = intent.getIntExtra("Start", 6 * numberOfGridPerHour);
         endDayAt = intent.getIntExtra("End", 22 * numberOfGridPerHour);

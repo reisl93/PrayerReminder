@@ -18,12 +18,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:gravity="right" android:baselineAligned="false">
-            <TextView
+            <re.breathpray.com.FontFitTextView
                     android:paddingLeft="15dp"
                     android:id="@+id/nameOfEditedDay"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:textSize="40dp"
+                    android:paddingRight="70dp"
+                    android:textSize="65dp"
                     android:textStyle="bold"
                     android:textColor="@color/blue"
                     android:layout_alignParentLeft="true"
