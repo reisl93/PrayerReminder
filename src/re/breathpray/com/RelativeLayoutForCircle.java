@@ -4,13 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Eisl
- * Date: 30.07.14
- * Time: 02:16
- * To change this template use File | Settings | File Templates.
- */
 public class RelativeLayoutForCircle extends RelativeLayout {
     public RelativeLayoutForCircle(Context context) {
         super(context);

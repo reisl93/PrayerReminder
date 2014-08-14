@@ -1,4 +1,4 @@
-package re.breathpray.com;
+package re.breathpray.com.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.triggertrap.seekarc.SeekArc;
 import org.joda.time.LocalTime;
+import re.breathpray.com.BreathPrayConstants;
+import re.breathpray.com.R;
+import re.breathpray.com.services.VibrationRepeaterService;
+import re.breathpray.com.VibrationAttributesManager;
 
 import java.util.LinkedList;
 
@@ -32,7 +36,7 @@ public class EditDayActivity extends Activity {
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.editday);
@@ -40,7 +44,7 @@ public class EditDayActivity extends Activity {
         Intent intent = getIntent();
 
         seekarcsListWithFirstElementsOnForeground = new LinkedList<SeekArc>();
-        currentDayName = intent.getStringExtra(BreathPrayConstants.dayName);
+        currentDayName = intent.getStringExtra(BreathPrayConstants.dayNameIntentExtraFieldName);
         final TextView textView = (TextView) this.findViewById(R.id.nameOfEditedDay);
         textView.setText(currentDayName);
 
@@ -140,7 +144,7 @@ public class EditDayActivity extends Activity {
         });
     }
 
-    public void onSeekarcFocusChangeButtonClicked(View view) {
+    public void onSeekarcFocusChangeButtonClicked(final View view) {
         final SeekArc first = seekarcsListWithFirstElementsOnForeground.getFirst();
         final ViewGroup parent = (ViewGroup) first.getParent();
         if (null != parent) {
@@ -161,9 +165,9 @@ public class EditDayActivity extends Activity {
         }
     }
 
-    public void onExitDayActivityClicked(View view) {
+    public void onExitDayActivityClicked(final View view) {
 
-        SharedPreferences.Editor editor = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(BreathPrayConstants.PREFERENCEFILE, MODE_PRIVATE).edit();
         editor.putInt(currentDayName + "Start", startDayAt);
         editor.putInt(currentDayName + "End", endDayAt);
         while (!editor.commit());

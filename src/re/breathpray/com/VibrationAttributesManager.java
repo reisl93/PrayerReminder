@@ -3,6 +3,8 @@ package re.breathpray.com;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.RingtoneManager;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 
@@ -18,9 +20,10 @@ public class VibrationAttributesManager {
     private int repeatTime = 1;
     private int duration = 16;
     private int pattern = 150;
-    private int start = 6 * 12;
-    private int end = 22 * 12;
-    private int volume = 500;
+    private int start = 8 * BreathPrayConstants.numberOfGridPerHour;
+    private int end = 22 * BreathPrayConstants.numberOfGridPerHour;
+    private int phoneRingerMode = AudioManager.RINGER_MODE_NORMAL;
+    private float volume = (float) 0.5;
     private boolean volumeActive = false;
     private boolean acousticNotificationActive = false;
     private String acousticNotificationUri = "";
@@ -44,19 +47,22 @@ public class VibrationAttributesManager {
     }
 
     public void reloadCurrentData() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.PREFERENCEFILE), Activity.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(BreathPrayConstants.PREFERENCEFILE, Activity.MODE_PRIVATE);
 
-        start = sharedPreferences.getInt(getCurrentDay() + "Start", 6 * 12);
-        end = sharedPreferences.getInt(getCurrentDay() + "End", 22 * 12);
+        start = sharedPreferences.getInt(getCurrentDay() + "Start", 8 * BreathPrayConstants.numberOfGridPerHour);
+        end = sharedPreferences.getInt(getCurrentDay() + "End", 22 * BreathPrayConstants.numberOfGridPerHour);
 
         appIsActive = sharedPreferences.getBoolean(BreathPrayConstants.keyIsAppActive, false);
         repeatTime = sharedPreferences.getInt(BreathPrayConstants.keyVibrationRepeatTime, 15);
         duration = sharedPreferences.getInt(BreathPrayConstants.keyVibrationDuration, 16);
         pattern = sharedPreferences.getInt(BreathPrayConstants.keyVibrationPattern, 15);
-        volume = sharedPreferences.getInt(BreathPrayConstants.keyNotificationVolume,500);
+        volume = sharedPreferences.getFloat(BreathPrayConstants.keyNotificationVolume, 0.5f);
         volumeActive = sharedPreferences.getBoolean(BreathPrayConstants.keyUniqueVolumeActive, false);
-        acousticNotificationUri = sharedPreferences.getString(BreathPrayConstants.keyAcousticNotificationUri, "");
+        acousticNotificationUri = sharedPreferences.getString(BreathPrayConstants.keyAcousticNotificationUri,
+                RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_NOTIFICATION).toString());
         acousticNotificationActive = sharedPreferences.getBoolean(BreathPrayConstants.keyAcousticIsActive, false);
+        phoneRingerMode = sharedPreferences.getInt(BreathPrayConstants.keyPhoneRingerMode, ((AudioManager) context.getSystemService(Context.AUDIO_SERVICE)).getRingerMode());
+
     }
 
     public String getCurrentDay(){
@@ -95,7 +101,7 @@ public class VibrationAttributesManager {
         return pattern;
     }
 
-    public int getVolume() {
+    public float getVolume() {
         return volume;
     }
 
@@ -109,5 +115,9 @@ public class VibrationAttributesManager {
 
     public String getAcousticNotificationUri() {
         return acousticNotificationUri;
+    }
+
+    public int getPhoneRingerMode() {
+        return phoneRingerMode;
     }
 }

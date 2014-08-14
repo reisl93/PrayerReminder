@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/google-play-services/google-play-services1.iml" filepath="$PROJECT_DIR$/google-play-services/google-play-services1.iml" />
       <module fileurl="file://$PROJECT_DIR$/SeekArc_library/seekarc.iml" filepath="$PROJECT_DIR$/SeekArc_library/seekarc.iml" />
       <module fileurl="file://$PROJECT_DIR$/spinnerwheel/spinnerwheel.iml" filepath="$PROJECT_DIR$/spinnerwheel/spinnerwheel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
     </modules>
   </component>
 </project>

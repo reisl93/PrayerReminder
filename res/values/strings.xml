@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BreathPray</string>
-    <string name="PREFERENCEFILE">re.breathpray.com.preferencefile</string>
 
     <string name="descriptionVibrationDuration">Set the duration in seconds of every single vibration of this app which
         notifies you:
@@ -34,6 +33,8 @@
         \nBy clicking the blue button in the middle of the circle the shutdown of the app is selected.
     </string>
 
+    <string name="welcome">Welcome!</string>
+
 
     <string name="deviceHasNoVibrator">Device has no vibrator. Use acoustic alarm?</string>
     <string name="yes">Yes</string>
@@ -54,11 +55,12 @@
         \n- own kind of vibration pattern
         \n- take a break button
         \n- shut down function
+        \n- mind calls and silent/vibration mode
+        \n- use acoustic notifications
         \nOnce the app is started it does not need any adjustments anymore and keeps running until you tell it
         otherwise.
         It boots with your device, adjusts to your off-hours and offers a break-button if the reminding is not
-        appropriate
-        at the time.
+        appropriate at the time.
     </string>
     <string name="explainButtons">
         Try out the blue buttons and sliders. They set up your individual configuration!

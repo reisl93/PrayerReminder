@@ -102,7 +102,7 @@
                 <LinearLayout
                         android:id="@+id/buttonWednesday"
                         style="@style/buttonStyle"
-                        android:onClick="onWednesdayClicked">>
+                        android:onClick="onWednesdayClicked">
                     <TextView
                             style="@style/buttonLeftText"
                             android:text="@string/wednesday"/>

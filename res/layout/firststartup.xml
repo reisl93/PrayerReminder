@@ -21,7 +21,7 @@
             <re.breathpray.com.FontFitTextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Welcome!"
+                    android:text="@string/welcome"
                     android:textStyle="bold"
                     android:gravity="left"
                     android:textColor="@color/blue"/>

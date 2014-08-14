@@ -4,7 +4,7 @@
     <string name="descriptionVibrationCycleTimeDescription">Hier stellen sie die Intervallszeit zwischen den Erinnerungen in Minuten ein:</string>
     <string name="descriptionVibrationPattern">Hier stellen Sie ein eigenes Vibriermuster ein, mit dem Sie erinnert werden:</string>
     <string name="descriptionPrayerReminderStatus">Klicken Sie hier um Status der App zu ändern:</string>
-    <string name="descriptionBreakButton">Wenn Sie den Knopf "Pause" drücken, wird eine Zeit lang nicht mehr erinnert. Hier können sie die Pausenlänge in Minuten einstellen:</string>
+    <string name="descriptionBreakButton">Wenn Sie den Knopf "Pause" drücken, werden Sie eine Zeit lang nicht mehr erinnert. Hier können Sie die Pausenlänge in Minuten einstellen:</string>
     <string name="descriptionRingtone">Hier kann eine akustische Erinnerung aktiviert und eingestellt werden:</string>
     <string name="descriptionVolume">System unabhängige Lautstärke der akustischen Erinnerungen?</string>
 
@@ -13,12 +13,12 @@
     <string name="takeABreakTitle">Pausenknopf</string>
     <string name="vibrationPatternTitle">Vibrationsmuster</string>
     <string name="ringtoneTitle">Akustische Erinnerung</string>
-    <string name="volumeTitle">Lautstärke</string>
+    <string name="volumeTitle">Einzigartige Lautstärke</string>
 
     <string name="takeABreakButton">Pause</string>
 
-    <string name="appIsActiveText">App ist aktiv und erinnert Sie</string>
-    <string name="appIsNotActiveText">App nicht aktiv - Sie werden nicht mehr erinnert</string>
+    <string name="appIsActiveText">App aktiv - kontinuierliche Erinnerungen</string>
+    <string name="appIsNotActiveText">App inaktiv - keine Erinnerungen</string>
 
     <string name="monday">Montag</string>
     <string name="tuesday">Dienstag</string>
@@ -33,13 +33,37 @@
         \nBeim Drücken des blauen Punktes wird eingestellt, ob Start oder Endzeit bearbeitet wird.
     </string>
 
+    <string name="firstStartupDialog">Freut euch alle Zeit! Betet ohne Unterlass!
+        \n1 Thess. 5, 16-17
+
+        \n\nWie? Ganz einfach! Dein Handy vibriert.
+        \nJede von dir eingestellte Erinnerung - Vibration - soll dich einladen Gott zu loben, ihm zu danken, sich zu
+        freuen und zu bitten. Werde dir seiner Gegenwart in deinem Leben bewusst.
+        \n\nDafür hast du verschiedene Einstellungsmöglichkeiten:
+        \n- Intervallszeit
+        \n- Vibrationsdauer
+        \n- Schlafmodus
+        \n- eigenes Vibrationsmuster
+        \n- Pausenknopf
+        \n- Abschaltfunktion
+        \n- akustische Erinnerungen
+        \n- berücksichtigt Telefonanrufe
+    </string>
+    <string name="explainButtons">
+        Probiere die blauen Buttons aus. Mit diesen können alle Einstellungen verändert werden!
+    </string>
+
     <string name="until">bis</string>
 
-    <string name="activatingApp">activiere…</string>
-    <string name="deactivatingApp">deactiviere…</string>
+    <string name="activatingApp">aktiviere…</string>
+    <string name="deactivatingApp">deaktiviere…</string>
 
     <string name="setRingtone">Ton ändern</string>
     <string name="ringtoneChooser">Wähle einen Ton</string>
+
+    <string name="returnToApp">Erkunde BreathPray!</string>
+
+    <string name="welcome">Willkommen!</string>
 
     <string name="yes">Ja</string>
     <string name="no">Nein</string>

@@ -1,9 +1,9 @@
-package re.breathpray.com;
+package re.breathpray.com.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import re.breathpray.com.R;
 
 /**
  * Date: 31.07.14
