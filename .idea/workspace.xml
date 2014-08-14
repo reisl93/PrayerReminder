@@ -57,6 +57,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/re/breathpray/com/services/ActiveVibrationService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/re/breathpray/com/services/VibrationRepeaterService.java" />
+      <change type="MODIFICATION" beforePath="D:\InHisLight\PrayerReminder\src\re\breathpray\com\activities\LauncherWindow.java" afterPath="$PROJECT_DIR$/src/re/breathpray/com/activities/LauncherWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/google-play-services/google-play-services1.iml" afterPath="$PROJECT_DIR$/google-play-services/google-play-services1.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/google-play-services/project.properties" afterPath="$PROJECT_DIR$/google-play-services/project.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PrayerReminder.iws" />
@@ -72,7 +77,7 @@
     <file path="/main.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1407967638758" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408020096248" ignored="false" />
     <file path="/IVibrationRepeaterService.aidl" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1400098543343" ignored="false" />
-    <file path="/Dummy.txt" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408049437045" ignored="false" />
+    <file path="/Dummy.txt" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408049455043" ignored="false" />
     <file path="/ObserverEvent.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288449786" ignored="false" />
     <file path="/Observer.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288883916" ignored="false" />
     <file path="/Observeable.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1399288877992" ignored="false" />
@@ -117,7 +122,7 @@
     <file path="/editday.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406765745677" ignored="false" />
     <file path="/LinearLayoutForCircle.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406686493807" ignored="false" />
     <file path="/circularprogressbar.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406682708101" ignored="false" />
-    <file path="/SeekArc.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406724476735" ignored="false" />
+    <file path="/SeekArc.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408050337442" ignored="false" />
     <file path="$PROJECT_DIR$/spinnerwheel/gen/antistatic/spinnerwheel/Manifest.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406684826370" ignored="false" />
     <file path="$PROJECT_DIR$/spinnerwheel/gen/antistatic/spinnerwheel/BuildConfig.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406684875789" ignored="false" />
     <file path="/roundbutton.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1406688289541" ignored="false" />
@@ -134,7 +139,9 @@
     <file path="/a.xml" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408009870519" ignored="false" />
     <file path="/IncomingCallReceiver.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408037875486" ignored="false" />
     <file path="/RingerModeStateChangeReceiver.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408037633816" ignored="false" />
-    <file path="$PROJECT_DIR$/gen/re/breathpray/com/BuildConfig.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408047950128" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/re/breathpray/com/BuildConfig.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408050428969" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/re/breathpray/com/R.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408051071563" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/re/breathpray/com/Manifest.java" changelist="77c36b94-db73-4ffc-b1e6-3a6014bb9ed2" time="1408051071563" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -250,19 +257,10 @@
       <file leaf-file-name="LauncherWindow.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/activities/LauncherWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="140" column="46" selection-start="6561" selection-end="6561" vertical-scroll-proportion="0.0">
+            <state line="101" column="58" selection-start="3963" selection-end="3963" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/values-de/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="44" selection-start="1348" selection-end="1348" vertical-scroll-proportion="-10.2">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -274,26 +272,6 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RingerModeStateChangeReceiver.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/receivers/RingerModeStateChangeReceiver.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RelativeLayoutForCircle.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/RelativeLayoutForCircle.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="11" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -310,16 +288,43 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="9" selection-start="735" selection-end="735" vertical-scroll-proportion="0.0">
+            <state line="14" column="65" selection-start="791" selection-end="791" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BreathPrayConstants.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="BreathPrayConstants.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/BreathPrayConstants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="104" selection-start="3385" selection-end="3385" vertical-scroll-proportion="0.33675563">
+            <state line="42" column="87" selection-start="3147" selection-end="3147" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="62" selection-start="3491" selection-end="3491" vertical-scroll-proportion="-13.16">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SeekArc.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SeekArc_library/src/com/triggertrap/seekarc/SeekArc.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="184" column="83" selection-start="6063" selection-end="6063" vertical-scroll-proportion="0.40246406">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="R.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://C:/Program Files (x86)/Android/android-sdk/platforms/android-13/android.jar!/android/R.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="642" column="30" selection-start="39208" selection-end="39208" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -367,13 +372,11 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/res/drawable/exitbutton.xml" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/RingerModeStateChangeReceiver.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/activities/EditDayActivity.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/receivers/IncomingCallReceiver.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/BreathPrayConstants.java" />
-        <option value="$PROJECT_DIR$/src/re/breathpray/com/activities/LauncherWindow.java" />
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/services/ActiveVibrationService.java" />
@@ -383,6 +386,8 @@
         <option value="$PROJECT_DIR$/res/values-de/strings.xml" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/receivers/BootCompletedReceiver.java" />
         <option value="$PROJECT_DIR$/src/re/breathpray/com/DeviceHasNoVibrationDialog.java" />
+        <option value="$PROJECT_DIR$/src/re/breathpray/com/activities/LauncherWindow.java" />
+        <option value="$PROJECT_DIR$/SeekArc_library/src/com/triggertrap/seekarc/SeekArc.java" />
       </list>
     </option>
   </component>
@@ -465,6 +470,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PrayerReminder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PrayerReminder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PrayerReminder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PrayerReminder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PrayerReminder" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -964,7 +1001,11 @@
       <created>1408049449115</created>
       <updated>1408049449115</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="version 2.2">
+      <created>1408049457616</created>
+      <updated>1408049457616</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -989,7 +1030,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="32" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5304948" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="-143" y="408" width="1634" height="355" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32947233" sideWeight="0.72600836" order="4" side_tool="false" content_ui="tabs" />
@@ -998,7 +1039,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="true" weight="0.32796317" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="1681" y="786" width="1600" height="265" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39355582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46870655" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32336017" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38550058" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
@@ -1007,7 +1048,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32986537" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1750306" sideWeight="0.61449945" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1750306" sideWeight="0.61449945" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3981588" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32336017" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="58" y="231" width="1634" height="469" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32986537" sideWeight="0.67318755" order="12" side_tool="false" content_ui="tabs" x="92" y="132" width="1496" height="826" />
@@ -1117,22 +1158,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/src/com/google/android/gms/ads/AdActivityTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="55" selection-start="664" selection-end="664" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/receivers/IncomingCallReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="63" selection-start="684" selection-end="684" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/services/ActiveVibrationService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="25" selection-start="1847" selection-end="1847" vertical-scroll-proportion="0.0">
@@ -1147,13 +1172,6 @@
             <element signature="e#2088#2280#0" expanded="true" />
             <element signature="e#2265#2266#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="39" selection-start="4076" selection-end="4131" vertical-scroll-proportion="-11.8">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1204,13 +1222,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="9" selection-start="735" selection-end="735" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/DeviceHasNoVibrationDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="24" selection-start="1042" selection-end="1042" vertical-scroll-proportion="0.0">
@@ -1227,18 +1238,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/BreathPrayConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="87" selection-start="3147" selection-end="3147" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="65" selection-start="791" selection-end="791" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/activities/LauncherWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="46" selection-start="6561" selection-end="6561" vertical-scroll-proportion="0.0">
+        <state line="101" column="58" selection-start="3963" selection-end="3963" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/re/breathpray/com/BreathPrayConstants.java">
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="104" selection-start="3385" selection-end="3385" vertical-scroll-proportion="0.33675563">
+        <state line="68" column="62" selection-start="3491" selection-end="3491" vertical-scroll-proportion="-13.16">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Android/android-sdk/platforms/android-13/android.jar!/android/R.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="642" column="30" selection-start="39208" selection-end="39208" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SeekArc_library/src/com/triggertrap/seekarc/SeekArc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="184" column="83" selection-start="6063" selection-end="6063" vertical-scroll-proportion="0.40246406">
           <folding />
         </state>
       </provider>
