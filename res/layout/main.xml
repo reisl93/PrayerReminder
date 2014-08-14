@@ -10,9 +10,8 @@
     <ToggleButton
             android:layout_width="fill_parent"
             android:layout_height="57dp"
-            android:text=""
             android:background="@drawable/my_toggle_button"
-            android:id="@+id/toggleButton" android:onClick="onToggleButtonClick"/>
+            android:id="@+id/toggleButtonAppIsActive" android:onClick="onToggleButtonActivateAppClick"/>
 
     <ScrollView
             android:layout_width="fill_parent"
@@ -20,12 +19,12 @@
             android:id="@+id/scrollView"
             android:layout_alignParentLeft="true" android:layout_marginLeft="20dp"
             android:layout_alignParentTop="true" android:layout_marginTop="60dp"
-            android:layout_marginBottom="60dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginBottom="60dp">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:gravity="center">
             <LinearLayout
                     android:orientation="vertical"
@@ -33,38 +32,44 @@
                     android:layout_height="wrap_content"
                     android:gravity="center">
                 <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/descriptionHeadTextStyle"
+                        android:text="@string/repeatTimeTitle"/>
+                <TextView
+                        style="@style/descriptionTextStyle"
                         android:id="@+id/textViewRepeatTime"
-                        android:text="@string/vibrationCycleTimeDescription"
-                        android:gravity="center|left"/>
+                        android:text="@string/descriptionVibrationCycleTimeDescription"/>
                 <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/repeatTime"
                                                              app:visibleItems="5"
                                                              app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
                                                              app:selectionDividerWidth="1px"
                                                              android:layout_height="wrap_content"
                                                              android:layout_width="wrap_content"/>
-                <View style="@style/lineSeparatorStyle"/>
             </LinearLayout>
+
+            <View style="@style/lineSeparatorStyle"/>
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
                 <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/vibrationDuration"
-                        android:id="@+id/textViewVibrateDuration" android:layout_gravity="center_horizontal|top"
-                        android:gravity="center|left"/>
+                        style="@style/descriptionHeadTextStyle"
+                        android:text="@string/durationTitle"/>
+                <TextView
+                        style="@style/descriptionTextStyle"
+                        android:text="@string/descriptionVibrationDuration"
+                        android:id="@+id/textViewVibrateDuration"/>
                 <antistatic.spinnerwheel.WheelHorizontalView android:id="@+id/vibrationDuration"
                                                              app:visibleItems="5"
                                                              app:selectionDivider="@drawable/divider_dark_gradient_horizontal"
                                                              app:selectionDividerWidth="1px"
                                                              android:layout_height="wrap_content"
                                                              android:layout_width="wrap_content"/>
-                <View style="@style/lineSeparatorStyle"/>
             </LinearLayout>
+
+            <View style="@style/lineSeparatorStyle"/>
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
@@ -80,9 +85,8 @@
                     <TextView
                             android:id="@+id/mondayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
-
                 <LinearLayout
                         android:id="@+id/buttonTuesday"
                         style="@style/buttonStyle"
@@ -93,7 +97,7 @@
                     <TextView
                             android:id="@+id/tuesdayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonWednesday"
@@ -105,7 +109,7 @@
                     <TextView
                             android:id="@+id/wednesdayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonThursday"
@@ -117,7 +121,7 @@
                     <TextView
                             android:id="@+id/thursdayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonFriday"
@@ -129,7 +133,7 @@
                     <TextView
                             android:id="@+id/fridayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonSaturday"
@@ -141,7 +145,7 @@
                     <TextView
                             android:id="@+id/saturdayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
                 <LinearLayout
                         android:id="@+id/buttonSunday"
@@ -153,34 +157,101 @@
                     <TextView
                             android:id="@+id/sundayTime"
                             style="@style/buttonRightText"
-                            android:text="06:00 - 22:00"/>
+                            android:text="08:00 - 22:00"/>
                 </LinearLayout>
             </LinearLayout>
+
             <View style="@style/lineSeparatorStyle"/>
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content">
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/vibrationPower"
-                        android:id="@+id/textViewVibratePower"/>
+                        style="@style/descriptionHeadTextStyle"
+                        android:text="@string/vibrationPatternTitle"/>
+                <TextView
+                        style="@style/descriptionTextStyle"
+                        android:text="@string/descriptionVibrationPattern"
+                        android:id="@+id/textViewVibrationPattern"/>
                 <SeekBar
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/seekBar"/>
-                <View style="@style/lineSeparatorStyle"/>
+                        android:id="@+id/seekBarPattern"/>
             </LinearLayout>
+
+            <View style="@style/lineSeparatorStyle"/>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        style="@style/descriptionHeadTextStyle"
+                        android:text="@string/ringtoneTitle"/>
+                <TextView
+                        style="@style/descriptionTextStyle"
+                        android:text="@string/descriptionRingtone"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <ToggleButton
+                        android:id="@+id/toggleButtonRingtone"
+                        style="@style/buttonStyle"
+                        android:background="@drawable/my_toggle_button"
+                        android:layout_width="wrap_content"
+                        android:onClick="onToggleButtonActivateRingtoneClick"/>
+                <Button
+                        android:layout_marginLeft="4dp"
+                        style="@style/buttonStyle"
+                        android:text="@string/setRingtone"
+                        android:onClick="onToggleButtonSetRingtoneClick"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:layout_marginTop="8dp"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        style="@style/descriptionHeadTextStyle"
+                        android:text="@string/volumeTitle"/>
+                <TextView
+                        style="@style/descriptionTextStyle"
+                        android:text="@string/descriptionVolume"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <ToggleButton
+                        android:id="@+id/toggleButtonVolume"
+                        style="@style/buttonStyle"
+                        android:background="@drawable/my_toggle_button"
+                        android:layout_width="wrap_content"
+                        android:onClick="onToggleButtonActivateVolumeClick"/>
+                <SeekBar
+                        android:layout_marginLeft="4dp"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:id="@+id/seekBarVolume"/>
+            </LinearLayout>
+
+            <View style="@style/lineSeparatorStyle"/>
+
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center">
                 <TextView
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/takeABreak"
+                        style="@style/descriptionHeadTextStyle"
+                        android:text="@string/takeABreakTitle"/>
+                <TextView
+                        style="@style/descriptionTextStyle"
+                        android:text="@string/descriptionBreakButton"
                         android:id="@+id/textViewTakeABreak"/>
                 <LinearLayout
                         android:orientation="vertical"

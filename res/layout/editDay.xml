@@ -46,7 +46,7 @@
                 android:id="@+id/description"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="@string/editDayActivityDescription"
+                android:text="@string/descriptionEditDayActivity"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"/>
     </LinearLayout>

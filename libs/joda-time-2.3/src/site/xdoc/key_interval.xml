@@ -12,7 +12,7 @@
 <section name="Interval">
 
 <p>
-An <i>interval</i> in Joda-Time represents an interval of time from one millisecond
+An <i>pattern</i> in Joda-Time represents an pattern of time from one millisecond
 <a href="key_instant.html">instant</a> to another instant.
 Both instants are fully specified instants in the datetime continuum, complete with time zone.
 </p>
@@ -20,12 +20,12 @@ Both instants are fully specified instants in the datetime continuum, complete w
 Intervals are implemented as <i>half-open</i>, which is to say that the start instant is
 inclusive but the end instant is exclusive.
 The end is always greater than or equal to the start.
-The interval is also restricted to just one <a href="key_chronology.html">chronology</a> and time zone.
+The pattern is also restricted to just one <a href="key_chronology.html">chronology</a> and time zone.
 </p>
 <p>
 Methods exist on intervals to obtain the start and end instants plus the chronology and time zone.
 There are also methods to obtain the <a href="key_duration.html">duration</a> and
-<a href="key_period.html">period</a> of the interval.
+<a href="key_period.html">period</a> of the pattern.
 </p>
 <p>
 You cannot compare intervals for order (ie. they do not implement <code>Comparable</code>.
@@ -36,7 +36,7 @@ If you want to compare the length of intervals you must obtain the duration of e
 
 <section name="Using Intervals in Joda-Time">
 <p>
-Within Joda-Time an interval is represented by the
+Within Joda-Time an pattern is represented by the
 <a href="apidocs/org/joda/time/ReadableInterval.html">ReadableInterval</a> interface.
 There are two implementations of the interface provided:
 <ul>
@@ -48,19 +48,19 @@ We recommend the immutable implementation for general usage.
 <p>
 The code can be used in various ways:
 <source>
-// interval from start to end
+// pattern from start to end
 DateTime start = new DateTime(2004, 12, 25, 0, 0, 0, 0);
 DateTime end = new DateTime(2005, 1, 1, 0, 0, 0, 0);
-Interval interval = new Interval(start, end);
+Interval pattern = new Interval(start, end);
 </source>
 Accessing other objects is easy:
 <source>
-Interval interval = ...
-DateTime start = interval.getStart();
-DateTime end = interval.getEnd();
-Chronology chrono = interval.getChronology();
-Duration duration = interval.toDuration();
-Period period = interval.toPeriod();
+Interval pattern = ...
+DateTime start = pattern.getStart();
+DateTime end = pattern.getEnd();
+Chronology chrono = pattern.getChronology();
+Duration duration = pattern.toDuration();
+Period period = pattern.toPeriod();
 </source>
 </p>
 <p>
@@ -71,9 +71,9 @@ Instead, you should usually refer directly to the implementation classes in your
 
 <subsection name="Nulls">
 <p>
-Joda-Time defines a null interval as a zero length interval from now to now.
+Joda-Time defines a null pattern as a zero length pattern from now to now.
 Thus, when a method is defined as taking a <code>ReadableInterval</code>, passing null in
-will be the same as passing in a zero length interval at the current time.
+will be the same as passing in a zero length pattern at the current time.
 </p>
 </subsection>
 

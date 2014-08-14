@@ -12,11 +12,28 @@
 
     <style name="lineSeparatorStyle">
         <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">2dip</item>
-        <item name="android:background">@color/blue</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@android:color/black</item>
         <item name="android:layout_marginBottom">6dp</item>
         <item name="android:layout_marginTop">6dp</item>
     </style>
+
+    <style name="descriptionHeadTextStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/darkBlue</item>
+        <item name="android:textSize">23dp</item>
+    </style>
+
+    <style name="descriptionTextStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
 
     <style name="buttonRightText">
         <item name="android:textColor">@color/grey</item>

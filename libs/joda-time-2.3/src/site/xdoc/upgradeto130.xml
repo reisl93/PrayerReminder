@@ -122,11 +122,11 @@ Bug fixes since 1.2
 
 - Interval.overlap/Interval.gap
   Previously these methods returned intervals in the default time zone
-  Now, they return intervals in the time zone of the original interval
+  Now, they return intervals in the time zone of the original pattern
 
 - Interval/MutableInterval.overlaps(ReadableInterval)
   Previously, these methods did not handle null correctly
-  Now, if the current millisecond instant is at the start of the interval the
+  Now, if the current millisecond instant is at the start of the pattern the
   method returns false (as defined, even if its a little unexpected)
 
 - DateTimeFormatterBuilder.MatchingParser

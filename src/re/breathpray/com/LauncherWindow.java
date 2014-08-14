@@ -1,6 +1,13 @@
 package re.breathpray.com;
 
 
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.database.Cursor;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Handler;
 import android.os.Vibrator;
 import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
@@ -13,12 +20,10 @@ import android.content.*;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.*;
 
 import antistatic.spinnerwheel.AbstractWheel;
-import antistatic.spinnerwheel.OnWheelChangedListener;
 import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
 import org.joda.time.LocalTime;
 
@@ -29,7 +34,18 @@ public class LauncherWindow extends Activity {
     private AdView adView;
     // Time scrolled flag
     private final Activity activity = this;
-    public final int textSizeInMM = 2;
+
+    //TODO telefonieren - keine vibration
+    //TODO volume mit lautlos?
+
+    // that is the string I want to get from Ringtone picker
+    // something like  content://media/internal/audio/media/60
+    // I can also get it stored version from somewhere else (preferences and such)
+    private String mRingtonePath = null;
+
+    // that is temp path I am using, because I can't find other way to store path
+    // received in setSingleChoiceItems onClickListener
+    private String mRingtoneTempPath = null;
 
     /**
      * Called when the activity is first created.
@@ -50,23 +66,25 @@ public class LauncherWindow extends Activity {
         adView.setAdSize(AdSize.BANNER);
         adView.setAdUnitId(AD_UNIT_ID);
 
-        Log.d(TAG,"starting up main window of BreathPray");
-        if(preferences.getBoolean(getString(R.string.keyFirstStart),false)){
-            Log.d(TAG,"BreathPray - first startup");
-
+        Log.d(TAG, "starting up main window of BreathPray");
+        if (preferences.getBoolean(BreathPrayConstants.keyFirstStart, true)) {
+            Log.d(TAG, "BreathPray - first startup");
 
             final Intent intent = new Intent(this, FirstStartupActivity.class);
             intent.setAction(BreathPrayConstants.defaultFirstStartupActivityAction);
             intent.addCategory(BreathPrayConstants.defaultCategory);
             startActivity(intent);
 
-            if(!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator());
-                //TODO create popup
+
+            if (!((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).hasVibrator()) {
+                DialogFragment newFragment = new DeviceHasNoVibrationDialog();
+                newFragment.show(this.getFragmentManager(), getString(R.string.deviceHasNoVibrator));
+            }
 
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean(getString(R.string.keyFirstStart),true);
-            editor.putBoolean(getString(R.string.keyIsAppActive),false);
-            while(!editor.commit());
+            editor.putBoolean(BreathPrayConstants.keyFirstStart, false);
+            editor.putBoolean(BreathPrayConstants.keyIsAppActive, false);
+            while (!editor.commit()) ;
         }
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.adView);
@@ -82,11 +100,11 @@ public class LauncherWindow extends Activity {
 
 
         final AbstractWheel repeatTimeWheel = (AbstractWheel) findViewById(R.id.repeatTime);
-        NumericWheelAdapter repeatTimeWheelAdapter = new NumericWheelAdapter(this,minRepeatTime , 12*60, "%03d");
+        NumericWheelAdapter repeatTimeWheelAdapter = new NumericWheelAdapter(this, minRepeatTime, 12 * 60, "%03d");
         repeatTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered_dark_back);
         repeatTimeWheelAdapter.setItemTextResource(R.id.text);
         repeatTimeWheel.setViewAdapter(repeatTimeWheelAdapter);
-        repeatTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationRepeatTime), 25) - minRepeatTime);
+        repeatTimeWheel.setCurrentItem(preferences.getInt(BreathPrayConstants.keyVibrationRepeatTime, 15) - minRepeatTime);
         repeatTimeWheel.addScrollingListener(new OnWheelScrollListener() {
 
             @Override
@@ -99,35 +117,33 @@ public class LauncherWindow extends Activity {
                 int value = minRepeatTime + wheel.getCurrentItem();
                 SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationRepeatTime), value);
-                editor.putBoolean(getString(R.string.keyIsAppActive), true);
+                editor.putInt(BreathPrayConstants.keyVibrationRepeatTime, value);
+                editor.putBoolean(BreathPrayConstants.keyIsAppActive, true);
                 //Data has to be commited!
                 while (!editor.commit()) ;
-                ((ToggleButton) activity.findViewById(R.id.toggleButton)).setChecked(true);
-                startVibrationService(true);
+                ((ToggleButton) activity.findViewById(R.id.toggleButtonAppIsActive)).setChecked(true);
+                startVibrationService(true, 0);
             }
         });
 
 
-
-
         final AbstractWheel vibrationDurationWheel = (AbstractWheel) findViewById(R.id.vibrationDuration);
         ArrayWheelAdapter<String> vibrationDurationWheelAdapter = new ArrayWheelAdapter<String>(this, new String[]{
-                "0,1","0,2","0,3","0,4","0,5","0,6","0,7","0,8","0,9","1,0",
-                "1,1","1,2","1,3","1,4","1,5","1,6","1,7","1,8","1,9","2,0",
-                "2,1","2,2","2,3","2,4","2,5","2,6","2,7","2,8","2,9","3,0",
-                "3,1","3,2","3,3","3,4","3,5","3,6","3,7","3,8","3,9","4,0",
-                "4,1","4,2","4,3","4,4","4,5","4,6","4,7","4,8","4,9","5,0",
-                "5,1","5,2","5,3","5,4","5,5","5,6","5,7","5,8","5,9","6,0",
-                "6,1","6,2","6,3","6,4","6,5","6,6","6,7","6,8","6,9","7,0",
-                "7,1","7,2","7,3","7,4","7,5","7,6","7,7","7,8","7,9","8,0",
-                "8,1","8,2","8,3","8,4","8,5","8,6","8,7","8,8","8,9","9,0",
-                "9,1","9,2","9,3","9,4","9,5","9,6","9,7","9,8","9,9"
+                "0,1", "0,2", "0,3", "0,4", "0,5", "0,6", "0,7", "0,8", "0,9", "1,0",
+                "1,1", "1,2", "1,3", "1,4", "1,5", "1,6", "1,7", "1,8", "1,9", "2,0",
+                "2,1", "2,2", "2,3", "2,4", "2,5", "2,6", "2,7", "2,8", "2,9", "3,0",
+                "3,1", "3,2", "3,3", "3,4", "3,5", "3,6", "3,7", "3,8", "3,9", "4,0",
+                "4,1", "4,2", "4,3", "4,4", "4,5", "4,6", "4,7", "4,8", "4,9", "5,0",
+                "5,1", "5,2", "5,3", "5,4", "5,5", "5,6", "5,7", "5,8", "5,9", "6,0",
+                "6,1", "6,2", "6,3", "6,4", "6,5", "6,6", "6,7", "6,8", "6,9", "7,0",
+                "7,1", "7,2", "7,3", "7,4", "7,5", "7,6", "7,7", "7,8", "7,9", "8,0",
+                "8,1", "8,2", "8,3", "8,4", "8,5", "8,6", "8,7", "8,8", "8,9", "9,0",
+                "9,1", "9,2", "9,3", "9,4", "9,5", "9,6", "9,7", "9,8", "9,9"
         });
         vibrationDurationWheelAdapter.setItemResource(R.layout.wheel_text_centered_dark_back);
         vibrationDurationWheelAdapter.setItemTextResource(R.id.text);
         vibrationDurationWheel.setViewAdapter(vibrationDurationWheelAdapter);
-        vibrationDurationWheel.setCurrentItem(preferences.getInt(getString(R.string.keyVibrationDuration), 25) - minVibrationDuration);
+        vibrationDurationWheel.setCurrentItem(preferences.getInt(BreathPrayConstants.keyVibrationDuration, 15) - minVibrationDuration);
         vibrationDurationWheel.addScrollingListener(new OnWheelScrollListener() {
 
             @Override
@@ -139,24 +155,23 @@ public class LauncherWindow extends Activity {
                 int value = minVibrationDuration + wheel.getCurrentItem();
                 SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationDuration), value);
-                editor.putBoolean(getString(R.string.keyIsAppActive), true);
+                editor.putInt(BreathPrayConstants.keyVibrationDuration, value);
+                editor.putBoolean(BreathPrayConstants.keyIsAppActive, true);
                 //Data has to be commited!
                 while (!editor.commit()) ;
-                ((ToggleButton) activity.findViewById(R.id.toggleButton)).setChecked(true);
-                startVibrationService(true);
+                ((ToggleButton) activity.findViewById(R.id.toggleButtonAppIsActive)).setChecked(true);
+                startVibrationService(true, 0);
             }
         });
 
         final AbstractWheel breakTimeWheel = (AbstractWheel) findViewById(R.id.breakTimeWheel);
 
-        NumericWheelAdapter breakTimeWheelAdapter = new NumericWheelAdapter(this,minBreakTime , 999, "%03d");
+        NumericWheelAdapter breakTimeWheelAdapter = new NumericWheelAdapter(this, minBreakTime, 999, "%03d");
         breakTimeWheelAdapter.setItemResource(R.layout.wheel_text_centered_dark_back);
         breakTimeWheelAdapter.setItemTextResource(R.id.text);
         breakTimeWheel.setViewAdapter(breakTimeWheelAdapter);
-        breakTimeWheel.setCurrentItem(preferences.getInt(getString(R.string.keyTakeABreakValue), 60) - minBreakTime);
+        breakTimeWheel.setCurrentItem(preferences.getInt(BreathPrayConstants.keyTakeABreakValue, 60) - minBreakTime);
         breakTimeWheel.addScrollingListener(new OnWheelScrollListener() {
-
 
             @Override
             public void onScrollingStarted(AbstractWheel wheel) {
@@ -167,18 +182,17 @@ public class LauncherWindow extends Activity {
                 int value = minBreakTime + wheel.getCurrentItem();
                 SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyTakeABreakValue), value);
+                editor.putInt(BreathPrayConstants.keyTakeABreakValue, value);
                 //Data has to be commited!
                 while (!editor.commit()) ;
             }
         });
 
 
-
-        SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar);
-        seekBar.setMax(BreathPrayConstants.vibrationCycleDuration);
-        seekBar.setProgress(preferences.getInt(getString(R.string.keyVibrationPower),150));
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBarPattern);
+        seekBar.setMax(BreathPrayConstants.vibrationInterval);
+        seekBar.setProgress(preferences.getInt(BreathPrayConstants.keyVibrationPattern, 150));
+        final SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
 
             private boolean mBound = false;
             private ActiveVibrationService mService;
@@ -198,62 +212,71 @@ public class LauncherWindow extends Activity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(mBound)
-                    mService.setInterval(seekBar.getProgress());
+                if (mBound) {
+                    mService.setPattern(((SeekBar) activity.findViewById(R.id.seekBarPattern)).getProgress());
+                    mService.setVolume(((SeekBar) activity.findViewById(R.id.seekBarVolume)).getProgress());
+                }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
-                final Intent intent = new Intent(activity,ActiveVibrationService.class);
+                final Intent intent = new Intent(activity, ActiveVibrationService.class);
                 intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
                 intent.addCategory(BreathPrayConstants.defaultCategory);
-                intent.putExtra(BreathPrayConstants.intervalIntentExtraFieldName,seekBar.getProgress());
-                intent.putExtra(BreathPrayConstants.durationIntentExtraFieldName, BreathPrayConstants.vibrationCycleDuration);
+                intent.putExtra(BreathPrayConstants.patternIntentExtraFieldName, ((SeekBar) activity.findViewById(R.id.seekBarPattern)).getProgress());
+                intent.putExtra(BreathPrayConstants.durationIntentExtraFieldName, 10);
+                intent.putExtra(BreathPrayConstants.acousticActiveIntentExtraFieldName, ((ToggleButton) activity.findViewById(R.id.toggleButtonRingtone)).isChecked());
+                intent.putExtra(BreathPrayConstants.acousticVolumeIntentExtraFieldName, ((SeekBar) activity.findViewById(R.id.seekBarVolume)).getProgress());
+                intent.putExtra(BreathPrayConstants.acousticUniqueVolumeIntentExtraFieldName, ((ToggleButton) activity.findViewById(R.id.toggleButtonVolume)).isChecked());
+                intent.putExtra(BreathPrayConstants.acousticUriIntentExtraFieldName, mRingtonePath);
                 intent.putExtra(BreathPrayConstants.loopEndlessExecuteIntentExtraFieldName, true);
 
-                bindService(intent,mConnection,Context.BIND_AUTO_CREATE);
+                bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                if(mBound){
+                if (mBound) {
                     unbindService(mConnection);
                     mBound = false;
                 }
                 SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putInt(getString(R.string.keyVibrationPower), seekBar.getProgress());
-                editor.apply();
+                editor.putInt(BreathPrayConstants.keyVibrationPattern, seekBar.getProgress());
+                while (!editor.commit()) ;
+                startVibrationService(true, 0);
             }
-        });
+        };
+        seekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
+
+        seekBar = (SeekBar) this.findViewById(R.id.seekBarVolume);
+        seekBar.setMax(1000);
+        seekBar.setProgress(preferences.getInt(BreathPrayConstants.keyNotificationVolume, 500));
+        seekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);
 
 
-        ToggleButton toggleButton = (ToggleButton) this.findViewById(R.id.toggleButton);
-
+        //app is active/inactive button
+        ToggleButton toggleButton = (ToggleButton) this.findViewById(R.id.toggleButtonAppIsActive);
         toggleButton.setTextOff(getString(R.string.appIsNotActiveText));
         toggleButton.setTextOn(getString(R.string.appIsActiveText));
-        toggleButton.setChecked(preferences.getBoolean(getString(R.string.keyIsAppActive), false));
+        toggleButton.setChecked(preferences.getBoolean(BreathPrayConstants.keyIsAppActive, false));
 
-        TextView textView = (TextView) this.findViewById(R.id.textViewRepeatTime);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
+        //acoustic activate button
+        toggleButton = (ToggleButton) this.findViewById(R.id.toggleButtonRingtone);
+        toggleButton.setChecked(preferences.getBoolean(BreathPrayConstants.keyAcousticIsActive, false));
 
-        textView = (TextView) this.findViewById(R.id.textViewVibrateDuration);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-
-        textView = (TextView) this.findViewById(R.id.textViewVibratePower);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
-
-        textView = (TextView) this.findViewById(R.id.textViewTakeABreak);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_MM, textSizeInMM);
+        //unique volume button
+        toggleButton = (ToggleButton) this.findViewById(R.id.toggleButtonVolume);
+        toggleButton.setChecked(preferences.getBoolean(BreathPrayConstants.keyUniqueVolumeActive, false));
 
         updateDateTimes();
 
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
 
-        if(adView != null)
+        if (adView != null)
             adView.destroy();
 
         super.onDestroy();
@@ -261,9 +284,9 @@ public class LauncherWindow extends Activity {
 
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(adView != null)
+        if (adView != null)
             adView.resume();
 
         updateDateTimes();
@@ -273,13 +296,13 @@ public class LauncherWindow extends Activity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
 
-        updateSingleDay(sharedPreferences, getString(R.string.monday),R.id.mondayTime);
-        updateSingleDay(sharedPreferences, getString(R.string.tuesday),R.id.tuesdayTime);
-        updateSingleDay(sharedPreferences, getString(R.string.wednesday),R.id.wednesdayTime);
-        updateSingleDay(sharedPreferences, getString(R.string.thursday),R.id.thursdayTime);
-        updateSingleDay(sharedPreferences, getString(R.string.friday),R.id.fridayTime);
-        updateSingleDay(sharedPreferences, getString(R.string.saturday),R.id.saturdayTime);
-        updateSingleDay(sharedPreferences, getString(R.string.sunday),R.id.sundayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.monday), R.id.mondayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.tuesday), R.id.tuesdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.wednesday), R.id.wednesdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.thursday), R.id.thursdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.friday), R.id.fridayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.saturday), R.id.saturdayTime);
+        updateSingleDay(sharedPreferences, getString(R.string.sunday), R.id.sundayTime);
 
     }
 
@@ -293,81 +316,210 @@ public class LauncherWindow extends Activity {
                         .hourOfDay().setCopy(startTime / BreathPrayConstants.numberOfGridPerHour)
                         .minuteOfHour().setCopy((startTime % BreathPrayConstants.numberOfGridPerHour) * BreathPrayConstants.gridInMinutes)
                         .toString(getString(R.string.timePattern))
-                + " - " +
-                new LocalTime()
-                        .hourOfDay().setCopy(endTime / BreathPrayConstants.numberOfGridPerHour)
-                        .minuteOfHour().setCopy((endTime % BreathPrayConstants.numberOfGridPerHour) * BreathPrayConstants.gridInMinutes)
-                        .toString(getString(R.string.timePattern))
+                        + " - " +
+                        new LocalTime()
+                                .hourOfDay().setCopy(endTime / BreathPrayConstants.numberOfGridPerHour)
+                                .minuteOfHour().setCopy((endTime % BreathPrayConstants.numberOfGridPerHour) * BreathPrayConstants.gridInMinutes)
+                                .toString(getString(R.string.timePattern))
 
         );
     }
 
     @Override
-    public void onPause(){
-        if(adView != null)
+    public void onPause() {
+        if (adView != null)
             adView.pause();
         super.onPause();
     }
 
-    public void onToggleButtonClick(View view){
+    public void onToggleButtonActivateAppClick(View view) {
         ToggleButton toggleButton = (ToggleButton) view;
 
         SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(getString(R.string.keyIsAppActive), toggleButton.isChecked());
-        while (!editor.commit());
+        editor.putBoolean(BreathPrayConstants.keyIsAppActive, toggleButton.isChecked());
+        while (!editor.commit()) ;
 
-        startVibrationService(toggleButton.isChecked());
+        startVibrationService(toggleButton.isChecked(), 0);
     }
 
-    private void startVibrationService(final boolean startOrStop) {
-        if(startOrStop) {
-            final Intent intent = new Intent(this, VibrationRepeaterService.class);
-            intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
-            this.startService(intent);
+    public void onToggleButtonActivateRingtoneClick(View view) {
+        ToggleButton toggleButton = (ToggleButton) view;
+
+        SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(BreathPrayConstants.keyAcousticIsActive, toggleButton.isChecked());
+        while (!editor.commit()) ;
+
+        //reactivate app or don't do anything if app is active/inactive
+        startVibrationService(((ToggleButton) activity.findViewById(R.id.toggleButtonAppIsActive)).isChecked(), 0);
+    }
+
+    public void onToggleButtonActivateVolumeClick(View view) {
+        ToggleButton toggleButton = (ToggleButton) view;
+
+        SharedPreferences preferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(BreathPrayConstants.keyUniqueVolumeActive, toggleButton.isChecked());
+        while (!editor.commit()) ;
+
+        startVibrationService(((ToggleButton) activity.findViewById(R.id.toggleButtonAppIsActive)).isChecked(), 0);
+    }
+
+    public void onToggleButtonSetRingtoneClick(View view) {
+        RingtoneManager rm = new RingtoneManager(activity);
+        final Cursor ringtones = rm.getCursor();
+        final MediaPlayer mp = new MediaPlayer();
+
+        int selected = -1;
+
+        // moving to proper ringtone in case some path was already supplied
+        if (mRingtonePath != null)
+            for (ringtones.moveToFirst(); !ringtones.isAfterLast(); ringtones
+                    .moveToNext()) {
+                selected++;
+                String path = ringtones
+                        .getString(RingtoneManager.URI_COLUMN_INDEX)
+                        + "/"
+                        + ringtones.getInt(RingtoneManager.ID_COLUMN_INDEX);
+                if (path.equals(mRingtonePath)) {
+                    break;
+                }
+            }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(getString(R.string.ringtoneChooser));
+        builder.setSingleChoiceItems(ringtones, selected,
+                ringtones.getColumnName(RingtoneManager.TITLE_COLUMN_INDEX),
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ringtones.moveToPosition(which);
+                        String path = ringtones
+                                .getString(RingtoneManager.URI_COLUMN_INDEX)
+                                + "/"
+                                + ringtones
+                                .getInt(RingtoneManager.ID_COLUMN_INDEX);
+                        // ugly solution to store temp path
+                        setTempPathTo(path);
+                        mp.reset();
+                        try {
+                            Uri uri = Uri.parse(path);
+                            mp.setDataSource(activity, uri);
+                            mp.prepare();
+                            mp.start();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mp.reset();
+                mp.release();
+
+                // I could read path nicely from here instead of using temp path,
+                // but ringtones Cursor somehow moves couple positions forward
+                // since last call to onClick in setSingleChoiceItems and
+                // String s = ringtones
+                // .getString(RingtoneManager.URI_COLUMN_INDEX)
+                // + "/"
+                // + ringtones.getInt(RingtoneManager.ID_COLUMN_INDEX);
+                mRingtonePath = mRingtoneTempPath;
+                SharedPreferences.Editor editor = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).edit();
+                editor.putString(BreathPrayConstants.keyAcousticNotificationUri, mRingtonePath);
+                while (!editor.commit()) ;
+            }
+        });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mp.reset();
+                        mp.release();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    void setTempPathTo(String path) {
+        mRingtoneTempPath = path;
+    }
+
+    private synchronized void startVibrationService(final boolean startOrStop, final int breakTime) {
+        final ToggleButton toggleButton = (ToggleButton) this.findViewById(R.id.toggleButtonAppIsActive);
+        final Intent intent = new Intent(this, VibrationRepeaterService.class);
+        intent.putExtra(BreathPrayConstants.breakTimeIntentExtraFieldName, breakTime);
+
+        if (startOrStop) {
+            //set extra to activating service
+            intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName, true);
+            //set button text to activating
+            toggleButton.setText(getString(R.string.activatingApp));
         } else {
-            final Intent intent = new Intent(this, VibrationRepeaterService.class);
-            intent.putExtra(BreathPrayConstants.endVibrationIntentExtraFieldName,true);
-            this.startService(intent);
+            //set extra to deactivating service
+            intent.putExtra(BreathPrayConstants.endVibrationIntentExtraFieldName, true);
+            //set button text to deactivating
+            toggleButton.setText(getString(R.string.deactivatingApp));
         }
+
+        //start service
+        while (!new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                activity.startService(intent);
+            }
+        })) ;
+
+        //delayed update of the displaying togglebutton - to visualize if the app is activating or deactivating
+        while (!new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toggleButton.setChecked(startOrStop);
+            }
+        }, 800)) ;
     }
 
-    public void onTakeABreakClicked(View view){
+    public void onTakeABreakClicked(View view) {
         Log.d(TAG, "takeABreak was clicked");
-        //TODO take a break
+        startVibrationService(true, activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(BreathPrayConstants.keyTakeABreakValue, 60));
     }
 
-    public void onMondayClicked(View view){
+    public void onMondayClicked(View view) {
         Log.d(TAG, "monday was edited");
         createEditDayActivity(getString(R.string.monday));
     }
 
-    public void onTuesdayClicked(View view){
+    public void onTuesdayClicked(View view) {
         Log.d(TAG, "tuesday was edited");
         createEditDayActivity(getString(R.string.tuesday));
     }
 
-    public void onWednesdayClicked(View view){
+    public void onWednesdayClicked(View view) {
         Log.d(TAG, "wednesday was edited");
         createEditDayActivity(getString(R.string.wednesday));
     }
 
-    public void onThursdayClicked(View view){
+    public void onThursdayClicked(View view) {
         Log.d(TAG, "thursday was edited");
         createEditDayActivity(getString(R.string.thursday));
     }
 
-    public void onFridayClicked(View view){
+    public void onFridayClicked(View view) {
         Log.d(TAG, "friday was edited");
         createEditDayActivity(getString(R.string.friday));
     }
 
-    public void onSaturdayClicked(View view){
+    public void onSaturdayClicked(View view) {
         Log.d(TAG, "saturday was edited");
         createEditDayActivity(getString(R.string.saturday));
     }
 
-    public void onSundayClicked(View view){
+    public void onSundayClicked(View view) {
         Log.d(TAG, "sunday was edited");
         createEditDayActivity(getString(R.string.sunday));
     }
@@ -379,24 +531,25 @@ public class LauncherWindow extends Activity {
         //set the dayname to monday
         intent.putExtra(BreathPrayConstants.dayName, dayName);
         //set "monday"+"Start" to time where the app should shut down
+        final SharedPreferences sharedPreferences = activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE);
         intent.putExtra("Start",
-                activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName + "Start", 6 * 12));
+                sharedPreferences.getInt(dayName + "Start", 8 * BreathPrayConstants.numberOfGridPerHour));
         //set "monday"+"End" to time where the app should shut down
         intent.putExtra("End",
-                activity.getSharedPreferences(getString(R.string.PREFERENCEFILE), MODE_PRIVATE).getInt(dayName+"End",22*12));
+                sharedPreferences.getInt(dayName + "End", 22 * BreathPrayConstants.numberOfGridPerHour));
         startActivity(intent);
     }
 
-    /**
-     * Adds changing listener for spinnerwheel that updates the spinnerwheel label
-     * @param wheel the spinnerwheel
-     * @param label the spinnerwheel label
-     */
-    private void addChangingListener(final AbstractWheel wheel, final String label) {
-        wheel.addChangingListener(new OnWheelChangedListener() {
-            public void onChanged(AbstractWheel wheel, int oldValue, int newValue) {
-                //spinnerwheel.setLabel(newValue != 1 ? label + "s" : label);
+    private void pulsView(final View view) {
+       /* view.setAlpha((float) 0.5);
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                view.setAlpha(view.getAlpha() + (float) 0.05);
+                if(view.getAlpha() != 1)
+                    view.postDelayed(runnable, 50);
             }
-        });
+        };
+        runnable.run();    */
     }
 }

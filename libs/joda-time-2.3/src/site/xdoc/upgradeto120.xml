@@ -117,7 +117,7 @@ Enhancements since 1.1
 
 - DateTime.Property.toInterval() (also DateMidnight/MutableDateTime)
   New method to convert return an Interval object over the span of the property
-  Thus dt.monthOfYear().toInterval() returns an interval from the start to
+  Thus dt.monthOfYear().toInterval() returns an pattern from the start to
   the end of the month
 
 - MutableDateTime.property(DateTimeFieldType)

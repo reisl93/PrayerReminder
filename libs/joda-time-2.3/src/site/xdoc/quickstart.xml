@@ -118,7 +118,7 @@ To obtain a Joda-Time chronology in the Tokyo time zone, you can use.
 Joda-Time provides support for intervals and time periods.
 </p>
 <p>
-An interval is represented by the
+An pattern is represented by the
 <a href="apidocs/org/joda/time/Interval.html"><code>Interval</code></a> class.
 It holds a start and end datetime, and allows operations based around that
 range of time.
@@ -127,13 +127,13 @@ range of time.
 A time period is represented by the
 <a href="apidocs/org/joda/time/Period.html"><code>Period</code></a> class.
 This holds a period such as 6 months, 3 days and 7 hours.
-You can create a <code>Period</code> directly, or derive it from an interval.
+You can create a <code>Period</code> directly, or derive it from an pattern.
 </p>
 <p>
 A time duration is represented by the
 <a href="apidocs/org/joda/time/Duration.html"><code>Duration</code></a> class.
 This holds an exact duration in milliseconds.
-You can create a <code>Duration</code> directly, or derive it from an interval.
+You can create a <code>Duration</code> directly, or derive it from an pattern.
 </p>
 <p>
 Although a period and a duration may seem similar, they operate differently.

@@ -16,10 +16,14 @@ import java.util.Map;
 public class VibrationAttributesManager {
 
     private int repeatTime = 1;
-    private int vibrationDuration = 16;
+    private int duration = 16;
+    private int pattern = 150;
     private int start = 6 * 12;
     private int end = 22 * 12;
-    private int takeABreakTime = 60;
+    private int volume = 500;
+    private boolean volumeActive = false;
+    private boolean acousticNotificationActive = false;
+    private String acousticNotificationUri = "";
     private boolean appIsActive = true;
 
     private final Context context;
@@ -35,12 +39,28 @@ public class VibrationAttributesManager {
         return repeatTime;
     }
 
-    public int getVibrationDuration() {
-        return vibrationDuration;
+    public int getDuration() {
+        return duration;
     }
 
     public void reloadCurrentData() {
-        Map<Integer, String> jodaTimeWeekdayIntegerToStringMapping = new HashMap<Integer, String>() {{
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.PREFERENCEFILE), Activity.MODE_PRIVATE);
+
+        start = sharedPreferences.getInt(getCurrentDay() + "Start", 6 * 12);
+        end = sharedPreferences.getInt(getCurrentDay() + "End", 22 * 12);
+
+        appIsActive = sharedPreferences.getBoolean(BreathPrayConstants.keyIsAppActive, false);
+        repeatTime = sharedPreferences.getInt(BreathPrayConstants.keyVibrationRepeatTime, 15);
+        duration = sharedPreferences.getInt(BreathPrayConstants.keyVibrationDuration, 16);
+        pattern = sharedPreferences.getInt(BreathPrayConstants.keyVibrationPattern, 15);
+        volume = sharedPreferences.getInt(BreathPrayConstants.keyNotificationVolume,500);
+        volumeActive = sharedPreferences.getBoolean(BreathPrayConstants.keyUniqueVolumeActive, false);
+        acousticNotificationUri = sharedPreferences.getString(BreathPrayConstants.keyAcousticNotificationUri, "");
+        acousticNotificationActive = sharedPreferences.getBoolean(BreathPrayConstants.keyAcousticIsActive, false);
+    }
+
+    public String getCurrentDay(){
+        final Map<Integer, String> jodaTimeWeekdayIntegerToStringMapping = new HashMap<Integer, String>() {{
             put(DateTimeConstants.MONDAY, context.getString(R.string.monday));
             put(DateTimeConstants.TUESDAY, context.getString(R.string.tuesday));
             put(DateTimeConstants.WEDNESDAY, context.getString(R.string.wednesday));
@@ -50,26 +70,11 @@ public class VibrationAttributesManager {
             put(DateTimeConstants.SUNDAY, context.getString(R.string.sunday));
         }};
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.PREFERENCEFILE), Activity.MODE_PRIVATE);
-
-        //current day is based on locale time and not UTC as AlarmManager
-        int currentDayOfWeek = DateTime.now().getDayOfWeek();
-        start = sharedPreferences.getInt(jodaTimeWeekdayIntegerToStringMapping.get(currentDayOfWeek) + "Start", 6 * 12);
-        end = sharedPreferences.getInt(jodaTimeWeekdayIntegerToStringMapping.get(currentDayOfWeek) + "End", 22 * 12);
-
-        appIsActive = sharedPreferences.getBoolean(context.getString(R.string.keyIsAppActive), false);
-        repeatTime = sharedPreferences.getInt(context.getString(R.string.keyVibrationRepeatTime), 15);
-        vibrationDuration = sharedPreferences.getInt(context.getString(R.string.keyVibrationDuration), 16);
-        takeABreakTime = sharedPreferences.getInt(context.getString(R.string.keyTakeABreakValue), 60);
-
+        return jodaTimeWeekdayIntegerToStringMapping.get(DateTime.now().getDayOfWeek());
     }
 
     public boolean isAppIsActive() {
         return appIsActive;
-    }
-
-    public int getTakeABreakTime() {
-        return takeABreakTime;
     }
 
     /**
@@ -84,5 +89,25 @@ public class VibrationAttributesManager {
      */
     public int getEnd() {
         return end * BreathPrayConstants.gridInMinutes * 60 *1000;
+    }
+
+    public int getPattern() {
+        return pattern;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public boolean isVolumeActive() {
+        return volumeActive;
+    }
+
+    public boolean isAcousticNotificationActive() {
+        return acousticNotificationActive;
+    }
+
+    public String getAcousticNotificationUri() {
+        return acousticNotificationUri;
     }
 }

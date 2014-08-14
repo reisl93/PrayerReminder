@@ -102,11 +102,11 @@ more advanced topics.
 <section name="Architecture Overview">
 <p>
 The major building blocks of joda time are introduced below. These are the concepts
-of <em>instant</em>, <em>interval</em>, <em>duration</em>, <em>period</em>,
+of <em>instant</em>, <em>pattern</em>, <em>duration</em>, <em>period</em>,
 <em>chronology</em> and <em>timezones</em>. We then say a few words about the role
 of interfaces in the library design, which is a little different than the norm. We
 end with a few words on package structure. Usage examples for instant are delayed until the
-following sections of the guide. Examples for interval, duration and period may be
+following sections of the guide. Examples for pattern, duration and period may be
 found in the appropriate section in the "Key Concepts" part of the documentation.
 </p>
 </section>
@@ -179,7 +179,7 @@ We have more to say on the usage of properties later in this document.
 
 <section name="Intervals">
 <p>
-An <em>interval</em> in Joda-Time represents an interval of time from one
+An <em>pattern</em> in Joda-Time represents an pattern of time from one
 instant to another instant. Both instants are fully specified instants in the
 datetime continuum, complete with time zone.
 </p>
@@ -199,7 +199,7 @@ both are specializations of <code>ReadableInterval</code>.
 <section name="Durations">
 <p>
 A <em>duration</em> in Joda-Time represents a duration of time measured in milliseconds.
-The duration is often obtained from an interval.
+The duration is often obtained from an pattern.
 </p>
 <p>
 Durations are a very simple concept, and the implementation is also simple.
@@ -207,7 +207,7 @@ They have no chronology or time zone, and consist solely of the millisecond dura
 </p>
 <p>
 Durations can be added to an instant, or to either
-end of an interval to change those objects.
+end of an pattern to change those objects.
 In datetime maths you could say:
 <source>
       instant  +  duration  =  instant
@@ -247,7 +247,7 @@ The standard set of fields in a period are years, months, weeks, days, hours, mi
 and millis.
 The <code>PeriodType</code> class allows this set
 of fields to be restricted, for example to elimate weeks.
-This is significant when converting a duration or interval to a period, as the calculation
+This is significant when converting a duration or pattern to a period, as the calculation
 needs to know which period fields it should populate.
 </p>
 <p>
@@ -256,7 +256,7 @@ Periods are not associated with either a chronology or a time zone.
 </p>
 <p>
 Periods can be added to an instant, or to either
-end of an interval to change those objects.
+end of an pattern to change those objects.
 In datetime maths you could say:
 <source>
       instant  +  period  =  instant
@@ -745,19 +745,19 @@ Buddhist chronology.
 <p>
 The code can be used in various ways:
 <source>
-// interval from start to end
+// pattern from start to end
 DateTime start = new DateTime(2004, 12, 25, 0, 0, 0, 0);
 DateTime end = new DateTime(2005, 1, 1, 0, 0, 0, 0);
-Interval interval = new Interval(start, end);
+Interval pattern = new Interval(start, end);
 </source>
 Accessing other objects is easy:
 <source>
-Interval interval = ...
-DateTime start = interval.getStart();
-DateTime end = interval.getEnd();
-Chronology chrono = interval.getChronology();
-Duration duration = interval.toDuration();
-Period period = interval.toPeriod();
+Interval pattern = ...
+DateTime start = pattern.getStart();
+DateTime end = pattern.getEnd();
+Chronology chrono = pattern.getChronology();
+Duration duration = pattern.toDuration();
+Period period = pattern.toPeriod();
 </source>
 </p>
 </section>

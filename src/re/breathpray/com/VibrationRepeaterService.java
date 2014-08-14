@@ -8,9 +8,7 @@ import android.content.Intent;
 import android.os.*;
 import android.util.Log;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import java.util.TimeZone;
+import org.joda.time.format.ISODateTimeFormat;
 
 /**
  * Date: 01.05.14
@@ -47,7 +45,7 @@ public class VibrationRepeaterService extends Service{
 
         if(intent.getBooleanExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,false) && vibrationAttributesManager.isAppIsActive()){
             this.stopCurrentlyPendingVibrations();
-            this.fillDayWithPendingVibrations();
+            this.startOffCyclicReminders(intent.getIntExtra(BreathPrayConstants.breakTimeIntentExtraFieldName, 0));
             kickOffVibrationRepeaterService();
         } else if (intent.getBooleanExtra(BreathPrayConstants.endVibrationIntentExtraFieldName,false) || !vibrationAttributesManager.isAppIsActive()){
             stopCurrentlyPendingVibrations();
@@ -71,48 +69,42 @@ public class VibrationRepeaterService extends Service{
      * Fills the day with vibration {@link AlarmManager} alarms with type: {@link AlarmManager#RTC_WAKEUP}.
      * First vibration is scheduled at start-time of current weekday or, if current daytime is more advanced, now.
      * Stops at end-time of current weekday
+     * @param withDelay delays the start in minutes
      */
-    private void fillDayWithPendingVibrations(){
+    private void startOffCyclicReminders(final int withDelay){
 
         //AlarmManager works with UTC-times! all calculations are done in UTC!
-        DateTime scheduleVibrationAt =  DateTime.now(DateTimeZone.forTimeZone(TimeZone.getTimeZone("UTC")));
+        DateTime scheduleVibrationAt = DateTime.now();
         //midnight of the locale day
-        final DateTime midnight = scheduleVibrationAt.withTimeAtStartOfDay();//.toDateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone("UTC")));
+        final DateTime midnight = scheduleVibrationAt.withTimeAtStartOfDay();
         final DateTime currentWeekdayVibrationStart = midnight.plus(vibrationAttributesManager.getStart());
         final DateTime currentWeekdayVibrationEnd = midnight.plus(vibrationAttributesManager.getEnd());
 
-        final int repeatTime = this.vibrationAttributesManager.getRepeatTime();
-        final int duration = vibrationAttributesManager.getVibrationDuration();
+        final int repeatTime = this.vibrationAttributesManager.getRepeatTime()*1000*60; //1000*60 == convert to minutes
+        final int duration = vibrationAttributesManager.getDuration();
+        final int pattern = vibrationAttributesManager.getPattern();
+        final boolean volumeActive = vibrationAttributesManager.isVolumeActive();
+        final int volume = vibrationAttributesManager.getVolume();
+        final boolean acousticNotificationActive = vibrationAttributesManager.isAcousticNotificationActive();
+        final String acousticNotificationUri = vibrationAttributesManager.getAcousticNotificationUri();
+
 
         //current time is before start?
-        if(scheduleVibrationAt.isBefore(currentWeekdayVibrationStart))
-            scheduleVibrationAt = currentWeekdayVibrationStart.toDateTime(DateTimeZone.forTimeZone(TimeZone.getTimeZone("UTC")));
+        if (scheduleVibrationAt.isBefore(currentWeekdayVibrationStart))
+            scheduleVibrationAt = currentWeekdayVibrationStart;
 
-        //requestCode for the PendingIntent
-        int requestCode = 0;
-
-        //while the Day is not filled!
-        while (scheduleVibrationAt.isBefore(currentWeekdayVibrationEnd)){
-
-            alarmManager.set(AlarmManager.RTC_WAKEUP,scheduleVibrationAt.getMillis(), createCyclingServicePendingIntent(requestCode, duration));
-
-            //increase scheduletime and requestCode
-            scheduleVibrationAt = scheduleVibrationAt.plusMinutes(repeatTime);
-            requestCode++;
-        }
-
+        alarmManager.setRepeating(
+                AlarmManager.RTC_WAKEUP,
+                scheduleVibrationAt.plusMillis(500).plusMinutes(withDelay).getMillis(),
+                repeatTime,
+                createCyclingServicePendingIntent(duration, pattern, currentWeekdayVibrationEnd,PendingIntent.FLAG_UPDATE_CURRENT, acousticNotificationActive, volumeActive, volume, acousticNotificationUri));
     }
 
     /**
      * stops all currently scheduled vibrations
      */
     private void stopCurrentlyPendingVibrations(){
-        final Intent intent = new Intent(this, ActiveVibrationService.class);
-        intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
-        intent.addCategory(BreathPrayConstants.defaultCategory);
-        for(int requestCode = 0; requestCode < 24*60; requestCode++) {
-            alarmManager.cancel(PendingIntent.getService(this,requestCode, intent,0));
-        }
+        alarmManager.cancel(createCyclingServicePendingIntent(0, 0, null, PendingIntent.FLAG_CANCEL_CURRENT, false, false, 0, null));
     }
 
     /**
@@ -126,25 +118,40 @@ public class VibrationRepeaterService extends Service{
 
         intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,true);
 
-        return PendingIntent.getService(this,0,intent,0);
+        return PendingIntent.getService(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void stopVibrationRepeaterService(){
         alarmManager.cancel(createVibrationRepeaterServicePendingIntent());
     }
 
-    private void kickOffVibrationRepeaterService(){
-        alarmManager.set(AlarmManager.RTC_WAKEUP, DateTime.now().withTimeAtStartOfDay().plusDays(1).getMillis(), createVibrationRepeaterServicePendingIntent());
+    private void kickOffVibrationRepeaterService() {
+
+        DateTime.now().toString();
+
+        alarmManager.set(
+                AlarmManager.RTC_WAKEUP,
+                DateTime.now()
+                        .withTimeAtStartOfDay()
+                        .plusDays(1)
+                        .plusMinutes(1)
+                        .getMillis(),
+                createVibrationRepeaterServicePendingIntent());
     }
 
-    private PendingIntent createCyclingServicePendingIntent(int number, int duration){
+    private PendingIntent createCyclingServicePendingIntent(int duration, int pattern, DateTime endTime, int flags, boolean notificationActive, boolean notificationVolumeActive, int notificationVolume, String notificationUri){
         final Intent intent = new Intent(this,ActiveVibrationService.class);
         intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
         intent.addCategory(BreathPrayConstants.defaultCategory);
         //config vibration
-        intent.putExtra(BreathPrayConstants.intervalIntentExtraFieldName, BreathPrayConstants.vibrationCycleDuration);
-        intent.putExtra(BreathPrayConstants.durationIntentExtraFieldName,duration);
+        intent.putExtra(BreathPrayConstants.patternIntentExtraFieldName, pattern);
+        intent.putExtra(BreathPrayConstants.durationIntentExtraFieldName, duration);
+        intent.putExtra(BreathPrayConstants.endVibrationAtIntentExtraFieldName, ISODateTimeFormat.dateTime().print(endTime));
+        intent.putExtra(BreathPrayConstants.acousticActiveIntentExtraFieldName, notificationActive);
+        intent.putExtra(BreathPrayConstants.acousticVolumeIntentExtraFieldName, notificationVolumeActive);
+        intent.putExtra(BreathPrayConstants.acousticUniqueVolumeIntentExtraFieldName, notificationVolume);
+        intent.putExtra(BreathPrayConstants.acousticUriIntentExtraFieldName, notificationUri);
 
-        return PendingIntent.getService(this,number, intent,0);
+        return PendingIntent.getService(this, 0, intent, flags);
     }
 }

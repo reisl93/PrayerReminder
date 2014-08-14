@@ -21,7 +21,7 @@ A period can only be resolved to an exact number of milliseconds by specifying t
 <p>
 Periods do not have a <a href="key_chronology.html">chronology</a> or time zone.
 They can be added to an <a href="key_instant.html">instant</a>, or to either
-end of an interval to change those objects.
+end of an pattern to change those objects.
 In datetime maths you could say:
 <source>
       instant  +  period  =  instant
@@ -62,7 +62,7 @@ information in a <code>Days</code> object.
 These classes provide static factory methods rather than constructors.
 For <code>Days</code> these include <code>daysBetween(startDate, endDate)</code> to
 obtain the number of whole days between two dates or datetimes, and 
-<code>daysIn(interval)</code> to obtain the number of whole days in an interval.
+<code>daysIn(pattern)</code> to obtain the number of whole days in an pattern.
 In addition, there are a range of constants, such as <code>Days.ZERO</code> and
 <code>Days.ONE</code>. The factory method <code>days(int)</code> either returns
 a constant, or creates a new instance as appropriate.
@@ -92,7 +92,7 @@ Internally, they store a set of <code>int</code> fields, one for each field.
 The standard set of fields in a period are years, months, weeks, days, hours, minutes, seconds and millis.
 The <a href="apidocs/org/joda/time/PeriodType.html">PeriodType</a> class allows this set
 of fields to be restricted, for example to elimate weeks.
-This is significant when converting a duration or interval to a period, as the calculation
+This is significant when converting a duration or pattern to a period, as the calculation
 needs to know which period fields it should populate.
 </p>
 <p>

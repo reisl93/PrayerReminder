@@ -3,6 +3,7 @@
     <color name="darkred">#ffd6a3a3</color>
     <color name="red">#FFCCCC</color>
     <color name="blue">#CCE5FF</color>
+    <color name="darkBlue">#ffadc7e1</color>
     <color name="grey">#ff575c54</color>
     <color name="lightgrey">#ff7b7f78</color>
 </resources>

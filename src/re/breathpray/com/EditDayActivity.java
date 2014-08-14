@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -169,6 +168,18 @@ public class EditDayActivity extends Activity {
         editor.putInt(currentDayName + "End", endDayAt);
         while (!editor.commit());
 
+        if(currentDayName.equals(new VibrationAttributesManager(this).getCurrentDay())){
+            final Intent intent = new Intent(this, VibrationRepeaterService.class);
+            intent.putExtra(BreathPrayConstants.breakTimeIntentExtraFieldName, 0);
+            intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName, true);
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    activity.startService(intent);
+                }
+            });
+            thread.start();
+        }
 
         finish();
     }

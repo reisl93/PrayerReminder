@@ -19,8 +19,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent arg1) {
         Log.w(TAG, "starting service breathpray");
         Intent intent = new Intent(context, VibrationRepeaterService.class);
-        intent.setAction(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setAction(BreathPrayConstants.defaultVibrationRepeaterServiceAction);
+        intent.addCategory(BreathPrayConstants.defaultCategory);
         context.startService(intent);
     }
 }

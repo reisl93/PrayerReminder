@@ -13,7 +13,7 @@
 
 <p>
 A <i>duration</i> in Joda-Time represents a duration of time measured in milliseconds.
-The duration is often obtained from an <a href="key_interval.html">interval</a>.
+The duration is often obtained from an <a href="key_interval.html">pattern</a>.
 </p>
 <p>
 Durations are a very simple concept, and the implementation is also simple.
@@ -22,7 +22,7 @@ solely of the millisecond duration.
 </p>
 <p>
 Durations can be added to an <a href="key_instant.html">instant</a>, or to either
-end of an interval to change those objects.
+end of an pattern to change those objects.
 In datetime maths you could say:
 <source>
       instant  +  duration  =  instant

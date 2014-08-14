@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="vibrationDuration">Hier stellen Sie die Vibrationsdauer der einzelnen Erinnerungen in Sekunden ein:</string>
-    <string name="vibrationCycleTimeDescription">Hier stellen sie die Intervallszeit zwischen den Erinnerungen in Minuten ein:</string>
-    <string name="vibrationPower">Hier stellen Sie ein eigenes Vibriermuster ein, mit dem Sie erinnert werden:</string>
-    <string name="prayerReminderStatus">Klicken Sie hier um Status der App zu ändern:</string>
-    <string name="takeABreak">Wenn Sie den Knopf mit "Pause" drücken, werden Sie eine Zeit lang nicht mehr erinnert. Hier können sie die Pausenlänge in Minuten einstellen:</string>
+    <string name="descriptionVibrationDuration">Hier stellen Sie die Vibrationsdauer der einzelnen Erinnerungen in Sekunden ein:</string>
+    <string name="descriptionVibrationCycleTimeDescription">Hier stellen sie die Intervallszeit zwischen den Erinnerungen in Minuten ein:</string>
+    <string name="descriptionVibrationPattern">Hier stellen Sie ein eigenes Vibriermuster ein, mit dem Sie erinnert werden:</string>
+    <string name="descriptionPrayerReminderStatus">Klicken Sie hier um Status der App zu ändern:</string>
+    <string name="descriptionBreakButton">Wenn Sie den Knopf "Pause" drücken, wird eine Zeit lang nicht mehr erinnert. Hier können sie die Pausenlänge in Minuten einstellen:</string>
+    <string name="descriptionRingtone">Hier kann eine akustische Erinnerung aktiviert und eingestellt werden:</string>
+    <string name="descriptionVolume">System unabhängige Lautstärke der akustischen Erinnerungen?</string>
+
+    <string name="durationTitle">Vibrationsdauer</string>
+    <string name="repeatTimeTitle">Periodische Wiederholung</string>
+    <string name="takeABreakTitle">Pausenknopf</string>
+    <string name="vibrationPatternTitle">Vibrationsmuster</string>
+    <string name="ringtoneTitle">Akustische Erinnerung</string>
+    <string name="volumeTitle">Lautstärke</string>
+
     <string name="takeABreakButton">Pause</string>
+
     <string name="appIsActiveText">App ist aktiv und erinnert Sie</string>
     <string name="appIsNotActiveText">App nicht aktiv - Sie werden nicht mehr erinnert</string>
 
@@ -17,12 +28,21 @@
     <string name="saturday">Samstag</string>
     <string name="sunday">Sonntag</string>
 
-    <string name="editDayActivityDescription">
+    <string name="descriptionEditDayActivity">
         Hier wird die Start und Endzeit der App festgelegt. Im blauen Punkt werden Start/Endzeit angezeigt, also wann die App am spezifizierten Wochentag gestartet bzw. beendet wird.
         \nBeim Drücken des blauen Punktes wird eingestellt, ob Start oder Endzeit bearbeitet wird.
     </string>
 
     <string name="until">bis</string>
+
+    <string name="activatingApp">activiere…</string>
+    <string name="deactivatingApp">deactiviere…</string>
+
+    <string name="setRingtone">Ton ändern</string>
+    <string name="ringtoneChooser">Wähle einen Ton</string>
+
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
 
     <string name="timePattern">HH:mm</string>
 
