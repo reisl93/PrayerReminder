@@ -11,8 +11,9 @@ import com.triggertrap.seekarc.SeekArc;
 import org.joda.time.LocalTime;
 import re.breathpray.com.BreathPrayConstants;
 import re.breathpray.com.R;
+import re.breathpray.com.ViewHelper;
 import re.breathpray.com.services.VibrationRepeaterService;
-import re.breathpray.com.VibrationAttributesManager;
+import re.breathpray.com.SettingsManager;
 
 import java.util.LinkedList;
 
@@ -145,6 +146,7 @@ public class EditDayActivity extends Activity {
     }
 
     public void onSeekarcFocusChangeButtonClicked(final View view) {
+        ViewHelper.pulsView(view);
         final SeekArc first = seekarcsListWithFirstElementsOnForeground.getFirst();
         final ViewGroup parent = (ViewGroup) first.getParent();
         if (null != parent) {
@@ -172,7 +174,7 @@ public class EditDayActivity extends Activity {
         editor.putInt(currentDayName + "End", endDayAt);
         while (!editor.commit());
 
-        if(currentDayName.equals(new VibrationAttributesManager(this).getCurrentDay())){
+        if(currentDayName.equals(new SettingsManager(this).getCurrentDay())){
             final Intent intent = new Intent(this, VibrationRepeaterService.class);
             intent.putExtra(BreathPrayConstants.breakTimeIntentExtraFieldName, 0);
             intent.putExtra(BreathPrayConstants.startVibrationIntentExtraFieldName, true);

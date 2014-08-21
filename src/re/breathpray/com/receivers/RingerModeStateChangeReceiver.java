@@ -18,8 +18,10 @@ public class RingerModeStateChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-        AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        final AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
         PendingIntent pendingIntent;
+
+        //TODO Toast popup
 
         switch (am.getRingerMode()) {
             //passively deactivate phone

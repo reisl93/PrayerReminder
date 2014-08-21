@@ -17,8 +17,8 @@
 
     <string name="takeABreakButton">Pause</string>
 
-    <string name="appIsActiveText">App aktiv - kontinuierliche Erinnerungen</string>
-    <string name="appIsNotActiveText">App inaktiv - keine Erinnerungen</string>
+    <string name="appIsActiveText">App aktiv</string>
+    <string name="appIsNotActiveText">App inaktiv</string>
 
     <string name="monday">Montag</string>
     <string name="tuesday">Dienstag</string>
@@ -27,6 +27,9 @@
     <string name="friday">Freitag</string>
     <string name="saturday">Samstag</string>
     <string name="sunday">Sonntag</string>
+
+    <string name="nextVibrationAt">Nächster:</string>
+    <string name="mode">Modus:</string>
 
     <string name="descriptionEditDayActivity">
         Hier wird die Start und Endzeit der App festgelegt. Im blauen Punkt werden Start/Endzeit angezeigt, also wann die App am spezifizierten Wochentag gestartet bzw. beendet wird.
@@ -69,5 +72,9 @@
     <string name="no">Nein</string>
 
     <string name="timePattern">HH:mm</string>
+
+    <string name="ringerModeSilent">Stumm</string>
+    <string name="ringerModeVibrate">Vibration</string>
+    <string name="ringerModeNormal">Normal</string>
 
 </resources>

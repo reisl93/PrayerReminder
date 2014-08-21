@@ -15,7 +15,7 @@ import java.util.Map;
  * Date: 01.05.14
  * Time: 18:20
  */
-public class VibrationAttributesManager {
+public class SettingsManager {
 
     private int repeatTime = 1;
     private int duration = 16;
@@ -31,7 +31,7 @@ public class VibrationAttributesManager {
 
     private final Context context;
 
-    public VibrationAttributesManager(final Context context) {
+    public SettingsManager(final Context context) {
         if (context == null)
             throw new IllegalArgumentException("Context must not be null");
         this.context = context;
@@ -55,7 +55,7 @@ public class VibrationAttributesManager {
         appIsActive = sharedPreferences.getBoolean(BreathPrayConstants.keyIsAppActive, false);
         repeatTime = sharedPreferences.getInt(BreathPrayConstants.keyVibrationRepeatTime, 15);
         duration = sharedPreferences.getInt(BreathPrayConstants.keyVibrationDuration, 16);
-        pattern = sharedPreferences.getInt(BreathPrayConstants.keyVibrationPattern, 15);
+        pattern = sharedPreferences.getInt(BreathPrayConstants.keyVibrationPattern, 150);
         volume = sharedPreferences.getFloat(BreathPrayConstants.keyNotificationVolume, 0.5f);
         volumeActive = sharedPreferences.getBoolean(BreathPrayConstants.keyUniqueVolumeActive, false);
         acousticNotificationUri = sharedPreferences.getString(BreathPrayConstants.keyAcousticNotificationUri,

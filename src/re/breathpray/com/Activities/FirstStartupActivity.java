@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import re.breathpray.com.R;
+import re.breathpray.com.ViewHelper;
 
 /**
  * Date: 31.07.14
@@ -18,6 +19,7 @@ public class FirstStartupActivity extends Activity {
     }
 
     public void onExitClicked(View view){
+        ViewHelper.pulsView(view);
         finish();
     }
 }

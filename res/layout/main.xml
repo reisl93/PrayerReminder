@@ -13,6 +13,36 @@
             android:background="@drawable/my_toggle_button"
             android:id="@+id/toggleButtonAppIsActive" android:onClick="onToggleButtonActivateAppClick"/>
 
+    <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+                style="@style/descriptionTextStyle"
+                android:text="@string/nextVibrationAt"
+                android:id="@+id/nextVibrationAtTimeTitle"/>
+        <TextView
+                style="@style/descriptionTextStyle"
+                android:id="@+id/nextVibrationAtTime"
+                android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <TextView
+                style="@style/descriptionTextStyle"
+                android:text="@string/mode"/>
+        <TextView
+                style="@style/descriptionTextStyle"
+                android:id="@+id/mode"/>
+    </LinearLayout>
+
     <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

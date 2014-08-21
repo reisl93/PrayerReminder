@@ -6,13 +6,14 @@ package re.breathpray.com;
  */
 public class BreathPrayConstants {
     //Actions and Categories
-    public final static String defaultCategory = "re.breathpray.com.VibrationAttributesManager.BreathPrayDefaultCategory";
-    public final static String defaultCyclicVibrationServiceAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayVibrationAction";
-    public final static String defaultVibrationRepeaterServiceAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayVibrationRepeaterAction";
+    public final static String defaultCategory = "re.breathpray.com.SettingsManager.BreathPrayDefaultCategory";
+    public final static String defaultCyclicVibrationServiceAction = "re.breathpray.com.SettingsManager.BreathPrayVibrationAction";
+    public final static String defaultVibrationRepeaterServiceAction = "re.breathpray.com.SettingsManager.BreathPrayVibrationRepeaterAction";
     public final static String temporaryDeactivateVibrationService = "re.breathpray.com.temporaryDeactivateService";
     public final static String temporaryDeactivateAcousticNotificationService = "re.breathpray.com.temporaryDeactivateAcousticNotificationService";
-    public final static String defaultFirstStartupActivityAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayFirstStartupActivityAction";
-    public final static String defaultEditDayAction = "re.breathpray.com.VibrationAttributesManager.BreathPrayEditDayActivityAction";
+    public final static String defaultFirstStartupActivityAction = "re.breathpray.com.BreathPrayFirstStartupActivityAction";
+    public final static String defaultEditDayAction = "re.breathpray.com.SettingsManager.BreathPrayEditDayActivityAction";
+    public final static String updateNextVibrationTimeAction = "re.breathpray.com.updateNextVibrationTimeAction";
 
     //extra field names of Intents
     public final static String patternIntentExtraFieldName = "re.breathpray.com.interval";
@@ -24,8 +25,9 @@ public class BreathPrayConstants {
     public final static String acousticUriIntentExtraFieldName = "re.breathpray.com.acousticUri";
     public final static String acousticUniqueVolumeActiveIntentExtraFieldName = "re.breathpray.com.acousticUniqueVolume";
     public final static String endVibrationIntentExtraFieldName = "re.breathpray.com.endVibration";
-    public final static String dayNameIntentExtraFieldName = "re.breathpray.com.dayNameIntentExtraFieldName";
-
+    public final static String dayNameIntentExtraFieldName = "re.breathpray.com.dayName";
+    public final static String nextVibrationAtIntentExtraFieldName = "re.breathpray.com.nextVibrationAt";
+    public final static String repeatTimeIntentExtraFieldName = "re.breathpray.com.repeatTime";
 
     //key values to save into the Preference File
     public final static String PREFERENCEFILE = "re.breathpray.com.preferencefile";

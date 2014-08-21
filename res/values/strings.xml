@@ -24,8 +24,8 @@
 
     <string name="takeABreakButton">break</string>
 
-    <string name="appIsActiveText">app keeps reminding you</string>
-    <string name="appIsNotActiveText">app is not active</string>
+    <string name="appIsActiveText">app active</string>
+    <string name="appIsNotActiveText">app inactive</string>
 
     <string name="descriptionEditDayActivity">
         In this view you can edit the exact time to passively start the app in the background at the specific weekday
@@ -35,6 +35,8 @@
 
     <string name="welcome">Welcome!</string>
 
+    <string name="nextVibrationAt">next:</string>
+    <string name="mode">mode:</string>
 
     <string name="deviceHasNoVibrator">Device has no vibrator. Use acoustic alarm?</string>
     <string name="yes">Yes</string>
@@ -88,5 +90,9 @@
     <string name="clickMe">click me!</string>
 
     <string name="timePattern">KK:mm aa</string>
+
+    <string name="ringerModeSilent">silent</string>
+    <string name="ringerModeVibrate">vibrate</string>
+    <string name="ringerModeNormal">normal</string>
 
 </resources>
