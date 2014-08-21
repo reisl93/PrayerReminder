@@ -95,4 +95,8 @@
     <string name="ringerModeVibrate">vibrate</string>
     <string name="ringerModeNormal">normal</string>
 
+    <string name="toastDescriptionSilent">BreathPray: Silent: \nno notifications at all</string>
+    <string name="toastDescriptionVibrate">BreathPray: Vibrate: \nonly vibrate notification</string>
+    <string name="toastDescriptionNormal">BreathPray: Normal: \nnormal notification</string>
+
 </resources>

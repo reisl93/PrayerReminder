@@ -3,6 +3,7 @@ package re.breathpray.com.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,6 +165,18 @@ public class EditDayActivity extends Activity {
             newFirst.setSweepAngle(BreathPrayConstants.MAXSEEKARCRANGE / 2 - newFirst.getArcRotation());
             newFirst.setMax(newFirst.getSweepAngle());
             newFirst.setProgress((int) newFirst.getProgressAngle() + (oldRotationAngle - newFirst.getArcRotation()));
+
+            if(newFirst == seekArcEnd){
+                final TextView startTime = ((TextView) findViewById(R.id.startTimeTextInButton));
+                startTime.setTypeface(null, Typeface.NORMAL);
+                final TextView endTime = ((TextView) findViewById(R.id.endTimeTextInButton));
+                endTime.setTypeface(null, Typeface.BOLD);
+            } else {
+                final TextView startTime = ((TextView) findViewById(R.id.startTimeTextInButton));
+                startTime.setTypeface(null, Typeface.BOLD);
+                final TextView endTime = ((TextView) findViewById(R.id.endTimeTextInButton));
+                endTime.setTypeface(null, Typeface.NORMAL);
+            }
         }
     }
 

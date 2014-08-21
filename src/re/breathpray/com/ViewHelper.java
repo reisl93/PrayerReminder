@@ -24,7 +24,8 @@ public class ViewHelper {
 
         for(int i = 0; i < (1-minAlpha)/stepSize; i++)
             if (view != null)
-                view.postDelayed(decreaseAlpha,i*timeStepsInMillis);
+                view.setAlpha(minAlpha);
+                //view.postDelayed(decreaseAlpha,i*timeStepsInMillis);
 
         for(int i = 0; i < (1-minAlpha)/stepSize; i++)
             if (view != null)

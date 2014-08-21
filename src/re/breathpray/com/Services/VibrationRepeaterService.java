@@ -11,8 +11,7 @@ import android.util.Log;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 import re.breathpray.com.BreathPrayConstants;
-import re.breathpray.com.VibrationAttributesManager;
-import re.breathpray.com.receivers.RingerModeStateChangeReceiver;
+import re.breathpray.com.SettingsManager;
 
 /**
  * Date: 01.05.14
@@ -23,7 +22,7 @@ public class VibrationRepeaterService extends Service{
 
     private static final String TAG = "VibrationRepeaterService";
 
-    private VibrationAttributesManager vibrationAttributesManager;
+    private SettingsManager settingsManager;
     private AlarmManager alarmManager;
 
 
@@ -37,33 +36,25 @@ public class VibrationRepeaterService extends Service{
         Log.d(TAG, "creating service...");
 
         //Load basic informations
-        vibrationAttributesManager = new VibrationAttributesManager(this);
+        settingsManager = new SettingsManager(this);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        super.onStartCommand(intent, flags, startId);
 
-        vibrationAttributesManager.reloadCurrentData();
+        settingsManager.reloadCurrentData();
 
-        if(intent.getBooleanExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,false) && vibrationAttributesManager.isAppIsActive()){
+        if(intent != null && intent.getBooleanExtra(BreathPrayConstants.startVibrationIntentExtraFieldName,false) && settingsManager.isAppIsActive()){
             this.stopCurrentlyPendingVibrations();
             this.startOffCyclicReminders(intent.getIntExtra(BreathPrayConstants.breakTimeIntentExtraFieldName, 0));
             kickOffVibrationRepeaterService();
-            final Context context = this;
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    new RingerModeStateChangeReceiver().onReceive(context, null);
-                }
-            });
-        } else if (intent.getBooleanExtra(BreathPrayConstants.endVibrationIntentExtraFieldName,false) || !vibrationAttributesManager.isAppIsActive()){
+        } else if (intent != null && intent.getBooleanExtra(BreathPrayConstants.endVibrationIntentExtraFieldName,false) || !settingsManager.isAppIsActive()){
             stopCurrentlyPendingVibrations();
             stopVibrationRepeaterService();
         }
-
-        return START_STICKY;
+        stopSelf();
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -88,36 +79,42 @@ public class VibrationRepeaterService extends Service{
         DateTime scheduleVibrationAt = DateTime.now();
         //midnight of the locale day
         final DateTime midnight = scheduleVibrationAt.withTimeAtStartOfDay();
-        final DateTime currentWeekdayVibrationStart = midnight.plus(vibrationAttributesManager.getStart());
-        final DateTime currentWeekdayVibrationEnd = midnight.plus(vibrationAttributesManager.getEnd());
+        final DateTime currentWeekdayVibrationStart = midnight.plus(settingsManager.getStart());
+        final DateTime currentWeekdayVibrationEnd = midnight.plus(settingsManager.getEnd());
 
-        final int repeatTime = this.vibrationAttributesManager.getRepeatTime()*1000*60; //1000*60 == convert to minutes
-        final int duration = vibrationAttributesManager.getDuration();
-        final int pattern = vibrationAttributesManager.getPattern();
-        final boolean volumeActive = vibrationAttributesManager.isVolumeActive();
-        final float volume = vibrationAttributesManager.getVolume();
+        final int repeatTime = this.settingsManager.getRepeatTime();
+        final int duration = settingsManager.getDuration();
+        final int pattern = settingsManager.getPattern();
+        final boolean volumeActive = settingsManager.isVolumeActive();
+        final float volume = settingsManager.getVolume();
         final boolean acousticNotificationActive =
-                vibrationAttributesManager.isAcousticNotificationActive() &&
-                vibrationAttributesManager.getPhoneRingerMode() == AudioManager.RINGER_MODE_NORMAL;
-        final String acousticNotificationUri = vibrationAttributesManager.getAcousticNotificationUri();
+                settingsManager.isAcousticNotificationActive() &&
+                settingsManager.getPhoneRingerMode() == AudioManager.RINGER_MODE_NORMAL;
+        final String acousticNotificationUri = settingsManager.getAcousticNotificationUri();
 
 
         //current time is before start?
         if (scheduleVibrationAt.isBefore(currentWeekdayVibrationStart))
             scheduleVibrationAt = currentWeekdayVibrationStart;
 
+        scheduleVibrationAt = scheduleVibrationAt.plusMillis(500).plusMinutes(withDelay);
+
         alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
-                scheduleVibrationAt.plusMillis(500).plusMinutes(withDelay).getMillis(),
-                repeatTime,
-                createCyclingServicePendingIntent(duration, pattern, currentWeekdayVibrationEnd,PendingIntent.FLAG_UPDATE_CURRENT, acousticNotificationActive, volumeActive, volume, acousticNotificationUri));
+                scheduleVibrationAt.getMillis(),
+                repeatTime*1000*60,   //1000*60 == convert to minutes
+                createCyclingServicePendingIntent(duration, pattern, currentWeekdayVibrationEnd,PendingIntent.FLAG_UPDATE_CURRENT, acousticNotificationActive, volumeActive, volume, acousticNotificationUri, repeatTime));
+
+        Intent i = new Intent(BreathPrayConstants.updateNextVibrationTimeAction);
+        i.putExtra(BreathPrayConstants.nextVibrationAtIntentExtraFieldName, ISODateTimeFormat.dateTime().print(scheduleVibrationAt));
+        sendBroadcast(i);
     }
 
     /**
      * stops all currently scheduled vibrations
      */
     private void stopCurrentlyPendingVibrations(){
-        alarmManager.cancel(createCyclingServicePendingIntent(0, 0, null, PendingIntent.FLAG_CANCEL_CURRENT, false, false, 0, null));
+        alarmManager.cancel(createCyclingServicePendingIntent(0, 0, null, PendingIntent.FLAG_CANCEL_CURRENT, false, false, 0, null,0));
     }
 
     /**
@@ -152,7 +149,7 @@ public class VibrationRepeaterService extends Service{
                 createVibrationRepeaterServicePendingIntent());
     }
 
-    private PendingIntent createCyclingServicePendingIntent(int duration, int pattern, DateTime endTime, int flags, boolean notificationActive, boolean notificationVolumeActive, float notificationVolume, String notificationUri){
+    private PendingIntent createCyclingServicePendingIntent(int duration, int pattern, DateTime endTime, int flags, boolean notificationActive, boolean notificationVolumeActive, float notificationVolume, String notificationUri, int repeatTime){
         final Intent intent = new Intent(this,ActiveVibrationService.class);
         intent.setAction(BreathPrayConstants.defaultCyclicVibrationServiceAction);
         intent.addCategory(BreathPrayConstants.defaultCategory);
@@ -164,6 +161,7 @@ public class VibrationRepeaterService extends Service{
         intent.putExtra(BreathPrayConstants.acousticVolumeIntentExtraFieldName, notificationVolume);
         intent.putExtra(BreathPrayConstants.acousticUniqueVolumeActiveIntentExtraFieldName, notificationVolumeActive);
         intent.putExtra(BreathPrayConstants.acousticUriIntentExtraFieldName, notificationUri);
+        intent.putExtra(BreathPrayConstants.repeatTimeIntentExtraFieldName, repeatTime);
 
         return PendingIntent.getService(this, 0, intent, flags);
     }

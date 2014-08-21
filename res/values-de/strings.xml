@@ -77,4 +77,8 @@
     <string name="ringerModeVibrate">Vibration</string>
     <string name="ringerModeNormal">Normal</string>
 
+    <string name="toastDescriptionSilent">BreathPray: Stumm: \nkeine Erinnerungen mehr</string>
+    <string name="toastDescriptionVibrate">BreathPray: Vibration: \nnur Vibrationserinnerungen</string>
+    <string name="toastDescriptionNormal">BreathPray: Normal: \nnormale Erinnerungen</string>
+
 </resources>

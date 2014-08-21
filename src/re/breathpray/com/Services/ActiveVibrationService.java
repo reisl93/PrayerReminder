@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.util.Log;
@@ -28,49 +27,39 @@ public class ActiveVibrationService extends Service {
     private boolean acousticNotificationActive;
     private String acousticNotificationUri;
     private int duration;
+    private DateTime nextVibration;
     private Vibrator vibrator;
-    private IBinder mBinder;
-
-    public void setPattern(int pattern) {
-        this.pattern = pattern;
-        run();
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         this.vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        this.pattern = BreathPrayConstants.vibrationInterval;
-        this.duration = 10;
-        this.mBinder = new LocalBinder();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        super.onStartCommand(intent, flags, startId);
 
-        //if the pendingIntent exists, the service is temporary disabled
-        if (PendingIntent.getService(this, 0, new Intent(BreathPrayConstants.temporaryDeactivateVibrationService), PendingIntent.FLAG_NO_CREATE) == null) {
+        final int ringMode = ((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
 
-            pattern = intent.getIntExtra(BreathPrayConstants.patternIntentExtraFieldName, 150);
+        if (ringMode != AudioManager.RINGER_MODE_SILENT) {
+            pattern =  intent.getIntExtra(BreathPrayConstants.patternIntentExtraFieldName, 150);
             duration = intent.getIntExtra(BreathPrayConstants.durationIntentExtraFieldName, 10);
             volume = intent.getFloatExtra(BreathPrayConstants.acousticVolumeIntentExtraFieldName, 0.5f);
             volumeActive = intent.getBooleanExtra(BreathPrayConstants.acousticUniqueVolumeActiveIntentExtraFieldName, false);
             acousticNotificationActive = intent.getBooleanExtra(BreathPrayConstants.acousticNotificationActiveIntentExtraFieldName, false);
-            //if this pendingIntent exists, the acoustic notification is temporary disabled
-            if (PendingIntent.getService(this, 0, new Intent(BreathPrayConstants.temporaryDeactivateAcousticNotificationService), PendingIntent.FLAG_NO_CREATE) != null)
+            nextVibration = DateTime.now().plusMinutes(intent.getIntExtra(BreathPrayConstants.repeatTimeIntentExtraFieldName,15));
+
+            if (ringMode == AudioManager.RINGER_MODE_VIBRATE)
                 acousticNotificationActive = false;
             acousticNotificationUri = intent.getStringExtra(BreathPrayConstants.acousticUriIntentExtraFieldName);
 
             //is still in time?
             final String stringExtra = intent.getStringExtra(BreathPrayConstants.endVibrationAtIntentExtraFieldName);
-            if (stringExtra == null)
-                return START_STICKY;
+            if (stringExtra == null) {
+                stopSelf();
+                return START_NOT_STICKY;
+            }
+
             final DateTime endVibrationServiceAt = DateTime.parse(stringExtra, ISODateTimeFormat.dateTime());
 
             if (endVibrationServiceAt.isAfterNow()) {
@@ -78,7 +67,13 @@ public class ActiveVibrationService extends Service {
             } else
                 ((AlarmManager) getSystemService(Context.ALARM_SERVICE)).cancel(PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_NO_CREATE));
         }
-        return START_STICKY;
+        stopSelf();
+        return START_NOT_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     public void run() {
@@ -113,19 +108,13 @@ public class ActiveVibrationService extends Service {
             }
         }
 
+        Intent i = new Intent(BreathPrayConstants.updateNextVibrationTimeAction);
+        i.putExtra(BreathPrayConstants.nextVibrationAtIntentExtraFieldName, ISODateTimeFormat.dateTime().print(nextVibration));
+        sendBroadcast(i);
+
         vibrator.vibrate(array, -1);
 
 
         Log.d(TAG, "exit - run");
-    }
-
-    public void setVolume(float volume) {
-        this.volume = volume;
-    }
-
-    public class LocalBinder extends Binder {
-        ActiveVibrationService getService() {
-            return ActiveVibrationService.this;
-        }
     }
 }
