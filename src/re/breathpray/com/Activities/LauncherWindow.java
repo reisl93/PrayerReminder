@@ -4,11 +4,13 @@ package re.breathpray.com.activities;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.database.Cursor;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.view.Gravity;
 import antistatic.spinnerwheel.OnWheelScrollListener;
 import antistatic.spinnerwheel.adapters.ArrayWheelAdapter;
 import com.google.android.gms.ads.AdRequest;
@@ -24,10 +26,13 @@ import android.widget.*;
 
 import antistatic.spinnerwheel.AbstractWheel;
 import antistatic.spinnerwheel.adapters.NumericWheelAdapter;
+import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
+import org.joda.time.format.ISODateTimeFormat;
 import re.breathpray.com.BreathPrayConstants;
 import re.breathpray.com.DeviceHasNoVibrationDialog;
 import re.breathpray.com.R;
+import re.breathpray.com.ViewHelper;
 import re.breathpray.com.services.VibrationRepeaterService;
 
 public class LauncherWindow extends Activity {
@@ -38,6 +43,8 @@ public class LauncherWindow extends Activity {
     // Time scrolled flag
     private final Activity activity = this;
 
+    private boolean startup = true;
+
     // that is the string I want to get from Ringtone picker
     // something like  content://media/internal/audio/media/60
     // I can also get it stored version from somewhere else (preferences and such)
@@ -47,6 +54,46 @@ public class LauncherWindow extends Activity {
     // received in setSingleChoiceItems onClickListener
     private String mRingtoneTempPath = null;
 
+    private final BroadcastReceiver vibrationTimesReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            activity.findViewById(R.id.nextVibrationAtTimeTitle).setVisibility(View.VISIBLE);
+            final TextView nextVibrationAt= (TextView) activity.findViewById(R.id.nextVibrationAtTime);
+            final int ringermode = ((AudioManager)activity.getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
+
+            final String stringExtra = intent.getStringExtra(BreathPrayConstants.nextVibrationAtIntentExtraFieldName);
+            if(stringExtra != null && ringermode != AudioManager.RINGER_MODE_SILENT)
+                nextVibrationAt.setText(DateTime.parse(stringExtra, ISODateTimeFormat.dateTime()).toString(getString(R.string.timePattern)));
+            else if(ringermode == AudioManager.RINGER_MODE_SILENT)
+                nextVibrationAt.setText(R.string.ringerModeSilent);
+        }
+    };
+
+    private final BroadcastReceiver ringerModeChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final TextView mode = (TextView) activity.findViewById(R.id.mode);
+            final Toast toast = Toast.makeText(activity,"",Toast.LENGTH_LONG);
+            //toast.setView(activity.findViewById(R.id.toggleButtonAppIsActive));
+            switch (((AudioManager)activity.getSystemService(Context.AUDIO_SERVICE)).getRingerMode()){
+                case AudioManager.RINGER_MODE_SILENT:
+                    mode.setText(R.string.ringerModeSilent);
+                    toast.setText(R.string.toastDescriptionSilent);
+                    break;
+                case AudioManager.RINGER_MODE_NORMAL:
+                    mode.setText(R.string.ringerModeNormal);
+                    toast.setText(R.string.toastDescriptionNormal);
+                    break;
+                case AudioManager.RINGER_MODE_VIBRATE:
+                    mode.setText(R.string.ringerModeVibrate);
+                    toast.setText(R.string.toastDescriptionVibrate);
+                    break;
+            }
+            if(!startup)
+                toast.show();
+        }
+    };
+
     /**
      * Called when the activity is first created.
      */
@@ -55,6 +102,16 @@ public class LauncherWindow extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.main);
+
+        startup = true;
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BreathPrayConstants.updateNextVibrationTimeAction);
+        registerReceiver(vibrationTimesReceiver,filter);
+
+        filter = new IntentFilter();
+        filter.addAction(AudioManager.RINGER_MODE_CHANGED_ACTION);
+        registerReceiver(ringerModeChangedReceiver,filter);
 
         final int minRepeatTime = 1;
         final int minVibrationDuration = 0;
@@ -91,8 +148,8 @@ public class LauncherWindow extends Activity {
         linearLayout.addView(adView);
 
         AdRequest adRequest = new AdRequest.Builder()
-                //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                //.addTestDevice("9684DFFB83935CE920E945C32F975A12")
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice("9684DFFB83935CE920E945C32F975A12")
                 .build();
         adView.loadAd(adRequest);
 
@@ -229,8 +286,21 @@ public class LauncherWindow extends Activity {
         toggleButton = (ToggleButton) this.findViewById(R.id.toggleButtonVolume);
         toggleButton.setChecked(preferences.getBoolean(BreathPrayConstants.keyUniqueVolumeActive, false));
 
+        //next button only visible through broadcast-update
+        activity.findViewById(R.id.nextVibrationAtTimeTitle).setVisibility(View.INVISIBLE);
+
+        //set silent,vibrate or normal
+        ringerModeChangedReceiver.onReceive(null,null);
+
         updateDateTimes();
 
+        //to avoid startup toast popup from mode
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startup = false;
+            }
+        },1000);
     }
 
     public void onDestroy() {
@@ -238,17 +308,21 @@ public class LauncherWindow extends Activity {
         if (adView != null)
             adView.destroy();
 
+        unregisterReceiver(vibrationTimesReceiver);
+        unregisterReceiver(ringerModeChangedReceiver);
+
         super.onDestroy();
     }
 
 
     @Override
     public void onResume() {
-        super.onResume();
         if (adView != null)
             adView.resume();
 
         updateDateTimes();
+
+        super.onResume();
     }
 
     private void updateDateTimes() {
@@ -288,11 +362,12 @@ public class LauncherWindow extends Activity {
     public void onPause() {
         if (adView != null)
             adView.pause();
+
         super.onPause();
     }
 
     public void onToggleButtonActivateAppClick(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
 
         final ToggleButton toggleButton = (ToggleButton) view;
 
@@ -305,7 +380,7 @@ public class LauncherWindow extends Activity {
     }
 
     public void onToggleButtonActivateRingtoneClick(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
 
         final ToggleButton toggleButton = (ToggleButton) view;
 
@@ -319,7 +394,7 @@ public class LauncherWindow extends Activity {
     }
 
     public void onToggleButtonActivateVolumeClick(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
 
         final ToggleButton toggleButton = (ToggleButton) view;
 
@@ -332,9 +407,10 @@ public class LauncherWindow extends Activity {
     }
 
     public void onToggleButtonSetRingtoneClick(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
 
         final RingtoneManager rm = new RingtoneManager(activity);
+        rm.setType(RingtoneManager.TYPE_NOTIFICATION);
         final Cursor ringtones = rm.getCursor();
         final MediaPlayer mp = new MediaPlayer();
 
@@ -386,6 +462,7 @@ public class LauncherWindow extends Activity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                mp.stop();
                 mp.reset();
                 mp.release();
 
@@ -406,6 +483,7 @@ public class LauncherWindow extends Activity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        mp.stop();
                         mp.reset();
                         mp.release();
                     }
@@ -449,53 +527,53 @@ public class LauncherWindow extends Activity {
             public void run() {
                 toggleButton.setChecked(startOrStop);
             }
-        }, 800)) ;
+        }, 1000)) ;
     }
 
     public void onTakeABreakClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "takeABreak was clicked");
         startVibrationService(true, activity.getSharedPreferences(BreathPrayConstants.PREFERENCEFILE, MODE_PRIVATE).getInt(BreathPrayConstants.keyTakeABreakValue, 60));
     }
 
     public void onMondayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "monday was edited");
         createEditDayActivity(getString(R.string.monday));
     }
 
     public void onTuesdayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "tuesday was edited");
         createEditDayActivity(getString(R.string.tuesday));
     }
 
     public void onWednesdayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "wednesday was edited");
         createEditDayActivity(getString(R.string.wednesday));
     }
 
     public void onThursdayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "thursday was edited");
         createEditDayActivity(getString(R.string.thursday));
     }
 
     public void onFridayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "friday was edited");
         createEditDayActivity(getString(R.string.friday));
     }
 
     public void onSaturdayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "saturday was edited");
         createEditDayActivity(getString(R.string.saturday));
     }
 
     public void onSundayClicked(final View view) {
-        pulsView(view);
+        ViewHelper.pulsView(view);
         Log.d(TAG, "sunday was edited");
         createEditDayActivity(getString(R.string.sunday));
     }
@@ -516,30 +594,8 @@ public class LauncherWindow extends Activity {
         startActivity(intent);
     }
 
-    private void pulsView(final View view) {
-        final float stepSize = 0.2f;
-        final float minAlpha = 0.2f;
-        final int timeStepsInMillis = 50;
-
-        final Runnable increaseAlpha = new Runnable() {
-            @Override
-            public void run() {
-                view.setAlpha(view.getAlpha() + stepSize);
-            }
-        };
-        final Runnable decreaseAlpha = new Runnable() {
-            @Override
-            public void run() {
-                view.setAlpha(view.getAlpha() - stepSize);
-            }
-        };
-
-        for(int i = 0; i < (1-minAlpha)/stepSize; i++)
-            view.postDelayed(decreaseAlpha,i*timeStepsInMillis);
-
-        for(int i = 0; i < (1-minAlpha)/stepSize; i++)
-            view.postDelayed(increaseAlpha,i*timeStepsInMillis + (int) ((1 - minAlpha) / stepSize * timeStepsInMillis));
-
-
+    public void onModeClicked(final View view) {
+        ViewHelper.pulsView(view);
+        ringerModeChangedReceiver.onReceive(this,null);
     }
 }

@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
@@ -39,9 +40,8 @@ public class ActiveVibrationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        final int ringMode = ((AudioManager) getSystemService(Context.AUDIO_SERVICE)).getRingerMode();
-
-        if (ringMode != AudioManager.RINGER_MODE_SILENT) {
+        final AudioManager audioManager = ((AudioManager) getSystemService(Context.AUDIO_SERVICE));
+        if (audioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT && audioManager.getMode() != AudioManager.MODE_IN_CALL) {
             pattern =  intent.getIntExtra(BreathPrayConstants.patternIntentExtraFieldName, 150);
             duration = intent.getIntExtra(BreathPrayConstants.durationIntentExtraFieldName, 10);
             volume = intent.getFloatExtra(BreathPrayConstants.acousticVolumeIntentExtraFieldName, 0.5f);
@@ -49,7 +49,7 @@ public class ActiveVibrationService extends Service {
             acousticNotificationActive = intent.getBooleanExtra(BreathPrayConstants.acousticNotificationActiveIntentExtraFieldName, false);
             nextVibration = DateTime.now().plusMinutes(intent.getIntExtra(BreathPrayConstants.repeatTimeIntentExtraFieldName,15));
 
-            if (ringMode == AudioManager.RINGER_MODE_VIBRATE)
+            if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE)
                 acousticNotificationActive = false;
             acousticNotificationUri = intent.getStringExtra(BreathPrayConstants.acousticUriIntentExtraFieldName);
 
